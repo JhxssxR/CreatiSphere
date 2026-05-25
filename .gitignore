@@ -1,0 +1,10 @@
+# Visual Studio / .NET Core / MAUI gitignore
+bin/
+obj/
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+Appdata/

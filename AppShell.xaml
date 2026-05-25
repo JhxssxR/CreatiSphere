@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="CreatiSphere.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:CreatiSphere"
+    xmlns:superadmin="clr-namespace:CreatiSphere.Views.SuperAdmin"
+    xmlns:admin="clr-namespace:CreatiSphere.Views.Admin"
+    xmlns:customer="clr-namespace:CreatiSphere.Views.Customer"
+    xmlns:creator="clr-namespace:CreatiSphere.Views.Creator"
+    xmlns:finance="clr-namespace:CreatiSphere.Views.Finance"
+    xmlns:sales="clr-namespace:CreatiSphere.Views.Sales"
+    Title="CreatiSphere"
+    FlyoutBehavior="Disabled">
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+
+    <ShellContent
+        Title="Dashboard"
+        ContentTemplate="{DataTemplate superadmin:DashboardPage}"
+        Route="DashboardPage" />
+
+    <ShellContent
+        Title="Admin Dashboard"
+        ContentTemplate="{DataTemplate admin:AdminDashboardPage}"
+        Route="AdminDashboard" />
+
+    <ShellContent
+        Title="Digital Asset Management"
+        ContentTemplate="{DataTemplate admin:DigitalAssetManagementPage}"
+        Route="DigitalAssetManagementPage" />
+
+    <ShellContent
+        Title="Manage Inventory"
+        ContentTemplate="{DataTemplate admin:ManageInventoryPage}"
+        Route="ManageInventoryPage" />
+
+    <ShellContent
+        Title="Manage Products"
+        ContentTemplate="{DataTemplate admin:ManageProductsPage}"
+        Route="ManageProductsPage" />
+
+    <ShellContent
+        Title="Manage Users"
+        ContentTemplate="{DataTemplate admin:ManageUsersPage}"
+        Route="ManageUsersPage" />
+
+    <ShellContent
+        Title="CRM Management"
+        ContentTemplate="{DataTemplate admin:CrmManagementPage}"
+        Route="CrmManagementPage" />
+
+    <ShellContent
+        Title="Custom Order Management"
+        ContentTemplate="{DataTemplate admin:CustomOrderManagementPage}"
+        Route="CustomOrderManagementPage" />
+
+    <ShellContent
+        Title="View Sales"
+        ContentTemplate="{DataTemplate admin:ViewSalesPage}"
+        Route="ViewSalesPage" />
+
+    <ShellContent
+        Title="Business Reports"
+        ContentTemplate="{DataTemplate admin:BusinessReportsPage}"
+        Route="BusinessReportsPage" />
+
+    <ShellContent
+        Title="MSME Directory"
+        ContentTemplate="{DataTemplate superadmin:MsmePage}"
+        Route="MsmePage" />
+
+    <ShellContent
+        Title="Manage Users"
+        ContentTemplate="{DataTemplate superadmin:UsersPage}"
+        Route="UsersPage" />
+
+    <ShellContent
+        Title="Manage Modules"
+        ContentTemplate="{DataTemplate superadmin:ModulesPage}"
+        Route="ModulesPage" />
+
+    <ShellContent
+        Title="Monitor System"
+        ContentTemplate="{DataTemplate superadmin:MonitorSystemPage}"
+        Route="MonitorSystemPage" />
+
+    <ShellContent
+        Title="System Reports"
+        ContentTemplate="{DataTemplate superadmin:ReportsPage}"
+        Route="ReportsPage" />
+
+    <ShellContent
+        Title="Customer Dashboard"
+        ContentTemplate="{DataTemplate customer:CustomerDashboardPage}"
+        Route="CustomerDashboard" />
+
+    <ShellContent
+        Title="Browse Marketplace"
+        ContentTemplate="{DataTemplate customer:BrowseMarketplacePage}"
+        Route="BrowseMarketplacePage" />
+
+    <ShellContent
+        Title="Custom Orders"
+        ContentTemplate="{DataTemplate customer:CustomOrdersPage}"
+        Route="CustomOrdersPage" />
+
+    <ShellContent
+        Title="Track Orders"
+        ContentTemplate="{DataTemplate customer:TrackOrdersPage}"
+        Route="TrackOrdersPage" />
+
+    <ShellContent
+        Title="Messages"
+        ContentTemplate="{DataTemplate customer:MessagesPage}"
+        Route="MessagesPage" />
+
+    <ShellContent
+        Title="Feedback"
+        ContentTemplate="{DataTemplate customer:FeedbackPage}"
+        Route="FeedbackPage" />
+
+    <ShellContent
+        Title="Rewards"
+        ContentTemplate="{DataTemplate customer:RewardsPage}"
+        Route="RewardsPage" />
+
+    <!-- ===== CREATOR PORTAL ROUTES ===== -->
+    <ShellContent
+        Title="Creator Dashboard"
+        ContentTemplate="{DataTemplate creator:CreatorDashboardPage}"
+        Route="CreatorDashboardPage" />
+
+    <ShellContent
+        Title="Asset Library"
+        ContentTemplate="{DataTemplate creator:AssetLibraryPage}"
+        Route="AssetLibraryPage" />
+
+    <ShellContent
+        Title="Commissions"
+        ContentTemplate="{DataTemplate creator:CommissionsPage}"
+        Route="CommissionsPage" />
+
+    <ShellContent
+        Title="Catalog Manager"
+        ContentTemplate="{DataTemplate creator:CatalogManagerPage}"
+        Route="CatalogManagerPage" />
+
+    <!-- ===== FINANCE PORTAL ROUTES ===== -->
+    <ShellContent
+        Title="Finance Dashboard"
+        ContentTemplate="{DataTemplate finance:FinanceDashboardPage}"
+        Route="FinanceDashboardPage" />
+
+    <ShellContent
+        Title="Monitor Revenue"
+        ContentTemplate="{DataTemplate finance:MonitorRevenuePage}"
+        Route="FinanceMonitorRevenuePage" />
+
+    <ShellContent
+        Title="Business Reports"
+        ContentTemplate="{DataTemplate finance:BusinessReportsPage}"
+        Route="FinanceBusinessReportsPage" />
+
+    <!-- ===== SALES PORTAL ROUTES ===== -->
+    <ShellContent
+        Title="Sales Dashboard"
+        ContentTemplate="{DataTemplate sales:SalesDashboardPage}"
+        Route="SalesDashboardPage" />
+
+    <ShellContent
+        Title="Sales Transactions"
+        ContentTemplate="{DataTemplate sales:SalesTransactionsPage}"
+        Route="SalesTransactionsPage" />
+
+    <ShellContent
+        Title="Sales Performance"
+        ContentTemplate="{DataTemplate sales:SalesPerformancePage}"
+        Route="SalesPerformancePage" />
+
+    <ShellContent
+        Title="Sales Customers"
+        ContentTemplate="{DataTemplate sales:SalesCustomersPage}"
+        Route="SalesCustomersPage" />
+
+    <ShellContent
+        Title="Sales Reports"
+        ContentTemplate="{DataTemplate sales:SalesReportsPage}"
+        Route="SalesReportsPage" />
+
+    <ShellContent
+        Title="Sales CRM"
+        ContentTemplate="{DataTemplate sales:SalesCrmPage}"
+        Route="SalesCrmPage" />
+
+</Shell>

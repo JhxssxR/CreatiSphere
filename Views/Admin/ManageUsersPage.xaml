@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:admin="clr-namespace:CreatiSphere.Views.Admin"
+             x:Class="CreatiSphere.Views.Admin.ManageUsersPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource Slate50}">
+
+    <Grid ColumnDefinitions="280, *">
+        <!-- Sidebar -->
+        <admin:AdminSidebar Grid.Column="0" ActivePage="ManageUsers" />
+
+        <!-- Main Content Area -->
+        <ScrollView Grid.Column="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="40" Spacing="32">
+                
+                <!-- Top Nav Bar -->
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="System Overview Dashboard" TextColor="{StaticResource Slate900}" FontSize="14" VerticalOptions="Center" />
+
+                    <!-- User Actions -->
+                    <HorizontalStackLayout Grid.Column="1" Spacing="24" VerticalOptions="Center">
+                        <!-- Search Bar -->
+                        <Border StrokeShape="RoundRectangle 8" StrokeThickness="0" BackgroundColor="{StaticResource Slate100}" WidthRequest="300" Padding="12, 8">
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Path Data="M15.5,14h-0.79l-0.28-0.27C15.41,12.59,16,11.11,16,9.5C16,5.91,13.09,3,9.5,3S3,5.91,3,9.5S5.91,16,9.5,16 c1.61,0,3.09-0.59,4.23-1.57l0.27,0.28v0.79l5,4.99L20.49,19L15.5,14z M9.5,14C7.01,14,5,11.99,5,9.5S7.01,5,9.5,5S14,7.01,14,9.5 S11.99,14,9.5,14z" 
+                                      Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                <Entry Grid.Column="1" x:Name="SearchEntry" Placeholder="Search by name or email..." 
+                                       TextChanged="OnSearchTextChanged"
+                                       PlaceholderColor="{StaticResource Slate400}" TextColor="{StaticResource Slate900}" BackgroundColor="Transparent" Margin="8,0,0,0" FontSize="12" />
+                            </Grid>
+                        </Border>
+
+                        <Path Data="M12,22c1.1,0,2-0.9,2-2h-4C10,21.1,10.9,22,12,22z M18,16v-5c0-3.1-1.6-5.6-4.5-6.3V4c0-0.8-0.7-1.5-1.5-1.5 S10.5,3.2,10.5,4v0.7C7.6,5.4,6,7.9,6,11v5l-2,2v1h16v-1L18,16z" 
+                              Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                        <Path Data="M19.1,12.9l2.1,1.6c0.2,0.1,0.2,0.4,0.1,0.6l-2,3.5c-0.1,0.2-0.4,0.3-0.6,0.2l-2.5-1c-0.5,0.4-1.1,0.7-1.7,1 l-0.4,2.6c0,0.2-0.2,0.4-0.5,0.4h-4c-0.3,0-0.5-0.2-0.5-0.4l-0.4-2.6c-0.6-0.3-1.2-0.6-1.7-1l-2.5,1c-0.2,0.1-0.5,0-0.6-0.2l-2-3.5 C1.9,14.9,2,14.6,2.2,14.5l2.1-1.6c-0.1-0.3-0.1-0.6-0.1-0.9s0-0.6,0.1-0.9L2.2,8.6c-0.2-0.1-0.2-0.4-0.1-0.6l2-3.5c0.1-0.2,0.4-0.3,0.6-0.2 l2.5,1c0.5-0.4,1.1-0.7,1.7-1L9.4,1.7c0-0.2,0.2-0.4,0.5-0.4h4c0.3,0,0.5,0.2,0.5,0.4l0.4,2.6c0.6,0.3,1.2,0.6,1.7,1l2.5-1 c0.2-0.1,0.5,0,0.6,0.2l2,3.5c0.1,0.2,0,0.5-0.2,0.6l-2.1,1.6c0.1,0.3,0.1,0.6,0.1,0.9S19.2,12.6,19.1,12.9z M12,15c1.7,0,3-1.3,3-3 s-1.3-3-3-3s-3,1.3-3,3S10.3,15,12,15z" 
+                              Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                        
+                        <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0">
+                            <Image Source="avatar.png" Aspect="AspectFill" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <!-- Page Header -->
+                <Grid ColumnDefinitions="*, Auto" Margin="0, 16, 0, 0">
+                    <VerticalStackLayout Spacing="8" VerticalOptions="Center">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="Management" TextColor="{StaticResource Slate500}" FontSize="13" />
+                            <Label Text="›" TextColor="{StaticResource Slate400}" FontSize="13" />
+                            <Label Text="Manage Users" TextColor="{StaticResource DashboardTeal}" FontSize="13" FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                            <Label Text="User Directory" TextColor="{StaticResource Slate900}" FontSize="28" FontAttributes="Bold" />
+                            <Border x:Name="TierBadge" BackgroundColor="#DBEAFE" Padding="12, 4" StrokeShape="RoundRectangle 12" StrokeThickness="0" VerticalOptions="Center" Margin="0, 4, 0, 0">
+                                <Label x:Name="TierLabel" Text="STARTER" TextColor="#1E40AF" FontSize="11" FontAttributes="Bold" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        <Label Text="Manage enterprise access controls and team permissions." TextColor="{StaticResource Slate600}" FontSize="14" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1" Text="+ Add New User" 
+                            Clicked="OnAddUserClicked"
+                            TextColor="White" 
+                            BackgroundColor="{StaticResource DashboardTeal}"
+                            CornerRadius="8"
+                            Padding="16, 8"
+                            FontSize="14"
+                            VerticalOptions="Center" />
+                </Grid>
+
+                <!-- Stats Cards Row -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
+                    <!-- Total Active Users Card -->
+                    <Border Grid.Column="0" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="1" />
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="1.03" />
+                                        <Setter Property="BackgroundColor" Value="#F8FAFC" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border.Shadow><Shadow Brush="Black" Opacity="0.05" Offset="0,4" Radius="10"/></Border.Shadow>
+                        <Grid>
+                            <VerticalStackLayout Spacing="8" VerticalOptions="Center">
+                                <Label Text="TOTAL ACTIVE USERS" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
+                                <Label x:Name="TotalUsersLabel" Text="0" TextColor="{StaticResource Slate900}" FontSize="32" FontAttributes="Bold" />
+                                <HorizontalStackLayout Spacing="4">
+                                    <Path Data="M7,14l5-5l5,5" Fill="{StaticResource DashboardTeal}" Aspect="Uniform" HeightRequest="10" WidthRequest="10" VerticalOptions="Center" />
+                                    <Label Text="12% increase this month" TextColor="{StaticResource DashboardTeal}" FontSize="13" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                            <Path Data="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" 
+                                  Fill="{StaticResource Slate100}" Aspect="Uniform" HeightRequest="120" WidthRequest="120" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,-24,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- System Capacity Card -->
+                    <Border Grid.Column="1" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="{StaticResource Slate800}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="1" />
+                                        <Setter Property="BackgroundColor" Value="{StaticResource Slate800}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="1.03" />
+                                        <Setter Property="BackgroundColor" Value="{StaticResource Slate700}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border.Shadow><Shadow Brush="Black" Opacity="0.2" Offset="0,8" Radius="15"/></Border.Shadow>
+                        <Grid>
+                            <Image Source="dashboard_bg.png" Aspect="AspectFill" Opacity="0.3" />
+                            <VerticalStackLayout Spacing="16" VerticalOptions="Center">
+                                <Label Text="System Capacity" TextColor="White" FontSize="20" FontAttributes="Bold" />
+                                <Border BackgroundColor="{StaticResource Slate700}" HeightRequest="8" StrokeShape="RoundRectangle 4" StrokeThickness="0">
+                                    <BoxView WidthRequest="200" HorizontalOptions="Start" Color="{StaticResource DashboardTeal}" />
+                                </Border>
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <Label Text="64% Resources Utilized" TextColor="{StaticResource Slate300}" FontSize="13" />
+                                    <Label Grid.Column="1" Text="Nodes: 48/75" TextColor="{StaticResource Slate300}" FontSize="13" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- Directory Table Section -->
+                <Border Padding="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                    <VerticalStackLayout>
+                        <!-- Table Header Controls -->
+                        <Grid ColumnDefinitions="*, Auto" Padding="24, 20">
+                            <HorizontalStackLayout Spacing="16" VerticalOptions="Center">
+                                <Label Text="Active Directory" TextColor="{StaticResource Slate900}" FontSize="16" VerticalOptions="Center" />
+                                <Border BackgroundColor="#CCFBF1" Padding="12, 4" StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="PointerOver">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="#99F6E4" />
+                                                    <Setter Property="Scale" Value="1.05" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <Label Text="INTERNAL" TextColor="#0F766E" FontSize="11" FontAttributes="Bold" />
+                                </Border>
+                                <Border BackgroundColor="{StaticResource Slate100}" Padding="12, 4" StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="PointerOver">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="{StaticResource Slate200}" />
+                                                    <Setter Property="Scale" Value="1.05" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <Label Text="CONTRACTORS" TextColor="{StaticResource Slate600}" FontSize="11" FontAttributes="Bold" />
+                                </Border>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Grid.Column="1" Spacing="12" VerticalOptions="Center">
+                                <!-- Role Filter Dropdown -->
+                                <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" Padding="12, 8" WidthRequest="180">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="PointerOver">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="{StaticResource Slate50}" />
+                                                    <Setter Property="Stroke" Value="{StaticResource DashboardTeal}" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <VerticalStackLayout Spacing="6">
+                                        <Label Text="All Roles" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
+                                        <Border StrokeShape="RoundRectangle 6" StrokeThickness="1" Stroke="{StaticResource Slate100}" BackgroundColor="White" Padding="8, 0" HeightRequest="32">
+                                            <Grid ColumnDefinitions="*, Auto">
+                                                <Picker x:Name="RoleFilterPicker" Title="" SelectedIndexChanged="OnFilterChanged" 
+                                                        TextColor="{StaticResource Slate900}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center">
+                                                    <Picker.ItemsSource>
+                                                        <x:Array Type="{x:Type x:String}">
+                                                            <x:String>All Roles</x:String>
+                                                            <x:String>Super Admin</x:String>
+                                                            <x:String>Admin</x:String>
+                                                            <x:String>Creator</x:String>
+                                                            <x:String>Customer</x:String>
+                                                            <x:String>Sales</x:String>
+                                                            <x:String>Finance</x:String>
+                                                        </x:Array>
+                                                    </Picker.ItemsSource>
+                                                </Picker>
+                                                <Path Grid.Column="1" Data="M7,10l5,5l5,-5" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="10" WidthRequest="10" VerticalOptions="Center" InputTransparent="True" />
+                                            </Grid>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <!-- Status Filter Dropdown -->
+                                <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" Padding="12, 8" WidthRequest="180">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="PointerOver">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="{StaticResource Slate50}" />
+                                                    <Setter Property="Stroke" Value="{StaticResource DashboardTeal}" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <VerticalStackLayout Spacing="6">
+                                        <Label Text="Any Status" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
+                                        <Border StrokeShape="RoundRectangle 6" StrokeThickness="1" Stroke="{StaticResource Slate100}" BackgroundColor="White" Padding="8, 0" HeightRequest="32">
+                                            <Grid ColumnDefinitions="*, Auto">
+                                                <Picker x:Name="StatusFilterPicker" Title="" SelectedIndexChanged="OnFilterChanged" 
+                                                        TextColor="{StaticResource Slate900}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center">
+                                                    <Picker.ItemsSource>
+                                                        <x:Array Type="{x:Type x:String}">
+                                                            <x:String>Any Status</x:String>
+                                                            <x:String>Active</x:String>
+                                                            <x:String>Inactive</x:String>
+                                                        </x:Array>
+                                                    </Picker.ItemsSource>
+                                                </Picker>
+                                                <Path Grid.Column="1" Data="M7,10l5,5l5,-5" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="10" WidthRequest="10" VerticalOptions="Center" InputTransparent="True" />
+                                            </Grid>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <!-- Action Buttons -->
+                                <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" HeightRequest="64" WidthRequest="56" Padding="14">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="PointerOver">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="{StaticResource Slate50}" />
+                                                    <Setter Property="Scale" Value="1.1" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <Path Data="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" Fill="{StaticResource Slate600}" Aspect="Uniform" VerticalOptions="Center" />
+                                </Border>
+                                
+                                <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" HeightRequest="64" WidthRequest="56" Padding="14">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="PointerOver">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="{StaticResource Slate50}" />
+                                                    <Setter Property="Scale" Value="1.1" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnDownloadClicked" />
+                                    </Border.GestureRecognizers>
+                                    <Path Data="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" Fill="{StaticResource Slate600}" Aspect="Uniform" VerticalOptions="Center" />
+                                </Border>
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{StaticResource Slate200}" />
+
+                        <!-- Columns -->
+                        <Grid ColumnDefinitions="3*, 1.5*, 1.5*, 2*, Auto" Padding="24, 16" BackgroundColor="{StaticResource Slate50}">
+                            <Label Grid.Column="0" Text="USER NAME" TextColor="{StaticResource Slate900}" FontSize="11" FontAttributes="Bold" />
+                            <Label Grid.Column="1" Text="ROLE" TextColor="{StaticResource Slate900}" FontSize="11" FontAttributes="Bold" />
+                            <Label Grid.Column="2" Text="STATUS" TextColor="{StaticResource Slate900}" FontSize="11" FontAttributes="Bold" />
+                            <Label Grid.Column="3" Text="LAST LOGIN" TextColor="{StaticResource Slate900}" FontSize="11" FontAttributes="Bold" />
+                            <Label Grid.Column="4" Text="ACTIONS" TextColor="{StaticResource Slate900}" FontSize="11" FontAttributes="Bold" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{StaticResource Slate200}" />
+
+                        <VerticalStackLayout x:Name="UsersList" BindableLayout.ItemsSource="{Binding .}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Border StrokeThickness="0" BackgroundColor="Transparent" Padding="0">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="Transparent" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="PointerOver">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="{StaticResource Slate50}" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <VerticalStackLayout>
+                                            <Grid ColumnDefinitions="3*, 1.5*, 1.5*, 2*, Auto" Padding="24, 16" VerticalOptions="Center">
+                                                <HorizontalStackLayout Grid.Column="0" Spacing="16" VerticalOptions="Center">
+                                                    <Border BackgroundColor="#E0E7FF" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0">
+                                                        <Label Text="{Binding Initials}" TextColor="#4338CA" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                    </Border>
+                                                    <VerticalStackLayout VerticalOptions="Center">
+                                                        <Label Text="{Binding Username}" TextColor="{StaticResource Slate900}" FontSize="14" FontAttributes="Bold" />
+                                                        <Label Text="{Binding Email}" TextColor="{StaticResource Slate500}" FontSize="12" />
+                                                    </VerticalStackLayout>
+                                                </HorizontalStackLayout>
+                                                <Label Grid.Column="1" Text="{Binding Role}" TextColor="{StaticResource Slate900}" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" />
+                                                <Border Grid.Column="2" Padding="12, 4" StrokeShape="RoundRectangle 12" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Center">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="BackgroundColor" Value="#F1F5F9" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Active">
+                                                                    <Setter Property="BackgroundColor" Value="#ECFDF5" />
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Inactive">
+                                                                    <Setter Property="BackgroundColor" Value="#FEF2F2" />
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="INACTIVE">
+                                                                    <Setter Property="BackgroundColor" Value="#FEF2F2" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <HorizontalStackLayout Spacing="6">
+                                                        <Path Data="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z" Aspect="Uniform" HeightRequest="8" WidthRequest="8" VerticalOptions="Center">
+                                                            <Path.Style>
+                                                                <Style TargetType="Path">
+                                                                    <Setter Property="Fill" Value="{StaticResource Slate400}" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Active">
+                                                                            <Setter Property="Fill" Value="#059669" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Inactive">
+                                                                            <Setter Property="Fill" Value="#EF4444" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="INACTIVE">
+                                                                            <Setter Property="Fill" Value="#EF4444" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Path.Style>
+                                                        </Path>
+                                                        <Label Text="{Binding Status}" FontSize="11" FontAttributes="Bold">
+                                                            <Label.Style>
+                                                                <Style TargetType="Label">
+                                                                    <Setter Property="TextColor" Value="{StaticResource Slate600}" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Active">
+                                                                            <Setter Property="TextColor" Value="#059669" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Inactive">
+                                                                            <Setter Property="TextColor" Value="#EF4444" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="INACTIVE">
+                                                                            <Setter Property="TextColor" Value="#EF4444" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Label.Style>
+                                                        </Label>
+                                                    </HorizontalStackLayout>
+                                                </Border>
+                                                <Label Grid.Column="3" Text="{Binding LastActive}" TextColor="{StaticResource Slate600}" FontSize="13" VerticalOptions="Center" />
+                                                <HorizontalStackLayout Grid.Column="4" Spacing="16" VerticalOptions="Center">
+                                                    <Path Data="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="16" WidthRequest="16">
+                                                        <Path.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="OnEditStatusClicked" CommandParameter="{Binding .}" />
+                                                        </Path.GestureRecognizers>
+                                                    </Path>
+                                                    <Path Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="16" WidthRequest="16">
+                                                        <Path.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="OnDeleteUserClicked" CommandParameter="{Binding .}" />
+                                                        </Path.GestureRecognizers>
+                                                    </Path>
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                            <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <BoxView HeightRequest="1" Color="{StaticResource Slate200}" />
+
+                        <!-- Footer Pagination -->
+                        <Grid ColumnDefinitions="*, Auto" Padding="24, 16">
+                            <Label Text="Showing 1-4 of 1,284 users" TextColor="{StaticResource Slate500}" FontSize="13" VerticalOptions="Center" />
+                            
+                            <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                                <Border Padding="12, 6" StrokeShape="RoundRectangle 6" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                                    <Label Text="Previous" TextColor="{StaticResource Slate700}" FontSize="13" />
+                                </Border>
+                                <Border BackgroundColor="{StaticResource Slate900}" Padding="12, 6" StrokeShape="RoundRectangle 6" StrokeThickness="0">
+                                    <Label Text="1" TextColor="White" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="2" TextColor="{StaticResource Slate700}" FontSize="14" VerticalOptions="Center" Padding="8,0" />
+                                <Label Text="3" TextColor="{StaticResource Slate700}" FontSize="14" VerticalOptions="Center" Padding="8,0" />
+                                <Border Padding="12, 6" StrokeShape="RoundRectangle 6" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                                    <Label Text="Next" TextColor="{StaticResource Slate700}" FontSize="13" />
+                                </Border>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Bottom Widgets Row -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
+                    <!-- Security Card -->
+                    <Border Grid.Column="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                        <Grid>
+                            <Image Source="dashboard_bg.png" Aspect="AspectFill" HorizontalOptions="End" Opacity="0.5" Margin="0,40,-60,-60" WidthRequest="300" HeightRequest="200" />
+                            <VerticalStackLayout Padding="32" Spacing="16">
+                                <Label Text="Enhance Security with 2FA" TextColor="{StaticResource Slate900}" FontSize="18" FontAttributes="Bold" />
+                                <Label Text="Force all users to utilize Multi-Factor Authentication to strengthen your enterprise security posture and protect sensitive data assets." TextColor="{StaticResource Slate600}" FontSize="14" LineHeight="1.5" />
+                                <Button Text="Global Security Settings" 
+                                        TextColor="White" 
+                                        BackgroundColor="{StaticResource Slate900}"
+                                        CornerRadius="8"
+                                        Padding="20, 10"
+                                        FontSize="14"
+                                        HorizontalOptions="Start"
+                                        Margin="0, 16, 0, 0" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- Policy Compliance Card -->
+                    <Border Grid.Column="1" StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="#A7F3D0">
+                        <Grid>
+                            <Path Data="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" 
+                                  Fill="#34D399" Aspect="Uniform" HeightRequest="180" WidthRequest="180" HorizontalOptions="End" VerticalOptions="Start" Margin="0,-40,-40,0" Opacity="0.3" />
+                            <Path Data="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" 
+                                  Fill="Transparent" Stroke="#059669" StrokeThickness="2" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="End" VerticalOptions="Start" Margin="32" Opacity="0.5" />
+                            
+                            <VerticalStackLayout Padding="32" Spacing="16">
+                                <Label Text="Policy Compliance" TextColor="#064E3B" FontSize="18" FontAttributes="Bold" />
+                                <Label Text="Your current directory is 94% compliant with regional GDPR and CCPA data privacy regulations." TextColor="#065F46" FontSize="14" LineHeight="1.5" />
+                                <Label Text="Review Compliance Audit" TextColor="#047857" FontSize="14" FontAttributes="Bold" TextDecorations="Underline" Margin="0,16,0,0" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <!-- Floating Action Button -->
+        <Border Grid.Column="1" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,32,32" 
+                HeightRequest="56" WidthRequest="56" StrokeShape="RoundRectangle 28" StrokeThickness="0" 
+                BackgroundColor="#0F766E">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnAddUserClicked" />
+            </Border.GestureRecognizers>
+            <Border.Shadow><Shadow Brush="Black" Opacity="0.3" Offset="0,4" Radius="8"/></Border.Shadow>
+            <Label Text="+" TextColor="White" FontSize="32" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,2" />
+        </Border>
+
+        <!-- Add User Modal Overlay -->
+        <Grid x:Name="AddUserModal" Grid.ColumnSpan="2" BackgroundColor="#80000000" IsVisible="False">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnCancelClicked" />
+            </Grid.GestureRecognizers>
+            
+            <Border WidthRequest="500" VerticalOptions="Center" HorizontalOptions="Center" 
+                    StrokeShape="RoundRectangle 24" StrokeThickness="0" BackgroundColor="White" Padding="0">
+                <Border.Shadow><Shadow Brush="Black" Opacity="0.2" Offset="0,10" Radius="20"/></Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnModalContentClicked" />
+                </Border.GestureRecognizers>
+
+                <VerticalStackLayout Spacing="0">
+                    <!-- Modal Header -->
+                    <Grid ColumnDefinitions="Auto, *" Padding="32, 32, 32, 24">
+                        <Border BackgroundColor="#F0FDFA" HeightRequest="56" WidthRequest="56" StrokeShape="RoundRectangle 16" StrokeThickness="0">
+                            <Path Data="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" 
+                                  Fill="#0D9488" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Margin="20, 0, 0, 0" VerticalOptions="Center">
+                            <Label Text="Add New Administrator" TextColor="#0F172A" FontSize="24" FontAttributes="Bold" />
+                            <Label Text="Create a new administrative account" TextColor="#64748B" FontSize="14" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                    <!-- Form Content -->
+                    <Grid RowDefinitions="Auto, Auto, Auto" Padding="32" RowSpacing="24">
+                        <!-- Username -->
+                        <VerticalStackLayout Grid.Row="0" Spacing="8">
+                            <Label Text="USERNAME" TextColor="#475569" FontSize="11" FontAttributes="Bold" />
+                            <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="#F8FAFC" Padding="16, 12">
+                                <Entry x:Name="NewUserUsernameEntry" Placeholder="e.g. sarah_smith" PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="14" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Email Address -->
+                        <VerticalStackLayout Grid.Row="1" Spacing="8">
+                            <Label Text="EMAIL ADDRESS" TextColor="#475569" FontSize="11" FontAttributes="Bold" />
+                            <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="#F8FAFC" Padding="16, 12">
+                                <Entry x:Name="NewUserEmailEntry" Keyboard="Email" Placeholder="sarah@example.com" PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="14" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <Grid Grid.Row="2" ColumnDefinitions="*, *" ColumnSpacing="20">
+                            <!-- Role Type -->
+                             <VerticalStackLayout Grid.Column="0" Spacing="8">
+                                 <Label Text="ROLE TYPE" TextColor="#475569" FontSize="11" FontAttributes="Bold" />
+                                 <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="#F8FAFC" Padding="16, 0">
+                                     <Picker x:Name="NewUserRolePicker" Title="Select Role" TextColor="#0F172A" FontSize="14" HeightRequest="48">
+                                         <Picker.ItemsSource>
+                                             <x:Array Type="{x:Type x:String}">
+                                                 <x:String>Super Admin</x:String>
+                                                 <x:String>Admin</x:String>
+                                                 <x:String>Creator</x:String>
+                                                 <x:String>Customer</x:String>
+                                                 <x:String>Sales</x:String>
+                                                 <x:String>Finance</x:String>
+                                             </x:Array>
+                                         </Picker.ItemsSource>
+                                     </Picker>
+                                 </Border>
+                             </VerticalStackLayout>
+
+                            <!-- Password -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="8">
+                                <Label Text="PASSWORD" TextColor="#475569" FontSize="11" FontAttributes="Bold" />
+                                <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="#F8FAFC" Padding="16, 12">
+                                    <Entry x:Name="NewUserPasswordEntry" IsPassword="True" Placeholder="••••••••" TextColor="#0F172A" FontSize="14" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Grid>
+
+                    <!-- Modal Actions -->
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="16" Padding="32, 0, 32, 40">
+                        <Button Text="Cancel" 
+                                Clicked="OnCancelClicked"
+                                TextColor="#475569" 
+                                BackgroundColor="White" 
+                                BorderColor="#E2E8F0" 
+                                BorderWidth="1"
+                                CornerRadius="12" 
+                                HeightRequest="48"
+                                FontSize="15" FontAttributes="Bold" />
+                        <Button Grid.Column="1" 
+                                Text="Create Account" 
+                                Clicked="OnCreateAccountClicked"
+                                TextColor="White" 
+                                BackgroundColor="#0D9488" 
+                                CornerRadius="12" 
+                                HeightRequest="48"
+                                FontSize="15" FontAttributes="Bold" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Manage User Actions Modal -->
+        <Grid x:Name="ManageUserModal" Grid.ColumnSpan="2" BackgroundColor="#80000000" IsVisible="False">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnCancelManageClicked" />
+            </Grid.GestureRecognizers>
+
+            <Border WidthRequest="400" VerticalOptions="Center" HorizontalOptions="Center" 
+                    StrokeShape="RoundRectangle 24" StrokeThickness="0" BackgroundColor="White" Padding="32">
+                <Border.Shadow><Shadow Brush="Black" Opacity="0.2" Offset="0,10" Radius="20"/></Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnModalContentClicked" />
+                </Border.GestureRecognizers>
+
+                <VerticalStackLayout Spacing="24">
+                    <Label x:Name="ManageUserTitleLabel" Text="Manage Account" TextColor="#0F172A" FontSize="20" FontAttributes="Bold" />
+
+                    <VerticalStackLayout Spacing="8">
+                        <!-- Toggle Status -->
+                        <Border BackgroundColor="Transparent" StrokeThickness="0" Padding="0, 12">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleStatusActionClicked" />
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="16">
+                                <Path Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" 
+                                      Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                                <Label x:Name="ToggleStatusActionLabel" Text="Set Inactive" TextColor="#334155" FontSize="16" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- Reset Password -->
+                        <Border BackgroundColor="Transparent" StrokeThickness="0" Padding="0, 12">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnResetPasswordActionClicked" />
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="16">
+                                <Path Data="M12.65,10C11.83,7.67,9.61,6,7,6c-3.31,0-6,2.69-6,6s2.69,6,6,6c2.61,0,4.83-1.67,5.65-4H17v4h4v-4h2v-4H12.65z M7,14c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S8.1,14,7,14z" 
+                                      Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                                <Label Text="Reset Password" TextColor="#334155" FontSize="16" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- Delete Account -->
+                        <Border BackgroundColor="Transparent" StrokeThickness="0" Padding="0, 12">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDeleteAccountActionClicked" />
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="16">
+                                <Path Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" 
+                                      Fill="#EF4444" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                                <Label Text="Delete Account" TextColor="#EF4444" FontSize="16" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <Button Text="Cancel" 
+                            Clicked="OnCancelManageClicked"
+                            TextColor="#64748B" 
+                            BackgroundColor="#F8FAFC" 
+                            CornerRadius="12" 
+                            HeightRequest="48"
+                            FontSize="15" FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Custom Confirmation Modal -->
+        <Grid x:Name="ConfirmationModal" Grid.RowSpan="2" Grid.ColumnSpan="2" IsVisible="False" BackgroundColor="#80000000" Padding="20">
+            <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="400" BackgroundColor="White" StrokeShape="RoundRectangle 24" Padding="32" StrokeThickness="0">
+                <Border.Shadow><Shadow Brush="Black" Opacity="0.2" Offset="0,10" Radius="30"/></Border.Shadow>
+                
+                <VerticalStackLayout Spacing="24" HorizontalOptions="Center">
+                    <Border x:Name="ConfirmIconContainer" BackgroundColor="#FEF2F2" HeightRequest="80" WidthRequest="80" StrokeShape="RoundRectangle 40" HorizontalOptions="Center">
+                        <Path x:Name="ConfirmIcon" Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" 
+                              Fill="#EF4444" Aspect="Uniform" HeightRequest="32" WidthRequest="32" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+
+                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                        <Label x:Name="ConfirmTitle" Text="Confirm Action" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Slate900}" HorizontalOptions="Center" />
+                        <Label x:Name="ConfirmMessage" Text="Are you sure you want to proceed?" FontSize="14" TextColor="{StaticResource Slate500}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="16" WidthRequest="340">
+                        <Button Text="Cancel" Clicked="OnCancelConfirmClicked" BackgroundColor="Transparent" TextColor="{StaticResource Slate600}" HeightRequest="48" CornerRadius="12" BorderWidth="1" BorderColor="{StaticResource Slate200}" />
+                        <Button x:Name="ConfirmBtn" Grid.Column="1" Text="Confirm" Clicked="OnFinalConfirmClicked" BackgroundColor="#EF4444" TextColor="White" FontAttributes="Bold" HeightRequest="48" CornerRadius="12" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+
+</ContentPage>

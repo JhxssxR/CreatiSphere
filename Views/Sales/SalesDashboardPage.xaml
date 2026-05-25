@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CreatiSphere.Views.Sales.SalesDashboardPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F8FAFC">
+
+    <Grid ColumnDefinitions="260, *">
+
+        <!-- ===== SALES SIDEBAR ===== -->
+        <Grid Grid.Column="0" RowDefinitions="Auto, *, Auto" BackgroundColor="#1E293B">
+            
+            <!-- Brand Logo -->
+            <VerticalStackLayout Grid.Row="0" Padding="24,32" Spacing="4">
+                <HorizontalStackLayout Spacing="12">
+                    <Border BackgroundColor="#0D9488" HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 8">
+                        <Label Text="◈" TextColor="White" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="Sales Portal" TextColor="White" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Label Text="CREATISPHERE" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" Margin="44,0,0,0" />
+            </VerticalStackLayout>
+
+            <!-- Nav Items -->
+            <VerticalStackLayout Grid.Row="1" Spacing="4" Padding="12,0">
+                
+                <!-- Dashboard (Active) -->
+                <Border BackgroundColor="#334155" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M3,13h8V3H3V13z M3,21h8v-6H3V21z M13,21h8V11h-8V21z M13,3v6h8V3H13z" Fill="#0D9488" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Dashboard" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Customers -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnCustomersClicked"/></Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M12,12c2.21,0,4-1.79,4-4s-1.79-4-4-4s-4,1.79-4,4S9.79,12,12,12z M12,14c-2.67,0-8,1.34-8,4v2h16v-2C20,15.34,14.67,14,12,14z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Customers" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Transactions -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnTransactionsClicked"/></Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z M13,9V3.5L18.5,9H13z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Transactions" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Performance -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnPerformanceClicked"/></Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M20.38,8.57l-1.23,1.85a8,8,0,0,1-.22,7.58H5.07A8,8,0,0,1,15.58,6.85l1.85-1.23A10,10,0,0,0,3.35,19a2,2,0,0,0,1.72,1H18.93a2,2,0,0,0,1.72-1A10,10,0,0,0,20.38,8.57ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18Zm5-7a1,1,0,1,1,1-1A1,1,0,0,1,17,11ZM7,11a1,1,0,1,1,1-1A1,1,0,0,1,7,11Zm5-5a1,1,0,1,1,1-1A1,1,0,0,1,12,6Z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Performance" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- CRM -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnCrmClicked"/></Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M12,2c1.1,0,2,0.9,2,2s-0.9,2-2,2s-2-0.9-2-2S10.9,2,12,2z M12,22c-1.1,0-2-0.9-2-2h4C14,21.1,13.1,22,12,22z M18,16v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-0.83-0.67-1.5-1.5-1.5s-1.5,0.67-1.5,1.5v0.68C7.63,5.36,6,7.92,6,11v5l-2,2v1h16v-1L18,16z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="CRM" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Reports -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnReportsClicked"/></Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z M17,17h-2V7h2V17z M13,17h-2v-4h2V17z M9,17H7v-7h2V17z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Reports" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- Bottom Section -->
+                        <VerticalStackLayout Grid.Row="2" Padding="20" Spacing="16">
+                
+                <BoxView HeightRequest="1" Color="#334155" Margin="0,4" />
+                
+                <VerticalStackLayout Spacing="16" Margin="0,4">
+                    <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                        <HorizontalStackLayout Spacing="14">
+                            <Path Data="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                            <Label Text="Settings" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                    <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLogoutClicked" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="14">
+                            <Path Data="M10.09,15.59L11.5,17l5-5l-5-5l-1.41,1.41L12.67,11H3v2h9.67L10.09,15.59z M19,3H5C3.89,3,3,3.9,3,5v4h2V5h14v14H5v-4H3v4 c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.11,3,19,3z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                            <Label Text="Logout" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+                
+                <BoxView HeightRequest="1" Color="#334155" Margin="0,4" />
+
+                <Grid ColumnDefinitions="Auto, *" Margin="0,4,0,0">
+                    <Border HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0">
+                        <Image Source="staff_avatar.png" Aspect="AspectFill" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="12,0">
+                        <Label Text="Alex Sterling" TextColor="White" FontSize="14" FontAttributes="Bold" />
+                        <Label Text="Senior Associate" TextColor="#94A3B8" FontSize="11" />
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <ScrollView Grid.Column="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="40" Spacing="32">
+                
+                <!-- Top Nav -->
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="Sales Performance - AI Insights" TextColor="#0F172A" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" />
+                    <Border Grid.Column="1" BackgroundColor="White" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#E2E8F0" Padding="12,0" HeightRequest="40" WidthRequest="300">
+                        <Grid ColumnDefinitions="20, *">
+                            <Path Data="M15.5,14h-0.79l-0.28-0.27C15.41,12.59,16,11.11,16,9.5C16,5.91,13.09,3,9.5,3S3,5.91,3,9.5S5.91,16,9.5,16 c1.61,0,3.09-0.59,4.23-1.57l0.27,0.28v0.79l5,4.99L20.49,19L15.5,14z M9.5,14C7.01,14,5,11.99,5,9.5S7.01,5,9.5,5S14,7.01,14,9.5 S11.99,14,9.5,14z" Fill="#64748B" Aspect="Uniform" VerticalOptions="Center" />
+                            <Entry Grid.Column="1" Placeholder="Search insights..." PlaceholderColor="#64748B" TextColor="#0F172A" FontSize="13" Margin="8,0,0,0" VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- AI Sales Hero Card -->
+                <Border StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#065F46" Padding="40" HeightRequest="280">
+                    <Grid ColumnDefinitions="*, Auto">
+                        <VerticalStackLayout Spacing="20" VerticalOptions="Center">
+                            <Border BackgroundColor="White" Opacity="0.1" StrokeShape="RoundRectangle 12" Padding="12,6" HorizontalOptions="Start">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="✨" TextColor="White" FontSize="12" />
+                                    <Label Text="AI SALES INSIGHTS" TextColor="White" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
+                                </HorizontalStackLayout>
+                            </Border>
+                            <Label Text="You're 12% away from&#10;your quarterly milestone." TextColor="White" FontSize="36" FontAttributes="Bold" LineHeight="1.1" />
+                            <Label Text="Based on current lead velocity, focusing on the &quot;Enterprise Modern&quot;&#10;segment in the next 48 hours could yield a 2.4x conversion multiplier." TextColor="#A7F3D0" FontSize="14" Opacity="0.9" />
+                            <HorizontalStackLayout Spacing="16">
+                                <Button Text="Action Recommended Leads" BackgroundColor="#2DD4BF" TextColor="#064E3B" FontAttributes="Bold" CornerRadius="8" HeightRequest="44" Padding="20,0" />
+                                <Button Text="Review Segment Data" BackgroundColor="Transparent" TextColor="White" BorderColor="White" BorderWidth="1" FontAttributes="Bold" CornerRadius="8" HeightRequest="44" Padding="20,0" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Progress Ring Placeholder -->
+                        <Grid Grid.Column="1" WidthRequest="180" HeightRequest="180" VerticalOptions="Center">
+                            <Ellipse Stroke="#042F2E" StrokeThickness="16" WidthRequest="160" HeightRequest="160" />
+                            <Ellipse Stroke="#2DD4BF" StrokeThickness="16" StrokeDashArray="360, 100" WidthRequest="160" HeightRequest="160" />
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="88%" TextColor="White" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
+                                <Label Text="Target Met" TextColor="#A7F3D0" FontSize="11" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- Stats Row -->
+                <Grid ColumnDefinitions="*, *, *" ColumnSpacing="24">
+                    <Border Grid.Column="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="Total Revenue" TextColor="#64748B" FontSize="13" />
+                            <Label x:Name="TotalRevenueLabel" Text="$0" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" />
+                            <Label Text="↗ +14.2%" TextColor="#0D9488" FontSize="12" FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="Active Leads" TextColor="#64748B" FontSize="13" />
+                            <Label x:Name="ActiveLeadsLabel" Text="0" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" />
+                            <Label Text="42 new this week" TextColor="#64748B" FontSize="12" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="2" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="Deal Pipeline Velocity" TextColor="#64748B" FontSize="13" />
+                                <Label Text="12.4 Days" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" />
+                                <Label Text="Faster than average by 3 days" TextColor="#64748B" FontSize="12" />
+                            </VerticalStackLayout>
+                            <!-- Mini Sparkline Placeholder -->
+                            <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="End" Margin="0,0,0,10">
+                                <BoxView WidthRequest="4" HeightRequest="12" Color="#E2E8F0" CornerRadius="2" />
+                                <BoxView WidthRequest="4" HeightRequest="18" Color="#E2E8F0" CornerRadius="2" />
+                                <BoxView WidthRequest="4" HeightRequest="28" Color="#0D9488" CornerRadius="2" />
+                                <BoxView WidthRequest="4" HeightRequest="22" Color="#0D9488" CornerRadius="2" />
+                                <BoxView WidthRequest="4" HeightRequest="32" Color="#0D9488" CornerRadius="2" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Grid ColumnDefinitions="*, 350" ColumnSpacing="24">
+                    <!-- Left Section: Priority Leads -->
+                    <Border Grid.Column="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="0">
+                        <VerticalStackLayout>
+                            <Grid ColumnDefinitions="*, Auto, Auto" Padding="24,20">
+                                <Label Text="Priority Leads" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
+                                <Path Grid.Column="1" Data="M3,18h18v-2H3V18z M3,13h18v-2H3V13z M3,6v2h18V6H3z" Fill="#64748B" Aspect="Uniform" HeightRequest="18" WidthRequest="18" Margin="16,0" VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="⋮" TextColor="#64748B" FontSize="24" VerticalOptions="Center" />
+                            </Grid>
+                            <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                            <!-- Lead Item 1 -->
+                            <Grid ColumnDefinitions="Auto, *, Auto, Auto" Padding="24,16" RowSpacing="4">
+                                <Border HeightRequest="44" WidthRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
+                                    <Image Source="staff_avatar.png" Aspect="AspectFill" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="16,0">
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Label Text="Studio Alpha Design" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                        <Border BackgroundColor="#F0FDFA" Padding="8,2" StrokeShape="RoundRectangle 4">
+                                            <Label Text="High Intent" TextColor="#0D9488" FontSize="9" FontAttributes="Bold" />
+                                        </Border>
+                                    </HorizontalStackLayout>
+                                    <Label Text="Last activity: Opened proposal 2 hours ago" TextColor="#64748B" FontSize="12" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,24,0">
+                                    <Label Text="$12,400" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" HorizontalOptions="End" />
+                                    <Label Text="Creative Agency" TextColor="#94A3B8" FontSize="11" HorizontalOptions="End" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <!-- Lead Item 2 -->
+                            <Grid ColumnDefinitions="Auto, *, Auto, Auto" Padding="24,16" RowSpacing="4">
+                                <Border HeightRequest="44" WidthRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
+                                    <Image Source="staff_avatar.png" Aspect="AspectFill" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="16,0">
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Label Text="Global Echo Media" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                        <Border BackgroundColor="#F1F5F9" Padding="8,2" StrokeShape="RoundRectangle 4">
+                                            <Label Text="Warm" TextColor="#64748B" FontSize="9" FontAttributes="Bold" />
+                                        </Border>
+                                    </HorizontalStackLayout>
+                                    <Label Text="Scheduled call for Tomorrow, 10:00 AM" TextColor="#64748B" FontSize="12" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,24,0">
+                                    <Label Text="$45,000" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" HorizontalOptions="End" />
+                                    <Label Text="Enterprise" TextColor="#94A3B8" FontSize="11" HorizontalOptions="End" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <!-- Lead Item 3 -->
+                            <Grid ColumnDefinitions="Auto, *, Auto, Auto" Padding="24,16" RowSpacing="4">
+                                <Border HeightRequest="44" WidthRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
+                                    <Image Source="staff_avatar.png" Aspect="AspectFill" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="16,0">
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Label Text="Urban Flora Collective" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                        <Border BackgroundColor="#FEF2F2" Padding="8,2" StrokeShape="RoundRectangle 4">
+                                            <Label Text="At Risk" TextColor="#EF4444" FontSize="9" FontAttributes="Bold" />
+                                        </Border>
+                                    </HorizontalStackLayout>
+                                    <Label Text="No contact for 12 days" TextColor="#64748B" FontSize="12" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,24,0">
+                                    <Label Text="$3,200" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" HorizontalOptions="End" />
+                                    <Label Text="Retail" TextColor="#94A3B8" FontSize="11" HorizontalOptions="End" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <BoxView HeightRequest="1" Color="#F1F5F9" />
+                            <Label Text="View All 148 Leads" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,16" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Right Sidebar Sections -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="24">
+                        <!-- Daily Activity -->
+                        <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
+                            <VerticalStackLayout Spacing="20">
+                                <Label Text="Daily Activity" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
+                                
+                                <VerticalStackLayout Spacing="8">
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <Label Text="Calls Completed" TextColor="#64748B" FontSize="12" />
+                                        <Label Grid.Column="1" Text="18/25" TextColor="#0F172A" FontSize="12" FontAttributes="Bold" />
+                                    </Grid>
+                                    <ProgressBar Progress="0.72" ProgressColor="#0D9488" HeightRequest="8" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="8">
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <Label Text="Proposals Sent" TextColor="#64748B" FontSize="12" />
+                                        <Label Grid.Column="1" Text="4/5" TextColor="#0F172A" FontSize="12" FontAttributes="Bold" />
+                                    </Grid>
+                                    <ProgressBar Progress="0.8" ProgressColor="#0D9488" HeightRequest="8" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="8">
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <Label Text="Meetings Held" TextColor="#64748B" FontSize="12" />
+                                        <Label Grid.Column="1" Text="2/3" TextColor="#0F172A" FontSize="12" FontAttributes="Bold" />
+                                    </Grid>
+                                    <ProgressBar Progress="0.66" ProgressColor="#0D9488" HeightRequest="8" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- AI Tip of the Day -->
+                        <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="#1E293B" Padding="24">
+                            <Grid RowDefinitions="Auto, *, Auto">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="AI Tip of the Day" TextColor="White" FontSize="15" FontAttributes="Bold" />
+                                </HorizontalStackLayout>
+                                <Label Grid.Row="1" Text="&quot;Users who received personalized follow-ups within 4 hours of a proposal opening showed a 40% higher close rate this month.&quot;" 
+                                       TextColor="#94A3B8" FontSize="13" FontAttributes="Italic" Margin="0,16" LineBreakMode="WordWrap" />
+                                <Label Grid.Row="2" Text="Setup Automated Triggers ›" TextColor="#2DD4BF" FontSize="13" FontAttributes="Bold" />
+                                
+                                <!-- Decorative Background Lightbulb -->
+                                <Path Grid.RowSpan="3" Data="M12,2c-3.86,0-7,3.14-7,7c0,2.38,1.19,4.47,3,5.74V17c0,0.55,0.45,1,1,1h6c0.55,0,1-0.45,1-1v-2.26c1.81-1.27,3-3.36,3-5.74 C19,5.14,15.86,2,12,2z M12,20c-1.1,0-2,0.9-2,2h4C14,20.9,13.1,20,12,20z" Fill="White" Opacity="0.05" Aspect="Uniform" HeightRequest="80" WidthRequest="80" HorizontalOptions="End" VerticalOptions="Start" />
+                                
+                                <Border Grid.RowSpan="3" BackgroundColor="#0D9488" HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" HorizontalOptions="End" VerticalOptions="Start" TranslationY="-10" TranslationX="10">
+                                    <Label Text="+" TextColor="White" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Market Trend -->
+                        <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="#F1F5F9" Padding="24">
+                            <VerticalStackLayout Spacing="16">
+                                <Label Text="MARKET TREND" TextColor="#64748B" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
+                                <!-- Bar Chart Mockup -->
+                                <HorizontalStackLayout Spacing="6" HeightRequest="100" VerticalOptions="End">
+                                    <BoxView WidthRequest="20" HeightRequest="40" Color="#E2E8F0" CornerRadius="4" VerticalOptions="End" />
+                                    <BoxView WidthRequest="20" HeightRequest="60" Color="#E2E8F0" CornerRadius="4" VerticalOptions="End" />
+                                    <BoxView WidthRequest="20" HeightRequest="30" Color="#E2E8F0" CornerRadius="4" VerticalOptions="End" />
+                                    <BoxView WidthRequest="20" HeightRequest="80" Color="#0D9488" CornerRadius="4" VerticalOptions="End" />
+                                    <BoxView WidthRequest="20" HeightRequest="50" Color="#E2E8F0" CornerRadius="4" VerticalOptions="End" />
+                                    <BoxView WidthRequest="20" HeightRequest="70" Color="#E2E8F0" CornerRadius="4" VerticalOptions="End" />
+                                </HorizontalStackLayout>
+                                <Label Text="B2B creative spend is up by 8% in the Northeast region." TextColor="#475569" FontSize="12" LineBreakMode="WordWrap" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <Label Text="© 2026 CreatiSphere Inc. All rights reserved. Professional Grade Sales Management." 
+                       TextColor="#94A3B8" FontSize="11" HorizontalOptions="Center" Margin="0,0,0,20" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>
+
+

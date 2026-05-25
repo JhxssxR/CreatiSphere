@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CreatiSphere.Views.Customer.BrowseMarketplacePage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F8FAFC">
+
+    <Grid ColumnDefinitions="220, *">
+
+        <!-- ===== LEFT SIDEBAR ===== -->
+        <Grid Grid.Column="0" RowDefinitions="Auto, *, Auto" BackgroundColor="#1A2332">
+
+            <!-- Logo -->
+            <HorizontalStackLayout Grid.Row="0" Padding="24,36,24,32" Spacing="12" VerticalOptions="Center">
+                <Border BackgroundColor="#0D9488" HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 10">
+                    <Label Text="◈" TextColor="White" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <Label Text="CreatiSphere" TextColor="White" FontSize="18" FontAttributes="Bold" FontFamily="Georgia" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <!-- Nav Items -->
+            <VerticalStackLayout Grid.Row="1" Spacing="4" Padding="12,0">
+
+                <!-- Dashboard -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnDashboardTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M3,13h8V3H3V13z M3,21h8v-6H3V21z M13,21h8V11h-8V21z M13,3v6h8V3H13z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Dashboard" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Explore (Active) -->
+                <Border BackgroundColor="#0D9488" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M12,2C8.13,2,5,5.13,5,9c0,5.25,7,13,7,13s7-7.75,7-13C19,5.13,15.87,2,12,2z M12,11.5c-1.38,0-2.5-1.12-2.5-2.5s1.12-2.5,2.5-2.5s2.5,1.12,2.5,2.5S13.38,11.5,12,11.5z"
+                              Fill="White" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Explore" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Custom Orders -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCustomOrdersTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Custom Orders" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Track Orders -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTrackOrdersTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M20,8h-3V4H3C1.9,4,1,4.9,1,6v11h2c0,1.66,1.34,3,3,3s3-1.34,3-3h6c0,1.66,1.34,3,3,3s3-1.34,3-3h2v-5L20,8z M6,18.5c-0.83,0-1.5-0.67-1.5-1.5S5.17,15.5,6,15.5S7.5,16.17,7.5,17S6.83,18.5,6,18.5z M19,9.5l1.96,2.5H17V9.5H19z M18,18.5c-0.83,0-1.5-0.67-1.5-1.5s0.67-1.5,1.5-1.5s1.5,0.67,1.5,1.5S18.83,18.5,18,18.5z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Track Orders" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Messages -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMessagesTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Messages" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Feedback -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFeedbackTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M20,2H4C2.9,2,2.01,2.9,2.01,4L2,22l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z M13,11h-2V5h2V11z M13,15h-2v-2h2V15z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Feedback" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Rewards -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRewardsTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M12,1L3,5v6c0,5.55,3.84,10.74,9,12c5.16-1.26,9-6.45,9-12V5L12,1z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Rewards" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- User Profile & Sign Out at Bottom -->
+            <VerticalStackLayout Grid.Row="2" Padding="12,24" Spacing="4">
+                <!-- User Profile -->
+                <Grid Padding="8,12" ColumnDefinitions="Auto,*,Auto">
+                    <Border HeightRequest="38" WidthRequest="38" StrokeShape="RoundRectangle 19" StrokeThickness="0" BackgroundColor="#0D9488">
+                        <Label x:Name="ProfileInitialsLabel" Text="AH" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="2" Padding="10,0,0,0" VerticalOptions="Center">
+                        <Label x:Name="ProfileNameLabel" Text="Alex Henderson" TextColor="White" FontSize="13" FontAttributes="Bold"/>
+                        <Label x:Name="ProfileRoleLabel" Text="Artisanal Collector" TextColor="#64748B" FontSize="11"/>
+                    </VerticalStackLayout>
+                    <Path Grid.Column="2" Data="M12,22c1.1,0,2-0.9,2-2h-4C10,21.1,10.9,22,12,22z M18,16v-5c0-3.1-1.6-5.6-4.5-6.3V4c0-0.8-0.7-1.5-1.5-1.5S10.5,3.2,10.5,4v0.7C7.6,5.4,6,7.9,6,11v5l-2,2v1h16v-1L18,16z"
+                          Fill="#64748B" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                </Grid>
+
+                <BoxView HeightRequest="1" Color="#2D3748" Margin="16,8" />
+
+                <!-- Sign Out -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSignOutTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M17,7l-1.41,1.41L18.17,11H8v2h10.17l-2.58,2.58L17,17l5-5L17,7z M4,5h8V3H4C2.9,3,2,3.9,2,5v14c0,1.1,0.9,2,2,2h8v-2H4V5z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Sign Out" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+        </Grid>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <Grid Grid.Column="1" RowDefinitions="Auto, *">
+            
+            <!-- Top Nav -->
+            <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Padding="32,24" BackgroundColor="White">
+                <Border StrokeShape="RoundRectangle 24" StrokeThickness="1" Stroke="#CBD5E1" BackgroundColor="Transparent" Padding="16,4" WidthRequest="400" HorizontalOptions="Start">
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <!-- Search Icon -->
+                        <Path Data="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" 
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" />
+                        <Entry Placeholder="Quick search assets..." PlaceholderColor="#94A3B8" TextColor="#0F172A" BackgroundColor="Transparent" VerticalOptions="Center" VerticalTextAlignment="Center" WidthRequest="320" Margin="0" FontSize="14"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <HorizontalStackLayout Grid.Column="1" Spacing="28" VerticalOptions="Center">
+                    <!-- Bell Icon -->
+                    <Grid WidthRequest="24" HeightRequest="24">
+                        <Path Data="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" 
+                              Fill="#64748B" Aspect="Uniform" HeightRequest="22" WidthRequest="22" VerticalOptions="Center" HorizontalOptions="Center" />
+                        <Ellipse Fill="#EF4444" WidthRequest="8" HeightRequest="8" HorizontalOptions="End" VerticalOptions="Start" Margin="0,0,0,0"/>
+                    </Grid>
+                    
+                    <!-- Cart Icon -->
+                    <Grid HeightRequest="28" WidthRequest="28">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCartTapped"/>
+                        </Grid.GestureRecognizers>
+                        <Path Data="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" 
+                              Fill="#64748B" Aspect="Uniform" HeightRequest="22" WidthRequest="22" VerticalOptions="Center" HorizontalOptions="Center" />
+                        <Border x:Name="CartBadge" BackgroundColor="#0D9488" StrokeShape="RoundRectangle 8" StrokeThickness="0" HeightRequest="16" WidthRequest="16" HorizontalOptions="End" VerticalOptions="Start" IsVisible="False">
+                            <Label x:Name="CartBadgeLabel" Text="0" TextColor="White" FontSize="9" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never" BackgroundColor="#F8FAFC">
+                <VerticalStackLayout Spacing="0">
+                    
+                    <!-- Hero Banner Image -->
+                    <Grid HeightRequest="340">
+                        <Image Source="redesign_bg.png" Aspect="AspectFill" BackgroundColor="#117E77" />
+                        <!-- Fallback gradient if image not found -->
+                        <BoxView>
+                            <BoxView.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#0F766E" Offset="0.0" />
+                                    <GradientStop Color="#14B8A6" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </BoxView.Background>
+                            <BoxView.Triggers>
+                                <DataTrigger TargetType="BoxView" Binding="{Binding Source={RelativeSource AncestorType={x:Type Image}}, Path=IsLoading}" Value="False">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </BoxView.Triggers>
+                        </BoxView>
+                        
+                        <VerticalStackLayout Spacing="16" VerticalOptions="Center" Padding="48,0">
+                            <Label Text="Discover the Extraordinary" TextColor="White" FontSize="44" FontAttributes="Bold" />
+                            <Label Text="Browse a curated collection of premium assets from the world's&#x0a;most innovative creators." 
+                                   TextColor="White" FontSize="18" LineHeight="1.5" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <VerticalStackLayout Padding="48,32,48,48" Spacing="32">
+                        
+                        <!-- Filter Tabs & Sort -->
+                        <Grid ColumnDefinitions="*, Auto">
+                            <!-- Filter Tabs -->
+                            <HorizontalStackLayout Spacing="12">
+                                <Border BackgroundColor="#0D9488" StrokeShape="RoundRectangle 20" StrokeThickness="0" Padding="24,10">
+                                    <Label Text="All Assets" TextColor="White" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                                </Border>
+                                <Border BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 20" StrokeThickness="0" Padding="24,10">
+                                    <Label Text="Stickers" TextColor="#475569" FontSize="13" VerticalOptions="Center" />
+                                </Border>
+                                <Border BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 20" StrokeThickness="0" Padding="24,10">
+                                    <Label Text="Art Prints" TextColor="#475569" FontSize="13" VerticalOptions="Center" />
+                                </Border>
+                                <Border BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 20" StrokeThickness="0" Padding="24,10">
+                                    <Label Text="Textures" TextColor="#475569" FontSize="13" VerticalOptions="Center" />
+                                </Border>
+                                <Border BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 20" StrokeThickness="0" Padding="24,10">
+                                    <Label Text="Brushes" TextColor="#475569" FontSize="13" VerticalOptions="Center" />
+                                </Border>
+                            </HorizontalStackLayout>
+                            
+                            <!-- Filters Button -->
+                            <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                                <Path Data="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z" 
+                                      Fill="#64748B" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                                <Label Text="Filters" TextColor="#64748B" FontSize="14" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                        
+                        <BoxView HeightRequest="1" Color="#E2E8F0" />
+                        
+                        <!-- Grid of Assets -->
+                        <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="24" RowSpacing="24">
+                            
+                            <!-- Card 1 -->
+                            <Border x:Name="ProductCard1" Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White">
+                                <VerticalStackLayout>
+                                    <Grid HeightRequest="220">
+                                        <BoxView>
+                                            <BoxView.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                    <GradientStop Color="#0F766E" Offset="0" />
+                                                    <GradientStop Color="#22D3EE" Offset="1" />
+                                                </LinearGradientBrush>
+                                            </BoxView.Background>
+                                        </BoxView>
+                                        <Label Text="{Binding Name}" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Border HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 18" StrokeThickness="0" BackgroundColor="White" HorizontalOptions="End" VerticalOptions="Start" Margin="16">
+                                            <Path Data="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" 
+                                                  Fill="Transparent" Stroke="#64748B" StrokeThickness="1.5" Aspect="Uniform" HeightRequest="16" WidthRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                    </Grid>
+                                    <VerticalStackLayout Padding="20" Spacing="6">
+                                        <Label Text="{Binding Name}" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" LineBreakMode="WordWrap" />
+                                        <Label Text="{Binding Category}" TextColor="#64748B" FontSize="13" />
+                                        <Grid ColumnDefinitions="*, Auto" Margin="0,16,0,0">
+                                            <Label Text="{Binding Price, StringFormat='{}{0:C2}'}" TextColor="#0D9488" FontSize="22" FontAttributes="Bold" VerticalOptions="Center" />
+                                            <Border Grid.Column="1" BackgroundColor="#0D9488" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="14,8">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnAddToCartTapped" CommandParameter="{Binding ProductID}"/>
+                                                </Border.GestureRecognizers>
+                                                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                                    <Path Data="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" 
+                                                          Fill="White" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                                    <Label Text="Add" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Card 2 -->
+                            <Border x:Name="ProductCard2" Grid.Column="1" Padding="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White">
+                                <VerticalStackLayout>
+                                    <Grid HeightRequest="220">
+                                        <BoxView>
+                                            <BoxView.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                    <GradientStop Color="#1E293B" Offset="0" />
+                                                    <GradientStop Color="#94A3B8" Offset="1" />
+                                                </LinearGradientBrush>
+                                            </BoxView.Background>
+                                        </BoxView>
+                                        <Label Text="{Binding Name}" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Border HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 18" StrokeThickness="0" BackgroundColor="White" HorizontalOptions="End" VerticalOptions="Start" Margin="16">
+                                            <Path Data="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" 
+                                                  Fill="Transparent" Stroke="#64748B" StrokeThickness="1.5" Aspect="Uniform" HeightRequest="16" WidthRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                    </Grid>
+                                    <VerticalStackLayout Padding="20" Spacing="6">
+                                        <Label Text="{Binding Name}" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" LineBreakMode="WordWrap" />
+                                        <Label Text="{Binding Category}" TextColor="#64748B" FontSize="13" />
+                                        <Grid ColumnDefinitions="*, Auto" Margin="0,16,0,0">
+                                            <Label Text="{Binding Price, StringFormat='{}{0:C2}'}" TextColor="#0D9488" FontSize="22" FontAttributes="Bold" VerticalOptions="Center" />
+                                            <Border Grid.Column="1" BackgroundColor="#0D9488" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="14,8">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnAddToCartTapped" CommandParameter="{Binding ProductID}"/>
+                                                </Border.GestureRecognizers>
+                                                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                                    <Path Data="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" 
+                                                          Fill="White" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                                    <Label Text="Add" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Card 3 -->
+                            <Border x:Name="ProductCard3" Grid.Column="2" Padding="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White">
+                                <VerticalStackLayout>
+                                    <Grid HeightRequest="220">
+                                        <BoxView>
+                                            <BoxView.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                    <GradientStop Color="#7C3AED" Offset="0" />
+                                                    <GradientStop Color="#F472B6" Offset="1" />
+                                                </LinearGradientBrush>
+                                            </BoxView.Background>
+                                        </BoxView>
+                                        <Label Text="{Binding Name}" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Border HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 18" StrokeThickness="0" BackgroundColor="White" HorizontalOptions="End" VerticalOptions="Start" Margin="16">
+                                            <Path Data="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" 
+                                                  Fill="Transparent" Stroke="#64748B" StrokeThickness="1.5" Aspect="Uniform" HeightRequest="16" WidthRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                    </Grid>
+                                    <VerticalStackLayout Padding="20" Spacing="6">
+                                        <Label Text="{Binding Name}" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" LineBreakMode="WordWrap" />
+                                        <Label Text="{Binding Category}" TextColor="#64748B" FontSize="13" />
+                                        <Grid ColumnDefinitions="*, Auto" Margin="0,16,0,0">
+                                            <Label Text="{Binding Price, StringFormat='{}{0:C2}'}" TextColor="#0D9488" FontSize="22" FontAttributes="Bold" VerticalOptions="Center" />
+                                            <Border Grid.Column="1" BackgroundColor="#0D9488" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="14,8">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnAddToCartTapped" CommandParameter="{Binding ProductID}"/>
+                                                </Border.GestureRecognizers>
+                                                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                                    <Path Data="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" 
+                                                          Fill="White" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                                    <Label Text="Add" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Card 4 -->
+                            <Border x:Name="ProductCard4" Grid.Column="3" Padding="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White">
+                                <VerticalStackLayout>
+                                    <Grid HeightRequest="220">
+                                        <BoxView>
+                                            <BoxView.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                    <GradientStop Color="#0F172A" Offset="0" />
+                                                    <GradientStop Color="#14B8A6" Offset="1" />
+                                                </LinearGradientBrush>
+                                            </BoxView.Background>
+                                        </BoxView>
+                                        <Label Text="{Binding Name}" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Border HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 18" StrokeThickness="0" BackgroundColor="White" HorizontalOptions="End" VerticalOptions="Start" Margin="16">
+                                            <Path Data="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" 
+                                                  Fill="Transparent" Stroke="#64748B" StrokeThickness="1.5" Aspect="Uniform" HeightRequest="16" WidthRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                    </Grid>
+                                    <VerticalStackLayout Padding="20" Spacing="6">
+                                        <Label Text="{Binding Name}" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" LineBreakMode="WordWrap" />
+                                        <Label Text="{Binding Category}" TextColor="#64748B" FontSize="13" />
+                                        <Grid ColumnDefinitions="*, Auto" Margin="0,16,0,0">
+                                            <Label Text="{Binding Price, StringFormat='{}{0:C2}'}" TextColor="#0D9488" FontSize="22" FontAttributes="Bold" VerticalOptions="Center" />
+                                            <Border Grid.Column="1" BackgroundColor="#0D9488" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="14,8">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnAddToCartTapped" CommandParameter="{Binding ProductID}"/>
+                                                </Border.GestureRecognizers>
+                                                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                                    <Path Data="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" 
+                                                          Fill="White" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                                    <Label Text="Add" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                            
+                        </Grid>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Payment Modal -->
+            <Grid x:Name="PaymentOverlay" Grid.RowSpan="2" BackgroundColor="Transparent" IsVisible="False">
+                <BoxView BackgroundColor="#80000000">
+                    <BoxView.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnClosePaymentTapped"/>
+                    </BoxView.GestureRecognizers>
+                </BoxView>
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 16" StrokeThickness="0" Padding="24"
+                        HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="520" InputTransparent="False">
+                    <VerticalStackLayout Spacing="20">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Text="Mode of Payment" TextColor="#0F172A" FontSize="20" FontAttributes="Bold" />
+                            <Border Grid.Column="1" BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 12" StrokeThickness="0" Padding="8">
+                                <Label Text="✕" TextColor="#64748B" FontSize="14">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnClosePaymentTapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Border>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                            <Border x:Name="PaymentCardTab" StrokeShape="RoundRectangle 12" StrokeThickness="2" Stroke="#0D9488" BackgroundColor="#F0FDFA" Padding="18,14">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnPaymentCardTapped"/>
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Path Data="M20,4H4C2.9,4,2,4.9,2,6V18C2,19.1,2.9,20,4,20H20C21.1,20,22,19.1,22,18V6C22,4.9,21.1,4,20,4ZM20,18H4V12H20V18ZM20,8H4V6H20V8Z" Fill="#0D9488" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" />
+                                    <Label Text="Credit Card" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border x:Name="PaymentWalletTab" Grid.Column="1" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="18,14">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnPaymentWalletTapped"/>
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Path Data="M21,7.28V5C21,3.9,20.1,3,19,3H5C3.9,3,3,3.9,3,5V19C3,20.1,3.9,21,5,21H19C20.1,21,21,20.1,21,19V12.72C21.59,12.38,22,11.74,22,11C22,10.26,21.59,9.62,21,9.28V7.28ZM20,9V13H14V9H20ZM5,19V5H19V7H13C11.9,7,11,7.9,11,9V13C11,14.1,11.9,15,13,15H19V19H5Z" Fill="#64748B" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" />
+                                    <Label Text="Digital Wallet" TextColor="#64748B" FontSize="13" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <VerticalStackLayout x:Name="PaymentCardPanel" Spacing="12">
+                            <Border StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#CBD5E1" Padding="14,0" HeightRequest="44">
+                                <Entry Placeholder="Cardholder Name" PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="13" />
+                            </Border>
+                            <Border StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#CBD5E1" Padding="14,0" HeightRequest="44">
+                                <Entry Placeholder="Card Number" PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="13" Keyboard="Numeric" />
+                            </Border>
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                                <Border StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#CBD5E1" Padding="14,0" HeightRequest="44">
+                                    <Entry Placeholder="MM/YY" PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="13" Keyboard="Numeric" />
+                                </Border>
+                                <Border Grid.Column="1" StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#CBD5E1" Padding="14,0" HeightRequest="44">
+                                    <Entry Placeholder="CVV" PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="13" Keyboard="Numeric" IsPassword="True" />
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout x:Name="PaymentWalletPanel" IsVisible="False" Spacing="12">
+                            <Border StrokeShape="RoundRectangle 12" StrokeThickness="2" Stroke="#0D9488" BackgroundColor="#F0FDFA" Padding="16,12">
+                                <HorizontalStackLayout Spacing="12">
+                                    <Border HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 8" StrokeThickness="0" BackgroundColor="#007AFF">
+                                        <Label Text="G" TextColor="White" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                                        <Label Text="GCash" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                        <Label Text="Linked wallet" TextColor="#64748B" FontSize="11" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </Border>
+                            <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="16,12">
+                                <HorizontalStackLayout Spacing="12">
+                                    <Border HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 8" StrokeThickness="0" BackgroundColor="#0A7A55">
+                                        <Label Text="M" TextColor="White" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                                        <Label Text="Maya" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                        <Label Text="Linked wallet" TextColor="#64748B" FontSize="11" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Text="Total" TextColor="#475569" FontSize="13" FontAttributes="Bold" />
+                            <Label x:Name="PaymentTotalLabel" Grid.Column="1" Text="$0.00" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" HorizontalOptions="End" />
+                        </Grid>
+
+                        <Button Text="Confirm Payment" BackgroundColor="#0D9488" TextColor="White" CornerRadius="10" HeightRequest="44" FontAttributes="Bold" Clicked="OnConfirmPaymentClicked" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Cart Drawer Overlay -->
+            <Grid x:Name="CartOverlay" Grid.RowSpan="2" BackgroundColor="Transparent" IsVisible="False">
+                <BoxView BackgroundColor="#80000000">
+                    <BoxView.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCloseCartTapped"/>
+                    </BoxView.GestureRecognizers>
+                </BoxView>
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 16" StrokeThickness="0" Padding="24"
+                        HorizontalOptions="End" VerticalOptions="Center" WidthRequest="360" Margin="0,0,24,0"
+                        InputTransparent="False">
+                    <VerticalStackLayout Spacing="16">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Your Cart" TextColor="#0F172A" FontSize="20" FontAttributes="Bold" />
+                                <Label Text="Review and checkout your selected assets." TextColor="#64748B" FontSize="12" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="1" BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 12" StrokeThickness="0" Padding="8">
+                                <Label Text="✕" TextColor="#64748B" FontSize="14">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnCloseCartTapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Border>
+                        </Grid>
+
+                        <Label x:Name="EmptyCartLabel" Text="Your cart is empty." TextColor="#94A3B8" FontSize="13" IsVisible="False" />
+                        <CollectionView x:Name="CartItemsCollectionView" HeightRequest="260">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="#F8FAFC" Padding="12" Margin="0,0,0,8">
+                                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="12">
+                                            <Label Text="{Binding Name}" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" />
+                                            <Label Grid.Column="1" Text="{Binding Price, StringFormat='{}{0:C2}'}" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" HorizontalOptions="End" />
+                                            <Label Grid.Row="1" Text="{Binding Category}" TextColor="#94A3B8" FontSize="11" />
+                                            <Label Grid.Row="1" Grid.Column="1" Text="Qty 1" TextColor="#94A3B8" FontSize="11" HorizontalOptions="End" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <Grid ColumnDefinitions="*, Auto" Padding="8,0,8,8">
+                            <Label Text="Total" TextColor="#475569" FontSize="13" FontAttributes="Bold" />
+                            <Label x:Name="CartTotalLabel" Grid.Column="1" Text="$0.00" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" HorizontalOptions="End" />
+                        </Grid>
+
+                        <Button Text="Checkout" BackgroundColor="#0D9488" TextColor="White" CornerRadius="10" HeightRequest="44" FontAttributes="Bold" Clicked="OnCheckoutClicked" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

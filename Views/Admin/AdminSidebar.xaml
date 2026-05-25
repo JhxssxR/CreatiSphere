@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CreatiSphere.Views.Admin"
+             x:Class="CreatiSphere.Views.Admin.AdminSidebar">
+    
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="MenuItemGridStyle" TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+
+            <Style x:Key="MenuItemPathStyle" TargetType="Path">
+                <Setter Property="Fill" Value="{StaticResource Slate400}" />
+            </Style>
+
+            <Style x:Key="MenuItemLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource Slate400}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <Grid BackgroundColor="{StaticResource Slate900}" RowDefinitions="Auto, *, Auto">
+        <!-- Logo Section -->
+        <HorizontalStackLayout Spacing="16" Padding="24, 32" VerticalOptions="Center">
+            <Border BackgroundColor="{StaticResource DashboardTeal}" 
+                    HeightRequest="40" WidthRequest="40" 
+                    StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                <Label Text="◈" TextColor="White" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+            <VerticalStackLayout VerticalOptions="Center">
+                <Label Text="CreatiSphere" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                <Label Text="CREATISPHERE" TextColor="{StaticResource Slate400}" FontSize="9" FontAttributes="Bold" CharacterSpacing="1" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+
+        <!-- Navigation Menu -->
+        <VerticalStackLayout Grid.Row="1" Spacing="4" Padding="0, 16">
+            <!-- Dashboard -->
+            <Grid x:Name="DashboardItem" Padding="24, 12" ColumnDefinitions="24, *" Style="{StaticResource MenuItemGridStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDashboardClicked" />
+                </Grid.GestureRecognizers>
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="Dashboard">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Slate800}" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                
+                <Border WidthRequest="4" HeightRequest="24" BackgroundColor="{StaticResource DashboardTeal}" HorizontalOptions="Start" Margin="-24,0,0,0">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="Dashboard">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                    </Border.Style>
+                </Border>
+
+                <Path Data="M3,13h8V3H3V13z M3,21h8v-6H3V21z M13,21h8V11h-8V21z M13,3v6h8V3H13z" 
+                      Style="{StaticResource MenuItemPathStyle}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center">
+                    <Path.Triggers>
+                        <DataTrigger TargetType="Path" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="Dashboard">
+                            <Setter Property="Fill" Value="White" />
+                        </DataTrigger>
+                    </Path.Triggers>
+                </Path>
+                <Label Grid.Column="1" Text="Dashboard" Style="{StaticResource MenuItemLabelStyle}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="Dashboard">
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Grid>
+
+            <Grid x:Name="ManageUsersItem" Padding="24, 12" ColumnDefinitions="24, *" Style="{StaticResource MenuItemGridStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnManageUsersClicked" />
+                </Grid.GestureRecognizers>
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageUsers">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Slate800}" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Border WidthRequest="4" HeightRequest="24" BackgroundColor="{StaticResource DashboardTeal}" HorizontalOptions="Start" Margin="-24,0,0,0">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageUsers">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <Path Data="M12,12c2.21,0,4-1.79,4-4s-1.79-4-4-4-4,1.79-4,4,1.79,4,4,4zm0,2c-2.67,0-8,1.34-8,4v2h16v-2c0-2.66-5.33-4-8-4z" 
+                      Style="{StaticResource MenuItemPathStyle}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center">
+                    <Path.Triggers>
+                        <DataTrigger TargetType="Path" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageUsers">
+                            <Setter Property="Fill" Value="White" />
+                        </DataTrigger>
+                    </Path.Triggers>
+                </Path>
+                <Label Grid.Column="1" Text="Manage Users" Style="{StaticResource MenuItemLabelStyle}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageUsers">
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Grid>
+
+            <Grid x:Name="ManageProductsItem" Padding="24, 12" ColumnDefinitions="24, *" Style="{StaticResource MenuItemGridStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnManageProductsClicked" />
+                </Grid.GestureRecognizers>
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageProducts">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Slate800}" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Border WidthRequest="4" HeightRequest="24" BackgroundColor="{StaticResource DashboardTeal}" HorizontalOptions="Start" Margin="-24,0,0,0">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageProducts">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <Path Data="M20,6h-4V4c0-1.11-.89-2-2-2h-4c-1.11,0-2,.89-2,2v2H4c-1.11,0-1.99.89-1.99,2L2,19c0,1.11.89,2,2,2h16c1.11,0,2-.89,2-2V8c0-1.11-.89-2-2-2zm-6,0h-4V4h4v2z" 
+                      Style="{StaticResource MenuItemPathStyle}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center">
+                    <Path.Triggers>
+                        <DataTrigger TargetType="Path" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageProducts">
+                            <Setter Property="Fill" Value="White" />
+                        </DataTrigger>
+                    </Path.Triggers>
+                </Path>
+                <Label Grid.Column="1" Text="Manage Products" Style="{StaticResource MenuItemLabelStyle}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageProducts">
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Grid>
+
+            <Grid x:Name="ManageInventoryItem" Padding="24, 12" ColumnDefinitions="24, *" Style="{StaticResource MenuItemGridStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnManageInventoryClicked" />
+                </Grid.GestureRecognizers>
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageInventory">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Slate800}" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Border WidthRequest="4" HeightRequest="24" BackgroundColor="{StaticResource DashboardTeal}" HorizontalOptions="Start" Margin="-24,0,0,0">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageInventory">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <Path Data="M3,13h2v-2H3v2zm0,4h2v-2H3v2zm0-8h2V7H3v2zm4,4h14v-2H7v2zm0,4h14v-2H7v2zM7,7v2h14V7H7z" 
+                      Style="{StaticResource MenuItemPathStyle}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center">
+                    <Path.Triggers>
+                        <DataTrigger TargetType="Path" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageInventory">
+                            <Setter Property="Fill" Value="White" />
+                        </DataTrigger>
+                    </Path.Triggers>
+                </Path>
+                <Label Grid.Column="1" Text="Manage Inventory" Style="{StaticResource MenuItemLabelStyle}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ManageInventory">
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Grid>
+
+            <Grid x:Name="ViewSalesItem" Padding="24, 12" ColumnDefinitions="24, *" Style="{StaticResource MenuItemGridStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnViewSalesClicked" />
+                </Grid.GestureRecognizers>
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ViewSales">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Slate800}" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Border WidthRequest="4" HeightRequest="24" BackgroundColor="{StaticResource DashboardTeal}" HorizontalOptions="Start" Margin="-24,0,0,0">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ViewSales">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <Path Data="M3.5,18.49l6-6.01 4,4L22,6.92l-1.41-1.41-7.09,7.09-4-4L2,15.01l1.5,1.48z" 
+                      Style="{StaticResource MenuItemPathStyle}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center">
+                    <Path.Triggers>
+                        <DataTrigger TargetType="Path" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ViewSales">
+                            <Setter Property="Fill" Value="White" />
+                        </DataTrigger>
+                    </Path.Triggers>
+                </Path>
+                <Label Grid.Column="1" Text="View Sales" Style="{StaticResource MenuItemLabelStyle}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="ViewSales">
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Grid>
+
+            <Grid x:Name="CustomOrderManagementItem" Padding="24, 12" ColumnDefinitions="24, *" Style="{StaticResource MenuItemGridStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCustomOrderManagementClicked" />
+                </Grid.GestureRecognizers>
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="CustomOrderManagement">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Slate800}" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Border WidthRequest="4" HeightRequest="24" BackgroundColor="{StaticResource DashboardTeal}" HorizontalOptions="Start" Margin="-24,0,0,0">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="CustomOrderManagement">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <Path Data="M7,18c-1.1,0-1.99.9-1.99,2S5.9,22,7,22s2-.9,2-2-.9-2-2-2zM1,2v2h2l3.6,7.59-1.35,2.45c-.16.28-.25.61-.25.96,0,1.1.9,2,2,2h12v-2H7.42c-.14,0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75,0,1.41-.41,1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48,0-.55-.45-1-1-1H5.21l-.94-2H1zm16,16c-1.1,0-1.99.9-1.99,2s.89,2,1.99,2,2-.9,2-2-.9-2-2-2z" 
+                      Style="{StaticResource MenuItemPathStyle}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center">
+                    <Path.Triggers>
+                        <DataTrigger TargetType="Path" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="CustomOrderManagement">
+                            <Setter Property="Fill" Value="White" />
+                        </DataTrigger>
+                    </Path.Triggers>
+                </Path>
+                <Label Grid.Column="1" Text="Custom Order Management" Style="{StaticResource MenuItemLabelStyle}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="CustomOrderManagement">
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Grid>
+
+            <Grid x:Name="DigitalAssetManagementItem" Padding="24, 12" ColumnDefinitions="24, *" Style="{StaticResource MenuItemGridStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDigitalAssetManagementClicked" />
+                </Grid.GestureRecognizers>
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="DigitalAssetManagement">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Slate800}" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Border WidthRequest="4" HeightRequest="24" BackgroundColor="{StaticResource DashboardTeal}" HorizontalOptions="Start" Margin="-24,0,0,0">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="DigitalAssetManagement">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <Path Data="M19.35,10.04C18.67,6.59,15.64,4,12,4C9.11,4,6.6,5.64,5.35,8.04C2.34,8.36,0,10.91,0,14c0,3.31,2.69,6,6,6h13c2.76,0,5-2.24,5-5C24,12.36,21.95,10.22,19.35,10.04z M19,18H6c-2.21,0-4-1.79-4-4c0-2.05,1.53-3.76,3.56-3.97l1.07-0.11l0.5-0.95C8.08,7.14,9.94,6,12,6c2.62,0,4.88,1.86,5.39,4.43l0.3,1.5l1.53,0.11C20.82,12.14,22,13.45,22,15C22,16.65,20.65,18,19,18z" 
+                      Style="{StaticResource MenuItemPathStyle}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center">
+                    <Path.Triggers>
+                        <DataTrigger TargetType="Path" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="DigitalAssetManagement">
+                            <Setter Property="Fill" Value="White" />
+                        </DataTrigger>
+                    </Path.Triggers>
+                </Path>
+                <Label Grid.Column="1" Text="Digital Asset Management" Style="{StaticResource MenuItemLabelStyle}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="DigitalAssetManagement">
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Grid>
+
+            <Grid x:Name="CrmManagementItem" Padding="24, 12" ColumnDefinitions="24, *" Style="{StaticResource MenuItemGridStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCrmManagementClicked" />
+                </Grid.GestureRecognizers>
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="CrmManagement">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Slate800}" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Border WidthRequest="4" HeightRequest="24" BackgroundColor="{StaticResource DashboardTeal}" HorizontalOptions="Start" Margin="-24,0,0,0">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="CrmManagement">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <Path Data="M16,11c1.66,0,2.99-1.34,2.99-3S17.66,5,16,5s-3,1.34-3,3,1.34,3,3,3zm-8,0c1.66,0,2.99-1.34,2.99-3S9.66,5,8,5,5,6.34,5,8s1.34,3,3,3zm0,2c-2.33,0-7,1.17-7,3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8,0c-0.29,0-0.62,0.02-0.97,0.05,1.16,0.84,1.97,1.97,1.97,3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" 
+                      Style="{StaticResource MenuItemPathStyle}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center">
+                    <Path.Triggers>
+                        <DataTrigger TargetType="Path" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="CrmManagement">
+                            <Setter Property="Fill" Value="White" />
+                        </DataTrigger>
+                    </Path.Triggers>
+                </Path>
+                <Label Grid.Column="1" Text="CRM Management" Style="{StaticResource MenuItemLabelStyle}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="CrmManagement">
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Grid>
+
+            <Grid x:Name="BusinessReportsItem" Padding="24, 12" ColumnDefinitions="24, *" Style="{StaticResource MenuItemGridStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBusinessReportsClicked" />
+                </Grid.GestureRecognizers>
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="BusinessReports">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Slate800}" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Border WidthRequest="4" HeightRequest="24" BackgroundColor="{StaticResource DashboardTeal}" HorizontalOptions="Start" Margin="-24,0,0,0">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="BusinessReports">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <Path Data="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M9,17H7v-7h2V17z M13,17h-2V7h2V17z M17,17h-2v-4h2V17z" 
+                      Style="{StaticResource MenuItemPathStyle}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center">
+                    <Path.Triggers>
+                        <DataTrigger TargetType="Path" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="BusinessReports">
+                            <Setter Property="Fill" Value="White" />
+                        </DataTrigger>
+                    </Path.Triggers>
+                </Path>
+                <Label Grid.Column="1" Text="Business Reports" Style="{StaticResource MenuItemLabelStyle}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding ActivePage, Source={RelativeSource AncestorType={x:Type local:AdminSidebar}}}" Value="BusinessReports">
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Grid>
+        </VerticalStackLayout>
+
+        <!-- Sign Out -->
+        <Grid Grid.Row="2" Padding="24, 48" ColumnDefinitions="24, *" BackgroundColor="Transparent">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnSignOutClicked" />
+            </Grid.GestureRecognizers>
+            <Path Data="M10.09,15.59L11.5,17l5-5l-5-5l-1.41,1.41L12.67,11H3v2h9.67L10.09,15.59z M19,3H5C3.89,3,3,3.9,3,5v4h2V5h14v14H5v-4H3v4c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z" 
+                  Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
+            <Label Grid.Column="1" Text="Logout" TextColor="{StaticResource Slate400}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0" />
+        </Grid>
+    </Grid>
+</ContentView>

@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CreatiSphere.Views.SuperAdmin.ModulesPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource Slate50}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="StatCardStyle" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="Padding" Value="24" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="TranslationY" Value="0" />
+                                    <Setter Property="Shadow">
+                                        <Setter.Value>
+                                            <Shadow Brush="Black" Opacity="0.05" Offset="0,4" Radius="10"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="TranslationY" Value="-5" />
+                                    <Setter Property="Shadow">
+                                        <Setter.Value>
+                                            <Shadow Brush="{StaticResource DashboardTeal}" Opacity="0.2" Offset="0,8" Radius="20"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid ColumnDefinitions="280, *">
+        <!-- Sidebar -->
+        <Grid Grid.Column="0" BackgroundColor="{StaticResource Slate900}" RowDefinitions="Auto, *, Auto">
+            <!-- Logo Section -->
+            <HorizontalStackLayout Spacing="16" Padding="24, 32" VerticalOptions="Center">
+                <Border BackgroundColor="{StaticResource DashboardTeal}" 
+                        HeightRequest="40" WidthRequest="40" 
+                        StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                    <Label Text="◈" TextColor="White" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Text="CreatiSphere" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="SUPER ADMIN CONSOLE" TextColor="{StaticResource Slate400}" FontSize="9" FontAttributes="Bold" CharacterSpacing="1" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <!-- Navigation Menu -->
+            <VerticalStackLayout Grid.Row="1" Spacing="4" Padding="0, 16">
+                <!-- Dashboard -->
+                <Grid Padding="24, 12" ColumnDefinitions="24, *" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnDashboardClicked" />
+                    </Grid.GestureRecognizers>
+                    <Path Data="M3,13h8V3H3V13z M3,21h8v-6H3V21z M13,21h8V11h-8V21z M13,3v6h8V3H13z" 
+                          Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="Dashboard" TextColor="{StaticResource Slate400}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0" />
+                </Grid>
+
+                <!-- MSME Directory -->
+                <Grid Padding="24, 12" ColumnDefinitions="24, *" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMsmeDirectoryClicked" />
+                    </Grid.GestureRecognizers>
+                    <Path Data="M20,4H4v2h16V4z M22,13v2v5c0,1.1-0.9,2-2,2H4c-1.1,0-2-0.9-2-2v-5v-2c0-0.6,0.1-1.2,0.4-1.8l2.3-5.7C5,7.7,5.9,7,7,7h10 c1.1,0,2-0.7,2.3,1.5l2.3,5.7C21.9,11.8,22,12.4,22,13z M19,13H5l-1.6,4h17.2L19,13z" 
+                          Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="Manage MSMEs" TextColor="{StaticResource Slate400}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0" />
+                </Grid>
+
+                <!-- Manage Users -->
+                <Grid Padding="24, 12" ColumnDefinitions="24, *" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnManageUsersClicked" />
+                    </Grid.GestureRecognizers>
+                    <Path Data="M12,12c2.2,0,4-1.8,4-4s-1.8-4-4-4s-4,1.8-4,4S9.8,12,12,12z M12,14c-2.7,0-8,1.3-8,4v2h16v-2C20,15.3,14.7,14,12,14z" 
+                          Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="Manage Users" TextColor="{StaticResource Slate400}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0" />
+                </Grid>
+
+                <!-- Manage Modules (Active) -->
+                <Border StrokeShape="RoundRectangle 0" StrokeThickness="0" BackgroundColor="{StaticResource Slate800}" Padding="24, 12">
+                    <Grid ColumnDefinitions="24, *">
+                        <Border WidthRequest="4" HeightRequest="24" BackgroundColor="{StaticResource DashboardTeal}" HorizontalOptions="Start" Margin="-24,0,0,0" />
+                        <Path Data="M20,12c0-1.1,0.9-2,2-2V6c0-1.1-0.9-2-2-2h-4c0-1.1-0.9-2-2-2s-2,0.9-2,2H8C6.9,4,6,4.9,6,6v4c-1.1,0-2,0.9-2,2 s0.9,2,2,2v4c0,1.1,0.9,2,2,2h4c0,1.1,0.9,2,2,2s2-0.9,2-2h4c1.1,0,2-0.9,2-2v-4C19.1,14,20,13.1,20,12z" 
+                              Fill="White" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="Manage Modules" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" Margin="12,0,0,0" />
+                    </Grid>
+                </Border>
+
+                <!-- Monitor System -->
+                <Grid Padding="24, 12" ColumnDefinitions="24, *" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMonitorSystemClicked" />
+                    </Grid.GestureRecognizers>
+                    <Path Data="M21,2H3C1.9,2,1,2.9,1,4v12c0,1.1,0.9,2,2,2h7l-2,3v1h8v-1l-2-3h7c1.1,0,2-0.9,2-2V4C23,2.9,22.1,2,21,2z M21,16H3V4h18V16z" 
+                          Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="Monitor System" TextColor="{StaticResource Slate400}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0" />
+                </Grid>
+
+                <!-- System Reports -->
+                <Grid Padding="24, 12" ColumnDefinitions="24, *" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSystemReportsClicked" />
+                    </Grid.GestureRecognizers>
+                    <Path Data="M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z M18,20H6V4h7v5h5V20z" 
+                          Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="System Reports" TextColor="{StaticResource Slate400}" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0" />
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Sign Out -->
+            <Grid Grid.Row="2" Padding="24, 48" ColumnDefinitions="24, *" BackgroundColor="Transparent">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSignOutClicked" />
+                </Grid.GestureRecognizers>
+                <Path Data="M17,7l-1.4,1.4L18.2,11H9v2h9.2l-2.6,2.6L17,17l5-5L17,7z M5,5h7V3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h7v-2H5V5z" 
+                      Fill="{StaticResource WarningOrange}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
+                <Label Grid.Column="1" Text="Sign Out" TextColor="White" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0" />
+            </Grid>
+        </Grid>
+
+        <!-- Main Content Area -->
+        <ScrollView Grid.Column="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="40" Spacing="32">
+                
+                <!-- Top Nav Bar -->
+                <Grid ColumnDefinitions="*, Auto">
+                    <!-- Search Bar (Aligned to Start to match other pages) -->
+                    <Border Grid.Column="0" StrokeShape="RoundRectangle 24" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" HorizontalOptions="Start" WidthRequest="400" Padding="16, 8">
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Path Data="M15.5,14h-0.79l-0.28-0.27C15.41,12.59,16,11.11,16,9.5C16,5.91,13.09,3,9.5,3S3,5.91,3,9.5S5.91,16,9.5,16 c1.61,0,3.09-0.59,4.23-1.57l0.27,0.28v0.79l5,4.99L20.49,19L15.5,14z M9.5,14C7.01,14,5,11.99,5,9.5S7.01,5,9.5,5S14,7.01,14,9.5 S11.99,14,9.5,14z" 
+                                  Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                            <Entry x:Name="SearchEntry" Grid.Column="1" Placeholder="Search modules..." PlaceholderColor="{StaticResource Slate400}" TextColor="{StaticResource Slate900}" BackgroundColor="Transparent" Margin="12,0,0,0" FontSize="13" TextChanged="OnSearchTextChanged" />
+                        </Grid>
+                    </Border>
+
+                    <!-- User Actions -->
+                    <HorizontalStackLayout Grid.Column="1" Spacing="24" VerticalOptions="Center">
+                        <Path Data="M12,22c1.1,0,2-0.9,2-2h-4C10,21.1,10.9,22,12,22z M18,16v-5c0-3.1-1.6-5.6-4.5-6.3V4c0-0.8-0.7-1.5-1.5-1.5 S10.5,3.2,10.5,4v0.7C7.6,5.4,6,7.9,6,11v5l-2,2v1h16v-1L18,16z" 
+                              Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                        <Path Data="M19.1,12.9l2.1,1.6c0.2,0.1,0.2,0.4,0.1,0.6l-2,3.5c-0.1,0.2-0.4,0.3-0.6,0.2l-2.5-1c-0.5,0.4-1.1,0.7-1.7,1 l-0.4,2.6c0,0.2-0.2,0.4-0.5,0.4h-4c-0.3,0-0.5-0.2-0.5-0.4l-0.4-2.6c-0.6-0.3-1.2-0.6-1.7-1l-2.5,1c-0.2,0.1-0.5,0-0.6-0.2l-2-3.5 C1.9,14.9,2,14.6,2.2,14.5l2.1-1.6c-0.1-0.3-0.1-0.6-0.1-0.9s0-0.6,0.1-0.9L2.2,8.6c-0.2-0.1-0.2-0.4-0.1-0.6l2-3.5c0.1-0.2,0.4-0.3,0.6-0.2 l2.5,1c0.5-0.4,1.1-0.7,1.7-1L9.4,1.7c0-0.2,0.2-0.4,0.5-0.4h4c0.3,0,0.5,0.2,0.5,0.4l0.4,2.6c0.6,0.3,1.2,0.6,1.7,1l2.5-1 c0.2-0.1,0.5,0,0.6,0.2l2,3.5c0.1,0.2,0,0.5-0.2,0.6l-2.1,1.6c0.1,0.3,0.1,0.6,0.1,0.9S19.2,12.6,19.1,12.9z M12,15c1.7,0,3-1.3,3-3 s-1.3-3-3-3s-3,1.3-3,3S10.3,15,12,15z" 
+                              Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                        
+                        <HorizontalStackLayout Spacing="12">
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label x:Name="UserNameLabel" Text="Alexander Thorne" TextColor="{StaticResource Slate900}" FontSize="14" FontAttributes="Bold" HorizontalOptions="End" />
+                                <Label x:Name="UserRoleLabel" Text="SUPER ADMIN" TextColor="{StaticResource DashboardTeal}" FontSize="10" FontAttributes="Bold" HorizontalOptions="End" CharacterSpacing="0.5" />
+                            </VerticalStackLayout>
+                            <Grid>
+                            <Border HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0">
+                                <Image Source="avatar.png" Aspect="AspectFill" />
+                            </Border>
+                        </Grid>
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+            </Grid>
+
+                <!-- Page Header -->
+                <Grid ColumnDefinitions="*, Auto">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Manage System Modules" TextColor="{StaticResource Slate900}" FontSize="28" FontAttributes="Bold" />
+                        <Label Text="Control and configure the ERP modules available to MSME clients." TextColor="{StaticResource Slate500}" FontSize="14" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1" Text="+ Add New Module" Clicked="OnAddModuleClicked" BackgroundColor="{StaticResource DashboardTeal}" TextColor="White" Padding="24, 0" HeightRequest="44" CornerRadius="8" FontAttributes="Bold" FontSize="14" VerticalOptions="Center" />
+                </Grid>
+
+                <!-- Stats Cards -->
+                <Grid ColumnDefinitions="*, *, *" ColumnSpacing="24">
+                    <!-- Total Modules -->
+                    <Border Grid.Column="0" Style="{StaticResource StatCardStyle}">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="TOTAL MODULES" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" CharacterSpacing="0.5" />
+                                <Label x:Name="TotalModulesLabel" Text="0" TextColor="{StaticResource Slate900}" FontSize="32" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="1" BackgroundColor="{StaticResource DashboardTealLight}" HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 24" StrokeThickness="0" VerticalOptions="Center">
+                                <Path Data="M3,3h7v7H3V3z M14,3h7v7h-7V3z M3,14h7v7H3V14z M14,14h7v7h-7V14z" 
+                                      Fill="{StaticResource DashboardTeal}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- Active Modules -->
+                    <Border Grid.Column="1" Style="{StaticResource StatCardStyle}">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="ACTIVE MODULES" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" CharacterSpacing="0.5" />
+                                <Label x:Name="ActiveModulesLabel" Text="0" TextColor="{StaticResource DashboardTeal}" FontSize="32" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="1" BackgroundColor="{StaticResource DashboardTealLight}" HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 24" StrokeThickness="0" VerticalOptions="Center">
+                                <Path Data="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M10,17l-5-5l1.41-1.41L10,14.17l7.59-7.59L19,8L10,17z" 
+                                      Fill="{StaticResource DashboardTeal}" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- Modules in Beta -->
+                    <Border Grid.Column="2" Style="{StaticResource StatCardStyle}">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="MODULES IN BETA" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" CharacterSpacing="0.5" />
+                                <Label x:Name="BetaModulesLabel" Text="0" TextColor="{StaticResource Slate500}" FontSize="32" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="1" BackgroundColor="{StaticResource DashboardTealLight}" HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 24" StrokeThickness="0" VerticalOptions="Center">
+                                <Path Data="M19,16l-4-5V5h1V3H8v2h1v6l-4,5c-0.2,0.3-0.3,0.6-0.3,1v2c0,0.6,0.4,1,1,1h12c0.6,0,1-0.4,1-1v-2C19.3,16.6,19.2,16.3,19,16z M17.3,18H6.7v-0.6l3.7-4.6V5h3.2v7.8l3.7,4.6V18z" 
+                                      Fill="{StaticResource DashboardTeal}" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- Module List -->
+                <CollectionView x:Name="ModulesCollectionView">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="24" VerticalItemSpacing="24" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="24" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="White">
+                                <Border.Shadow><Shadow Brush="Black" Opacity="0.05" Offset="0,4" Radius="10"/></Border.Shadow>
+                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                    <Border Grid.Column="0" BackgroundColor="#E0F2F1" HeightRequest="64" WidthRequest="64" StrokeShape="RoundRectangle 12" StrokeThickness="0" VerticalOptions="Start" Margin="0,0,16,0">
+                                        <Path Data="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z M7,10h2v7H7V10z M11,7h2v10h-2V7z M15,13h2v4h-2V13z" 
+                                              Fill="{StaticResource DashboardTeal}" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="16">
+                                        <VerticalStackLayout Spacing="4">
+                                            <Label Text="{Binding Name}" TextColor="{StaticResource Slate900}" FontSize="18" FontAttributes="Bold" />
+                                            <HorizontalStackLayout Spacing="8">
+                                                <Border BackgroundColor="#CCFBF1" Padding="8,2" StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                                                    <Label Text="{Binding Status}" TextColor="{StaticResource DashboardTeal}" FontSize="10" FontAttributes="Bold" />
+                                                </Border>
+                                                <Label Text="{Binding Version}" TextColor="{StaticResource Slate500}" FontSize="12" VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                        <HorizontalStackLayout Spacing="12">
+                                            <Button Text="Configure" Clicked="OnConfigureClicked" BackgroundColor="{StaticResource Slate100}" TextColor="{StaticResource Slate900}" CornerRadius="8" HeightRequest="36" Padding="16,0" FontSize="12" />
+                                            <Button Text="Permissions" Clicked="OnPermissionsClicked" BackgroundColor="{StaticResource Slate100}" TextColor="{StaticResource Slate900}" CornerRadius="8" HeightRequest="36" Padding="16,0" FontSize="12" />
+                                            <Button Text="Delete" Clicked="OnDeleteModuleClicked" BackgroundColor="#FEF2F2" TextColor="#EF4444" CornerRadius="8" HeightRequest="36" Padding="16,0" FontSize="12" BorderColor="#FEE2E2" BorderWidth="1" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="End" Spacing="4">
+                                        <Label Text="ACCESS TIERS" TextColor="{StaticResource Slate400}" FontSize="9" FontAttributes="Bold" HorizontalOptions="End" Margin="0,0,0,4" />
+                                        <HorizontalStackLayout Spacing="4" HorizontalOptions="End">
+                                            <Border IsVisible="{Binding IsStarterEnabled}" BackgroundColor="#F1F5F9" Padding="8,2" StrokeShape="RoundRectangle 4" StrokeThickness="0">
+                                                <Label Text="STARTER" TextColor="{StaticResource Slate600}" FontSize="8" FontAttributes="Bold" />
+                                            </Border>
+                                            <Border IsVisible="{Binding IsStandardEnabled}" BackgroundColor="#DBEAFE" Padding="8,2" StrokeShape="RoundRectangle 4" StrokeThickness="0">
+                                                <Label Text="STANDARD" TextColor="#1E40AF" FontSize="8" FontAttributes="Bold" />
+                                            </Border>
+                                            <Border IsVisible="{Binding IsEnterpriseEnabled}" BackgroundColor="#FDF2F8" Padding="8,2" StrokeShape="RoundRectangle 4" StrokeThickness="0">
+                                                <Label Text="ENTERPRISE" TextColor="#9D174D" FontSize="8" FontAttributes="Bold" />
+                                            </Border>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout HorizontalOptions="End" Margin="0,4,0,0">
+                                            <Label Text="{Binding EnabledCount}" TextColor="{StaticResource Slate400}" FontSize="12" FontAttributes="Bold" />
+                                            <Label Text=" ACTIVE INSTANCES" TextColor="{StaticResource Slate400}" FontSize="10" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Module Health Check -->
+                <Border Padding="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#0F172A">
+                    <Grid>
+                        <!-- Background graphic (Gear) -->
+                        <Path Data="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" 
+                              Fill="#1E293B" Aspect="Uniform" HeightRequest="120" WidthRequest="120" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,-16,-16" />
+                        
+                        <VerticalStackLayout Spacing="16" Margin="0,0,80,0">
+                            <HorizontalStackLayout Spacing="8">
+                                <Ellipse Fill="{StaticResource DashboardTeal}" WidthRequest="6" HeightRequest="6" VerticalOptions="Center" />
+                                <Label Text="LIVE SYSTEM INSIGHTS" TextColor="{StaticResource DashboardTeal}" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
+                            </HorizontalStackLayout>
+                            <Label Text="Module Health Check" TextColor="White" FontSize="20" FontAttributes="Bold" />
+                            <Label Text="All core ERP services are performing within optimal latency parameters. Last global module synchronization completed 14 minutes ago without errors." 
+                                   TextColor="{StaticResource Slate400}" FontSize="13" LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Add New Module Modal -->
+        <Grid x:Name="AddModuleModal" Grid.ColumnSpan="2" IsVisible="False" BackgroundColor="#80000000">
+            <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="450" BackgroundColor="White" StrokeShape="RoundRectangle 24" Padding="0" StrokeThickness="0">
+                <Border.Shadow><Shadow Brush="Black" Opacity="0.2" Offset="0,10" Radius="30"/></Border.Shadow>
+                
+                <VerticalStackLayout Spacing="0">
+                    <!-- Modal Header -->
+                    <VerticalStackLayout Padding="32, 32, 32, 24" Spacing="8">
+                        <Label Text="Deploy New Module" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource Slate900}" />
+                        <Label Text="Provision a new ERP capability for MSME clients." FontSize="14" TextColor="{StaticResource Slate500}" />
+                    </VerticalStackLayout>
+
+                    <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
+
+                    <!-- Modal Body -->
+                    <VerticalStackLayout Padding="32" Spacing="24">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="MODULE NAME" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource Slate500}" CharacterSpacing="0.5" />
+                            <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 12">
+                                <Entry x:Name="NewModuleNameEntry" Placeholder="e.g. Warehouse Analytics" PlaceholderColor="{StaticResource Slate400}" TextColor="{StaticResource Slate900}" FontSize="15" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="16">
+                            <Label Text="INITIAL PERMISSIONS" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource Slate500}" CharacterSpacing="0.5" />
+                            
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Label Text="Starter Tier" VerticalOptions="Center" FontSize="14" TextColor="{StaticResource Slate700}" />
+                                <Switch x:Name="NewModuleStarterSwitch" Grid.Column="1" OnColor="{StaticResource DashboardTeal}" IsToggled="True" />
+                            </Grid>
+                            
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Label Text="Standard Tier" VerticalOptions="Center" FontSize="14" TextColor="{StaticResource Slate700}" />
+                                <Switch x:Name="NewModuleStandardSwitch" Grid.Column="1" OnColor="{StaticResource DashboardTeal}" IsToggled="True" />
+                            </Grid>
+                            
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Label Text="Enterprise Plus Tier" VerticalOptions="Center" FontSize="14" TextColor="{StaticResource Slate700}" />
+                                <Switch x:Name="NewModuleEnterpriseSwitch" Grid.Column="1" OnColor="{StaticResource DashboardTeal}" IsToggled="True" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Modal Footer -->
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="12" Padding="32, 0, 32, 32">
+                        <Button Text="Cancel" Clicked="OnCancelAddModuleClicked" BackgroundColor="Transparent" TextColor="{StaticResource Slate600}" HeightRequest="48" CornerRadius="12" FontSize="15" FontAttributes="Bold" />
+                        <Button Grid.Column="1" Text="Deploy Module" Clicked="OnDeployModuleClicked" BackgroundColor="{StaticResource DashboardTeal}" TextColor="White" HeightRequest="48" CornerRadius="12" FontSize="15" FontAttributes="Bold" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+        <!-- Configuration Modal -->
+        <Grid x:Name="ConfigModal" Grid.ColumnSpan="2" IsVisible="False" BackgroundColor="#80000000">
+            <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="400" BackgroundColor="White" StrokeShape="RoundRectangle 16" Padding="32" StrokeThickness="0">
+                <Border.Shadow><Shadow Brush="Black" Opacity="0.2" Offset="0,10" Radius="30"/></Border.Shadow>
+                <VerticalStackLayout Spacing="24">
+                    <Label x:Name="ConfigModalTitle" Text="Configure Module" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Slate900}" />
+                    
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Module Status" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource Slate500}" />
+                        <Border StrokeShape="RoundRectangle 8" Stroke="{StaticResource Slate200}" Padding="12, 0">
+                            <Picker x:Name="StatusPicker" FontSize="14">
+                                <Picker.Items>
+                                    <x:String>Active</x:String>
+                                    <x:String>Beta</x:String>
+                                    <x:String>Maintenance</x:String>
+                                    <x:String>Inactive</x:String>
+                                </Picker.Items>
+                            </Picker>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                        <Button Text="Cancel" Clicked="OnCancelConfigClicked" BackgroundColor="Transparent" TextColor="{StaticResource Slate600}" HeightRequest="44" CornerRadius="8" />
+                        <Button Grid.Column="1" Text="Save Changes" Clicked="OnSaveConfigClicked" BackgroundColor="{StaticResource DashboardTeal}" TextColor="White" HeightRequest="44" CornerRadius="8" FontAttributes="Bold" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+        <!-- Permissions Modal -->
+        <Grid x:Name="PermissionsModal" Grid.ColumnSpan="2" IsVisible="False" BackgroundColor="#80000000">
+            <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="400" BackgroundColor="White" StrokeShape="RoundRectangle 16" Padding="32" StrokeThickness="0">
+                <Border.Shadow><Shadow Brush="Black" Opacity="0.2" Offset="0,10" Radius="30"/></Border.Shadow>
+                <VerticalStackLayout Spacing="24">
+                    <Label x:Name="PermissionsModalTitle" Text="Access Control List" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Slate900}" />
+                    
+                    <VerticalStackLayout Spacing="16">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Text="Enable for Starter Tier" VerticalOptions="Center" FontSize="14" />
+                            <Switch x:Name="StarterTierSwitch" Grid.Column="1" OnColor="{StaticResource DashboardTeal}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Text="Enable for Standard Tier" VerticalOptions="Center" FontSize="14" />
+                            <Switch x:Name="StandardTierSwitch" Grid.Column="1" OnColor="{StaticResource DashboardTeal}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Text="Enable for Enterprise Plus Tier" VerticalOptions="Center" FontSize="14" />
+                            <Switch x:Name="EnterpriseTierSwitch" Grid.Column="1" OnColor="{StaticResource DashboardTeal}" />
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                        <Button Text="Cancel" Clicked="OnCancelPermissionsClicked" BackgroundColor="Transparent" TextColor="{StaticResource Slate600}" HeightRequest="44" CornerRadius="8" />
+                        <Button Grid.Column="1" Text="Save Permissions" Clicked="OnSavePermissionsClicked" BackgroundColor="{StaticResource DashboardTeal}" TextColor="White" HeightRequest="44" CornerRadius="8" FontAttributes="Bold" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

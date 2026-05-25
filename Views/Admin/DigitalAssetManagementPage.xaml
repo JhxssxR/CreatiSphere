@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:admin="clr-namespace:CreatiSphere.Views.Admin"
+             x:Class="CreatiSphere.Views.Admin.DigitalAssetManagementPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource Slate50}">
+
+    <Grid ColumnDefinitions="280, *">
+        <!-- Sidebar -->
+        <admin:AdminSidebar Grid.Column="0" ActivePage="DigitalAssetManagement" />
+
+        <!-- Main Content Area -->
+        <ScrollView Grid.Column="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="40" Spacing="32">
+                
+                <!-- Top Nav Bar -->
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="System Overview Dashboard" TextColor="{StaticResource Slate900}" FontSize="14" VerticalOptions="Center" />
+
+                    <!-- User Actions -->
+                    <HorizontalStackLayout Grid.Column="1" Spacing="24" VerticalOptions="Center">
+                        <!-- Search Bar -->
+                        <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" WidthRequest="320" Padding="12, 8">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal" />
+                                    <VisualState Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Property="Stroke" Value="{StaticResource DashboardTeal}" />
+                                            <Setter Property="BackgroundColor" Value="#F0FDFA" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Path Data="M15.5,14h-0.79l-0.28-0.27C15.41,12.59,16,11.11,16,9.5C16,5.91,13.09,3,9.5,3S3,5.91,3,9.5S5.91,16,9.5,16 c1.61,0,3.09-0.59,4.23-1.57l0.27,0.28v0.79l5,4.99L20.49,19L15.5,14z M9.5,14C7.01,14,5,11.99,5,9.5S7.01,5,9.5,5S14,7.01,14,9.5 S11.99,14,9.5,14z" 
+                                      Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                <Entry Grid.Column="1" Placeholder="Search creatives, assets..." PlaceholderColor="{StaticResource Slate400}" TextColor="{StaticResource Slate900}" BackgroundColor="Transparent" Margin="8,0,0,0" FontSize="12" />
+                            </Grid>
+                        </Border>
+
+                        <Path Data="M12,22c1.1,0,2-0.9,2-2h-4C10,21.1,10.9,22,12,22z M18,16v-5c0-3.1-1.6-5.6-4.5-6.3V4c0-0.8-0.7-1.5-1.5-1.5 S10.5,3.2,10.5,4v0.7C7.6,5.4,6,7.9,6,11v5l-2,2v1h16v-1L18,16z" 
+                              Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                        <Path Data="M19.1,12.9l2.1,1.6c0.2,0.1,0.2,0.4,0.1,0.6l-2,3.5c-0.1,0.2-0.4,0.3-0.6,0.2l-2.5-1c-0.5,0.4-1.1,0.7-1.7,1 l-0.4,2.6c0,0.2-0.2,0.4-0.5,0.4h-4c-0.3,0-0.5-0.2-0.5-0.4l-0.4-2.6c-0.6-0.3-1.2-0.6-1.7-1l-2.5,1c-0.2,0.1-0.5,0-0.6-0.2l-2-3.5 C1.9,14.9,2,14.6,2.2,14.5l2.1-1.6c-0.1-0.3-0.1-0.6-0.1-0.9s0-0.6,0.1-0.9L2.2,8.6c-0.2-0.1-0.2-0.4-0.1-0.6l2-3.5c0.1-0.2,0.4-0.3,0.6-0.2 l2.5,1c0.5-0.4,1.1-0.7,1.7-1L9.4,1.7c0-0.2,0.2-0.4,0.5-0.4h4c0.3,0,0.5,0.2,0.5,0.4l0.4,2.6c0.6,0.3,1.2,0.6,1.7,1l2.5-1 c0.2-0.1,0.5,0,0.6,0.2l2,3.5c0.1,0.2,0,0.5-0.2,0.6l-2.1,1.6c0.1,0.3,0.1,0.6,0.1,0.9S19.2,12.6,19.1,12.9z M12,15c1.7,0,3-1.3,3-3 s-1.3-3-3-3s-3,1.3-3,3S10.3,15,12,15z" 
+                              Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                        
+                        <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0">
+                            <Image Source="avatar.png" Aspect="AspectFill" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <!-- Page Header -->
+                <Grid ColumnDefinitions="*, Auto" Margin="0, 16, 0, 0">
+                    <VerticalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Label Text="Digital Asset Management" TextColor="{StaticResource Slate900}" FontSize="28" FontAttributes="Bold" />
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="Root" TextColor="{StaticResource Slate500}" FontSize="13" />
+                            <Label Text="›" TextColor="{StaticResource Slate400}" FontSize="13" />
+                            <Label x:Name="CurrentFolderLabel" Text="All Assets" TextColor="{StaticResource Slate900}" FontSize="13" FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                    <HorizontalStackLayout Grid.Column="1" Spacing="16" VerticalOptions="Center">
+                        <Button Text="New Folder" 
+                                Clicked="OnNewFolderClicked"
+                                TextColor="{StaticResource Slate700}" 
+                                BackgroundColor="White"
+                                BorderColor="{StaticResource Slate300}"
+                                BorderWidth="1"
+                                CornerRadius="8"
+                                Padding="16, 8"
+                                FontSize="14" />
+                        <Button Text="Upload Assets" 
+                                Clicked="OnUploadAssetsClicked"
+                                TextColor="White" 
+                                BackgroundColor="{StaticResource DashboardTeal}"
+                                CornerRadius="8"
+                                Padding="16, 8"
+                                FontSize="14" />
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <!-- Folders Row -->
+                <FlexLayout x:Name="FoldersLayout" Wrap="Wrap" JustifyContent="Start" BindableLayout.ItemsSource="{Binding Folders}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border WidthRequest="320" Margin="0,0,20,20" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal" />
+                                        <VisualState Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="#F8FAFC" />
+                                                <Setter Property="Stroke" Value="{StaticResource DashboardTeal}" />
+                                                <Setter Property="TranslationY" Value="-4" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnFolderTapped" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout Spacing="16">
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <Border BackgroundColor="{Binding BgColor}" HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 12" StrokeThickness="0" HorizontalOptions="Start">
+                                            <Path Data="{Binding IconPath}" 
+                                                  Fill="{Binding IconColor}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <Label Grid.Column="1" Text="⋮" TextColor="{StaticResource Slate400}" FontSize="24" FontAttributes="Bold" VerticalOptions="Start" />
+                                    </Grid>
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="{Binding Name}" TextColor="{StaticResource Slate900}" FontSize="18" FontAttributes="Bold" />
+                                        <Label TextColor="{StaticResource Slate500}" FontSize="13">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding ItemCount}" />
+                                                    <Span Text=" items • " />
+                                                    <Span Text="{Binding Size}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </VerticalStackLayout>
+                                    <HorizontalStackLayout Spacing="-8" Margin="0,8,0,0">
+                                        <Border HeightRequest="28" WidthRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="2" Stroke="White" BackgroundColor="{StaticResource Slate200}">
+                                            <Image Source="{Binding Avatar1}" Aspect="AspectFill" />
+                                        </Border>
+                                        <Border HeightRequest="28" WidthRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="2" Stroke="White" BackgroundColor="{StaticResource Slate200}">
+                                            <Image Source="{Binding Avatar2}" Aspect="AspectFill" />
+                                        </Border>
+                                        <Border HeightRequest="28" WidthRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="2" Stroke="White" BackgroundColor="#E0E7FF">
+                                            <Label Text="{Binding PlusCount}" TextColor="#4338CA" FontSize="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+
+                <!-- File List Section -->
+                <Border Padding="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                    <VerticalStackLayout>
+                        
+                        <!-- Tabs & Toggles -->
+                        <Grid ColumnDefinitions="*, Auto" Padding="24, 20">
+                            <HorizontalStackLayout Spacing="24" VerticalOptions="Center">
+                                <VerticalStackLayout x:Name="RecentFilesTab" Spacing="8">
+                                    <VerticalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="Recent" />
+                                    </VerticalStackLayout.GestureRecognizers>
+                                    <Label x:Name="RecentFilesLabel" Text="Recent Files" TextColor="{StaticResource DashboardTeal}" FontSize="14" FontAttributes="Bold" />
+                                    <BoxView x:Name="RecentFilesIndicator" HeightRequest="2" Color="{StaticResource DashboardTeal}" HorizontalOptions="Fill" Margin="0,0,0,-20" IsVisible="True" />
+                                </VerticalStackLayout>
+                                
+                                <VerticalStackLayout x:Name="FavoritesTab" Spacing="8">
+                                    <VerticalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="Favorites" />
+                                    </VerticalStackLayout.GestureRecognizers>
+                                    <Label x:Name="FavoritesLabel" Text="Favorites" TextColor="{StaticResource Slate500}" FontSize="14" />
+                                    <BoxView x:Name="FavoritesIndicator" HeightRequest="2" Color="{StaticResource DashboardTeal}" HorizontalOptions="Fill" Margin="0,0,0,-20" IsVisible="False" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout x:Name="TrashTab" Spacing="8">
+                                    <VerticalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="Trash" />
+                                    </VerticalStackLayout.GestureRecognizers>
+                                    <Label x:Name="TrashLabel" Text="Trash" TextColor="{StaticResource Slate500}" FontSize="14" />
+                                    <BoxView x:Name="TrashIndicator" HeightRequest="2" Color="{StaticResource DashboardTeal}" HorizontalOptions="Fill" Margin="0,0,0,-20" IsVisible="False" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                            
+                            <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                                <Border x:Name="GridViewBtn" BackgroundColor="Transparent" Padding="8" StrokeShape="RoundRectangle 6" StrokeThickness="0">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnViewToggleTapped" CommandParameter="Grid" />
+                                    </Border.GestureRecognizers>
+                                    <Path x:Name="GridViewIcon" Data="M4,11h5V5H4V11z M4,18h5v-5H4V18z M10,18h5v-6h-5V18z M16,18h5v-7h-5V18z M10,10h11V5H10V10z" 
+                                          Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" />
+                                </Border>
+                                <Border x:Name="ListViewBtn" BackgroundColor="{StaticResource Slate100}" Padding="8" StrokeShape="RoundRectangle 6" StrokeThickness="0">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnViewToggleTapped" CommandParameter="List" />
+                                    </Border.GestureRecognizers>
+                                    <Path x:Name="ListViewIcon" Data="M3,13h2v-2H3v2zm0,4h2v-2H3v2zm0-8h2V7H3v2zm4,4h14v-2H7v2zm0,4h14v-2H7v2zM7,7v2h14V7H7z" 
+                                          Fill="{StaticResource DashboardTeal}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" />
+                                </Border>
+                            </HorizontalStackLayout>
+                        </Grid>
+                        
+                        <BoxView HeightRequest="1" Color="{StaticResource Slate200}" />
+
+                        <!-- Table Headers -->
+                        <Grid ColumnDefinitions="3*, 1.2*, 1.2*, 1.2*, Auto" Padding="24, 16" BackgroundColor="#F8FAFC">
+                            <Label Grid.Column="0" Text="FILE NAME ↓" TextColor="{StaticResource Slate700}" FontSize="12" FontAttributes="Bold" />
+                            <Label Grid.Column="1" Text="SIZE" TextColor="{StaticResource Slate700}" FontSize="12" FontAttributes="Bold" />
+                            <Label Grid.Column="2" Text="UPLOAD DATE" TextColor="{StaticResource Slate700}" FontSize="12" FontAttributes="Bold" />
+                            <Label Grid.Column="3" Text="ACCESS LEVEL" TextColor="{StaticResource Slate700}" FontSize="12" FontAttributes="Bold" />
+                        </Grid>
+                        
+                        <BoxView HeightRequest="1" Color="{StaticResource Slate200}" />
+
+                        <VerticalStackLayout x:Name="AssetsList" BindableLayout.ItemsSource="{Binding .}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout>
+                                        <Grid ColumnDefinitions="3*, 1.2*, 1.2*, 1.2*, Auto" Padding="24, 20" VerticalOptions="Center">
+                                            <HorizontalStackLayout Grid.Column="0" Spacing="16" VerticalOptions="Center">
+                                                <Border BackgroundColor="{StaticResource Slate100}" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                                                    <Path Data="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M8.5,13.5l2.5,3.01L14.5,12l4.5,6H5L8.5,13.5z" 
+                                                          Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                </Border>
+                                                <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                                    <Label Text="{Binding Name}" TextColor="{StaticResource Slate900}" FontSize="14" FontAttributes="Bold" />
+                                                    <Label Text="Added recently" TextColor="{StaticResource Slate500}" FontSize="11" />
+                                                </VerticalStackLayout>
+                                            </HorizontalStackLayout>
+                                            <Label Grid.Column="1" Text="{Binding Size}" TextColor="{StaticResource Slate600}" FontSize="13" VerticalOptions="Center" />
+                                            <Label Grid.Column="2" Text="{Binding Date}" TextColor="{StaticResource Slate600}" FontSize="13" VerticalOptions="Center" />
+                                            <Border Grid.Column="3" BackgroundColor="#E0F2FE" Padding="12, 4" StrokeShape="RoundRectangle 12" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Center">
+                                                <Label Text="{Binding Format}" TextColor="#0284C7" FontSize="10" FontAttributes="Bold" />
+                                            </Border>
+                                            <Label Grid.Column="4" Text="⋯" TextColor="{StaticResource Slate400}" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" />
+                                        </Grid>
+                                        <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <!-- Footer Pagination -->
+                        <Grid ColumnDefinitions="*, Auto" Padding="24, 16" BackgroundColor="#F8FAFC">
+                            <Label Text="Showing 4 of 24 assets" TextColor="{StaticResource Slate500}" FontSize="13" VerticalOptions="Center" />
+                            <HorizontalStackLayout Grid.Column="1" Spacing="8">
+                                <Button Text="Previous" TextColor="{StaticResource Slate400}" BackgroundColor="White" BorderColor="{StaticResource Slate200}" BorderWidth="1" CornerRadius="6" Padding="12, 6" FontSize="13" />
+                                <Button Text="Next" TextColor="{StaticResource Slate700}" BackgroundColor="White" BorderColor="{StaticResource Slate200}" BorderWidth="1" CornerRadius="6" Padding="12, 6" FontSize="13" />
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        
+    </Grid>
+</ContentPage>

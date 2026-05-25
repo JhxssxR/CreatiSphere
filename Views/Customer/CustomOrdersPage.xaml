@@ -1,0 +1,1219 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CreatiSphere.Views.Customer.CustomOrdersPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F8FAFC">
+
+    <Grid ColumnDefinitions="220, *">
+
+        <!-- ===== LEFT SIDEBAR ===== -->
+        <Grid Grid.Column="0" RowDefinitions="Auto, *, Auto" BackgroundColor="#1A2332">
+
+            <!-- Logo -->
+            <HorizontalStackLayout Grid.Row="0" Padding="24,36,24,32" Spacing="12" VerticalOptions="Center">
+                <Border BackgroundColor="#0D9488" HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 10">
+                    <Label Text="◈" TextColor="White" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <Label Text="CreatiSphere" TextColor="White" FontSize="18" FontAttributes="Bold" FontFamily="Georgia" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <!-- Nav Items -->
+            <VerticalStackLayout Grid.Row="1" Spacing="4" Padding="12,0">
+
+                <!-- Dashboard -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnDashboardTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M3,13h8V3H3V13z M3,21h8v-6H3V21z M13,21h8V11h-8V21z M13,3v6h8V3H13V3z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Dashboard" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Explore -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnExploreTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M12,2C8.13,2,5,5.13,5,9c0,5.25,7,13,7,13s7-7.75,7-13C19,5.13,15.87,2,12,2z M12,11.5c-1.38,0-2.5-1.12-2.5-2.5s1.12-2.5,2.5-2.5s2.5,1.12,2.5,2.5S13.38,11.5,12,11.5z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Explore" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Custom Orders (Active) -->
+                <Border BackgroundColor="#0D9488" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z"
+                              Fill="White" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Custom Orders" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Track Orders -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTrackOrdersTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M20,8h-3V4H3C1.9,4,1,4.9,1,6v11h2c0,1.66,1.34,3,3,3s3-1.34,3-3h6c0,1.66,1.34,3,3,3s3-1.34,3-3h2v-5L20,8z M6,18.5c-0.83,0-1.5-0.67-1.5-1.5S5.17,15.5,6,15.5S7.5,16.17,7.5,17S6.83,18.5,6,18.5z M19,9.5l1.96,2.5H17V9.5H19z M18,18.5c-0.83,0-1.5-0.67-1.5-1.5s0.67-1.5,1.5-1.5s1.5,0.67,1.5,1.5S18.83,18.5,18,18.5z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Track Orders" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Messages -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMessagesTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Messages" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- My Commissions -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z" 
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="My Commissions" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Revenue -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M21,7.28V5c0-1.1-0.9-2-2-2H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2v-2.28c0.59-0.35,1-0.98,1-1.72V9 C22,8.26,21.59,7.63,21,7.28z M20,9v6h-7V9H20z M5,19V5h14v2h-6c-1.1,0-2,0.9-2,2v6c0,1.1,0.9,2,2,2h6V19H5z" 
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Revenue" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Support -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M11,18h2v-2h-2V18z M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20c-4.41,0-8-3.59-8-8 s3.59-8,8-8s8,3.59,8,8S16.41,20,12,20z M12,6c-2.21,0-4,1.79-4,4h2c0-1.1,0.9-2,2-2s2,0.9,2,2c0,2-3,1.75-3,5h2c0-2.25,3-2.5,3-5 C16,7.79,14.21,6,12,6z" 
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Support" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- User Profile & Sign Out -->
+            <VerticalStackLayout Grid.Row="2" Padding="12,24" Spacing="4">
+                <!-- User Profile -->
+                <Grid Padding="8,12" ColumnDefinitions="Auto,*,Auto">
+                    <Border HeightRequest="38" WidthRequest="38" StrokeShape="RoundRectangle 19" StrokeThickness="0" BackgroundColor="#0D9488">
+                        <Label x:Name="ProfileInitialsLabel" Text="AM" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="2" Padding="10,0,0,0" VerticalOptions="Center">
+                        <Label x:Name="ProfileNameLabel" Text="Alex Morgan" TextColor="White" FontSize="13" FontAttributes="Bold"/>
+                        <Label x:Name="ProfileRoleLabel" Text="Standard Partner" TextColor="#64748B" FontSize="11"/>
+                    </VerticalStackLayout>
+                    <Path Grid.Column="2" Data="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" 
+                          Fill="#64748B" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                </Grid>
+
+                <BoxView HeightRequest="1" Color="#2D3748" Margin="16,8" />
+
+                <!-- Sign Out -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSignOutTapped"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M17,7l-1.41,1.41L18.17,11H8v2h10.17l-2.58,2.58L17,17l5-5L17,7z M4,5h8V3H4C2.9,3,2,3.9,2,5v14c0,1.1,0.9,2,2,2h8v-2H4V5z"
+                              Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Sign Out" TextColor="#94A3B8" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <Grid Grid.Column="1" RowDefinitions="Auto, *">
+            <!-- Top Nav -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="32,24" BackgroundColor="White">
+                <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                    <Label x:Name="NavBreadcrumb1" Text="Custom Orders" TextColor="#64748B" FontSize="14" VerticalOptions="Center" />
+                    <BoxView WidthRequest="1" HeightRequest="16" Color="#E2E8F0" VerticalOptions="Center" />
+                    <Border x:Name="NavBreadcrumbPill" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="Transparent" Padding="12,6" VerticalOptions="Center">
+                        <Label x:Name="NavBreadcrumb2" Text="New Commission" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                    </Border>
+                </HorizontalStackLayout>
+
+                <!-- Search Bar (Step 2 style) -->
+                <Border Grid.Column="1" HorizontalOptions="Center" WidthRequest="320" HeightRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="#F8FAFC">
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Path Data="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="16" WidthRequest="16" Margin="16,0,8,0" VerticalOptions="Center" />
+                        <Entry Grid.Column="1" Placeholder="Search for assets..." PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="13" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <HorizontalStackLayout Grid.Column="2" Spacing="24" VerticalOptions="Center">
+                    <Path Data="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" Fill="#64748B" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                    <Path Data="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,3.75c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,6.29C8.66,6.53,8.12,6.85,7.63,7.23L5.24,6.27c-0.22-0.08-0.47,0-0.59,0.22L2.74,9.81 c-0.12,0.21-0.08,0.47,0.12,0.61l2.03,1.58C4.84,12.3,4.8,12.63,4.8,12.94s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" Fill="#64748B" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                    <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#F1F5F9">
+                        <Label Text="AM" TextColor="#0D9488" FontSize="11" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+                <VerticalStackLayout Spacing="0" BackgroundColor="#F8FAFC">
+                    <VerticalStackLayout x:Name="Step1Content">
+                        <!-- Header Section -->
+                        <VerticalStackLayout Padding="48,40,48,20" Spacing="16">
+                            <Label Text="Commission Your Vision" TextColor="#0F172A" FontSize="36" FontAttributes="Bold" />
+                            <Label Text="Partner with our master creators to bring your bespoke artistic concepts to&#10;life through a curated consultation process." TextColor="#64748B" FontSize="16" LineHeight="1.5" />
+                        </VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="*, 340" ColumnSpacing="32" Padding="48,20,48,48">
+                            
+                            <!-- Left Column (Form) -->
+                            <VerticalStackLayout Grid.Column="0" Spacing="32">
+                                <!-- Stepper -->
+                                <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="40,32">
+                                    <Grid ColumnDefinitions="*,*,*,*">
+                                        <BoxView Grid.ColumnSpan="4" HeightRequest="2" Color="#E2E8F0" VerticalOptions="Center" Margin="60,0,60,28" />
+                                        <BoxView Grid.ColumnSpan="1" HeightRequest="2" Color="#0D9488" VerticalOptions="Center" Margin="60,0,0,28" HorizontalOptions="Start" WidthRequest="80"/>
+                                        
+                                        <!-- Step 1 (Active) -->
+                                        <VerticalStackLayout Grid.Column="0" Spacing="12" HorizontalOptions="Center">
+                                            <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#0D9488">
+                                                <Path Data="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" Fill="White" Aspect="Uniform" HeightRequest="14" WidthRequest="14" HorizontalOptions="Center" VerticalOptions="Center" />
+                                            </Border>
+                                            <Label Text="The Brief" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" />
+                                        </VerticalStackLayout>
+                                        
+                                        <!-- Step 2 -->
+                                        <VerticalStackLayout Grid.Column="1" Spacing="12" HorizontalOptions="Center">
+                                            <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#F1F5F9">
+                                                <Path Data="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C13.66,22 15,20.66 15,19C15,18.23 14.71,17.53 14.24,17C13.78,16.48 13.5,15.81 13.5,15C13.5,13.34 14.84,12 16.5,12H19C20.66,12 22,10.66 22,9C22,5.13 17.52,2 12,2ZM6.5,12C5.67,12 5,11.33 5,10.5C5,9.67 5.67,9 6.5,9C7.33,9 8,9.67 8,10.5C8,11.33 7.33,12 6.5,12ZM9.5,8C8.67,8 8,7.33 8,6.5C8,5.67 8.67,5 9.5,5C10.33,5 11,5.67 11,6.5C11,7.33 10.33,8 9.5,8ZM14.5,8C13.67,8 13,7.33 13,6.5C13,5.67 13.67,5 14.5,5C15.33,5 16,5.67 16,6.5C16,7.33 15.33,8 14.5,8ZM17.5,12C16.67,12 16,11.33 16,10.5C16,9.67 16.67,9 17.5,9C18.33,9 19,9.67 19,10.5C19,11.33 18.33,12 17.5,12Z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="16" WidthRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                                            </Border>
+                                            <Label Text="Aesthetics" TextColor="#64748B" FontSize="13" HorizontalOptions="Center" />
+                                        </VerticalStackLayout>
+                                        
+                                        <!-- Step 3 -->
+                                        <VerticalStackLayout Grid.Column="2" Spacing="12" HorizontalOptions="Center">
+                                            <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#F1F5F9">
+                                                <Path Data="M14,2H6C4.9,2 4,2.9 4,4V20C4,21.1 4.9,22 6,22H18C19.1,22 20,21.1 20,20V8L14,2ZM18,20H6V4H13V9H18V20Z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="16" WidthRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                                            </Border>
+                                            <Label Text="Review" TextColor="#64748B" FontSize="13" HorizontalOptions="Center" />
+                                        </VerticalStackLayout>
+                                        
+                                        <!-- Step 4 -->
+                                        <VerticalStackLayout Grid.Column="3" Spacing="12" HorizontalOptions="Center">
+                                            <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#F1F5F9">
+                                                <Path Data="M9,16.17L4.83,12L3.41,13.41L9,19L21,7L19.59,5.59L9,16.17Z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="16" WidthRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                                            </Border>
+                                            <Label Text="Payment" TextColor="#64748B" FontSize="13" HorizontalOptions="Center" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Form Box 1 -->
+                                <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="40">
+                                    <VerticalStackLayout Spacing="32">
+                                        <HorizontalStackLayout Spacing="16">
+                                            <BoxView WidthRequest="4" Color="#0D9488" CornerRadius="2" />
+                                            <Label Text="The Creative Brief" TextColor="#0F172A" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+
+                                        <!-- Project Title -->
+                                        <VerticalStackLayout Spacing="12">
+                                            <Label Text="Project Title" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" Padding="16,0" HeightRequest="52">
+                                                <Entry x:Name="BriefTitleEntry" Placeholder="e.g., Minimalist Kinetic Sculpture for Main Lobby" PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="15" />
+                                            </Border>
+                                        </VerticalStackLayout>
+
+                                        <!-- Visionary Intent -->
+                                        <VerticalStackLayout Spacing="12">
+                                            <Label Text="Visionary Intent" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" Padding="16" HeightRequest="160">
+                                                <Editor x:Name="BriefIntentEditor" Placeholder="Describe the atmosphere, purpose, and emotional core of your vision..." PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="15" />
+                                            </Border>
+                                        </VerticalStackLayout>
+
+                                        <!-- Dimensions & Budget -->
+                                        <Grid ColumnDefinitions="*,*" ColumnSpacing="32">
+                                            <VerticalStackLayout Spacing="12">
+                                                <Label Text="Dimensions" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                                                <HorizontalStackLayout Spacing="12">
+                                                    <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" HeightRequest="52" WidthRequest="80">
+                                                        <Entry x:Name="BriefWidthEntry" Placeholder="W" HorizontalTextAlignment="Center" FontSize="15" />
+                                                    </Border>
+                                                    <Label Text="×" TextColor="#64748B" FontSize="18" VerticalOptions="Center" />
+                                                    <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" HeightRequest="52" WidthRequest="80">
+                                                        <Entry x:Name="BriefHeightEntry" Placeholder="H" HorizontalTextAlignment="Center" FontSize="15" />
+                                                    </Border>
+                                                    <Label Text="cm" TextColor="#64748B" FontSize="14" VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+
+                                            <VerticalStackLayout Grid.Column="1" Spacing="12">
+                                                <Label Text="Estimated Budget Range" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                                                <Grid ColumnDefinitions="*, Auto, *" ColumnSpacing="12">
+                                                    <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" Padding="16,0" HeightRequest="52">
+                                                        <HorizontalStackLayout Spacing="4">
+                                                            <Label Text="$" TextColor="#64748B" VerticalOptions="Center" FontSize="15" />
+                                                            <Entry x:Name="BudgetMinEntry" Placeholder="Min" Keyboard="Numeric" TextColor="#0F172A" FontSize="15" VerticalOptions="Center" />
+                                                        </HorizontalStackLayout>
+                                                    </Border>
+                                                    <Label Grid.Column="1" Text="to" TextColor="#64748B" VerticalOptions="Center" FontSize="14" />
+                                                    <Border Grid.Column="2" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" Padding="16,0" HeightRequest="52">
+                                                        <HorizontalStackLayout Spacing="4">
+                                                            <Label Text="$" TextColor="#64748B" VerticalOptions="Center" FontSize="15" />
+                                                            <Entry x:Name="BudgetMaxEntry" Placeholder="Max" Keyboard="Numeric" TextColor="#0F172A" FontSize="15" VerticalOptions="Center" />
+                                                        </HorizontalStackLayout>
+                                                    </Border>
+                                                </Grid>
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <!-- Mood Board Preview -->
+                                <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="40">
+                                    <VerticalStackLayout Spacing="32">
+                                        <Grid ColumnDefinitions="*, Auto">
+                                            <HorizontalStackLayout Spacing="16">
+                                                <BoxView WidthRequest="4" Color="#0D9488" CornerRadius="2" />
+                                                <Label Text="Mood Board Preview" TextColor="#0F172A" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+                                        </Grid>
+
+
+
+                                        <!-- Consolidated Upload Area -->
+                                        <Grid>
+                                            <Border x:Name="Step1UploadZone" StrokeShape="RoundRectangle 16" StrokeThickness="2" StrokeDashArray="6,6" Stroke="#CBD5E1" BackgroundColor="#F8FAFC" Padding="40" HeightRequest="280">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnAddReferencesTapped" />
+                                                </Border.GestureRecognizers>
+                                                <VerticalStackLayout x:Name="Step1DropZonePrompt" Spacing="24" HorizontalOptions="Center" VerticalOptions="Center">
+                                                    <Border HeightRequest="64" WidthRequest="64" StrokeShape="RoundRectangle 32" BackgroundColor="#F0FDFA" StrokeThickness="0">
+                                                        <Path Data="M19.35,10.04C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.04C2.34,8.36 0,10.91 0,14C0,17.31 2.69,20 6,20H19C21.76,20 24,17.76 24,15C24,12.36 21.95,10.22 19.35,10.04ZM14,13V17H10V13H7L12,8L17,13H14Z" Fill="#0D9488" Aspect="Uniform" HeightRequest="32" WidthRequest="32" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                    </Border>
+                                                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                                        <Label Text="Drag &amp; drop inspiration here" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                                                        <Label Text="PNG, JPG or PDF up to 20MB" TextColor="#64748B" FontSize="14" HorizontalOptions="Center" />
+                                                    </VerticalStackLayout>
+                                                    <Button Text="Browse Files" BackgroundColor="#1E293B" TextColor="White" CornerRadius="8" Padding="32,12" FontAttributes="Bold" HorizontalOptions="Center" Clicked="OnAddReferencesTapped" />
+                                                </VerticalStackLayout>
+                                            </Border>
+
+                                            <!-- Preview Area (Hidden by default) -->
+                                            <Border x:Name="Step1PreviewContainer" IsVisible="False" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="White" HeightRequest="280">
+                                                <Grid>
+                                                    <Image x:Name="Step1ReferenceImagePreview" Aspect="AspectFill" />
+                                                    <BoxView Color="#0F172A" Opacity="0.4" />
+                                                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="16">
+                                                        <Label Text="Inspiration Selected" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                                                        <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                                                            <Button Text="Change Image" BackgroundColor="White" TextColor="#0F172A" CornerRadius="8" Padding="16,8" Clicked="OnAddReferencesTapped" />
+                                                            <Button Text="Remove" BackgroundColor="#EF4444" TextColor="White" CornerRadius="8" Padding="16,8" Clicked="OnRemoveReferenceClicked" />
+                                                        </HorizontalStackLayout>
+                                                    </VerticalStackLayout>
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <!-- Actions -->
+                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                    <Button Text="Save for Later" BackgroundColor="White" TextColor="#475569" BorderColor="#CBD5E1" BorderWidth="1" CornerRadius="8" Padding="32,16" FontAttributes="Bold" />
+                                    <Button Grid.Column="2" Text="Continue to Aesthetics" BackgroundColor="#0D9488" TextColor="White" CornerRadius="8" Padding="48,16" FontAttributes="Bold" Clicked="OnContinueToAestheticsClicked" />
+                                </Grid>
+                            </VerticalStackLayout>
+
+                            <!-- Right Column (Info Cards) -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="32">
+                                <!-- Creative Consultant Card -->
+                                <Border StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#F0FDFA" Padding="32">
+                                    <VerticalStackLayout Spacing="24">
+                                        <HorizontalStackLayout Spacing="20">
+                                            <Border HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 24" StrokeThickness="0" BackgroundColor="#0D9488">
+                                                <Label Text="◈" TextColor="White" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                            </Border>
+                                            <VerticalStackLayout VerticalOptions="Center">
+                                                <Label Text="Creative&#10;Consultant" TextColor="#0F172A" FontSize="20" FontAttributes="Bold" LineHeight="1.1" />
+                                                <Label Text="Available for instant chat" TextColor="#0D9488" FontSize="12" />
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+                                        <Label Text="&quot;Our curators are ready to help refine your brief. Start a conversation if you're unsure about dimensions or material feasibility.&quot;" TextColor="#475569" FontSize="14" LineHeight="1.5" />
+                                        <Button Text="Consult Now" BackgroundColor="#1E293B" TextColor="White" CornerRadius="8" Padding="24,14" FontAttributes="Bold" />
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <!-- FAQ Card -->
+                                <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="32">
+                                    <VerticalStackLayout Spacing="24">
+                                        <Label Text="Order FAQ" TextColor="#0F172A" FontSize="20" FontAttributes="Bold" />
+                                        <VerticalStackLayout Spacing="20">
+                                            <VerticalStackLayout Spacing="8">
+                                                <Grid ColumnDefinitions="*,Auto">
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="OnFaqTapped" CommandParameter="1" />
+                                                    </Grid.GestureRecognizers>
+                                                    <Label Text="How long is the process?" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                                    <Path x:Name="Faq1Arrow" Grid.Column="1" Data="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" Fill="#0F172A" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                                </Grid>
+                                                <Label x:Name="Faq1Answer" Text="Typically 2-4 weeks depending on the complexity of the custom brief and artist availability." TextColor="#64748B" FontSize="13" IsVisible="False" />
+                                            </VerticalStackLayout>
+                                            
+                                            <BoxView HeightRequest="1" Color="#F1F5F9" />
+                                            
+                                            <VerticalStackLayout Spacing="8">
+                                                <Grid ColumnDefinitions="*,Auto">
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="OnFaqTapped" CommandParameter="2" />
+                                                    </Grid.GestureRecognizers>
+                                                    <Label Text="Are revisions included?" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                                    <Path x:Name="Faq2Arrow" Grid.Column="1" Data="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" Fill="#0F172A" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                                </Grid>
+                                                <Label x:Name="Faq2Answer" Text="Yes, each commission includes 3 major revision rounds during the sketching and conceptual phases." TextColor="#64748B" FontSize="13" IsVisible="False" />
+                                            </VerticalStackLayout>
+
+                                            <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                                            <VerticalStackLayout Spacing="8">
+                                                <Grid ColumnDefinitions="*,Auto">
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="OnFaqTapped" CommandParameter="3" />
+                                                    </Grid.GestureRecognizers>
+                                                    <Label Text="Shipping and handling?" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                                    <Path x:Name="Faq3Arrow" Grid.Column="1" Data="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" Fill="#0F172A" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                                </Grid>
+                                                <Label x:Name="Faq3Answer" Text="We offer worldwide insured shipping. For large-scale physical pieces, a specialized courier is used." TextColor="#64748B" FontSize="13" IsVisible="False" />
+                                            </VerticalStackLayout>
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <!-- Featured Commission -->
+                                <Border StrokeShape="RoundRectangle 16" StrokeThickness="0" HeightRequest="180">
+                                    <Grid>
+                                        <Image Source="style_abstract.png" Aspect="AspectFill" />
+                                        <BoxView BackgroundColor="Black" Opacity="0.5" />
+                                        <VerticalStackLayout VerticalOptions="End" Padding="24">
+                                            <Label Text="FEATURED COMMISSION" TextColor="#CBD5E1" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
+                                            <Label Text="Urban Solitude Series" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <!-- STEP 2: AESTHETICS (Implementation based on image) -->
+                    <VerticalStackLayout x:Name="Step2Content" IsVisible="False">
+                        <Grid ColumnDefinitions="*, 340" ColumnSpacing="32" Padding="48,40">
+                            
+                            <!-- Left Column: Configuration -->
+                            <VerticalStackLayout Grid.ColumnSpan="2" Spacing="48">
+                                <!-- Select Visual Style -->
+                                <VerticalStackLayout Spacing="24">
+                                    <HorizontalStackLayout Spacing="16">
+                                        <BoxView WidthRequest="4" Color="#0D9488" CornerRadius="2" />
+                                        <Label Text="Select Visual Style" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                    <Label Text="Choose the artistic foundation for your commission." TextColor="#64748B" FontSize="16" Margin="20,0,0,0" />
+
+                                    <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="20">
+                                        <!-- Minimalist (Active) -->
+                                        <Border x:Name="StyleMinimalist" Grid.Column="0" StrokeShape="RoundRectangle 16" StrokeThickness="2" Stroke="#0D9488" BackgroundColor="White" Padding="20">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnStyleMinimalistTapped" />
+                                            </Border.GestureRecognizers>
+                                            <VerticalStackLayout Spacing="16">
+                                                <Border HeightRequest="180" StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                                                    <Image Source="redesign_bg.png" Aspect="AspectFill" />
+                                                </Border>
+                                                <Grid ColumnDefinitions="*, Auto">
+                                                    <Label Text="Minimalist" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" />
+                                                    <Path x:Name="CheckMinimalist" Grid.Column="1" Data="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M10,17l-5-5l1.41-1.41L10,14.17l7.59-7.59L19,8L10,17z" Fill="#0D9488" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                                                </Grid>
+                                                <Label Text="Clean lines, high whitespace, and industrial reliability." TextColor="#64748B" FontSize="14" LineHeight="1.4" />
+                                            </VerticalStackLayout>
+                                        </Border>
+                                        <!-- Watercolor -->
+                                        <Border x:Name="StyleWatercolor" Grid.Column="1" StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnStyleWatercolorTapped" />
+                                            </Border.GestureRecognizers>
+                                            <VerticalStackLayout Spacing="16">
+                                                <Border HeightRequest="180" StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                                                    <Image Source="login_bg.png" Aspect="AspectFill" />
+                                                </Border>
+                                                <Grid ColumnDefinitions="*, Auto">
+                                                    <Label Text="Watercolor" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" />
+                                                    <Ellipse x:Name="CheckWatercolor" Grid.Column="1" HeightRequest="20" WidthRequest="20" Stroke="#CBD5E1" StrokeThickness="1" VerticalOptions="Center" />
+                                                </Grid>
+                                                <Label Text="Expressive fluidity with a soft, artisanal touch." TextColor="#64748B" FontSize="14" LineHeight="1.4" />
+                                            </VerticalStackLayout>
+                                        </Border>
+                                        <!-- Vector Art -->
+                                        <Border x:Name="StyleVectorArt" Grid.Column="2" StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnStyleVectorArtTapped" />
+                                            </Border.GestureRecognizers>
+                                            <VerticalStackLayout Spacing="16">
+                                                <Border HeightRequest="180" StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                                                    <Image Source="artist1.png" Aspect="AspectFill" />
+                                                </Border>
+                                                <Grid ColumnDefinitions="*, Auto">
+                                                    <Label Text="Vector Art" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" />
+                                                    <Ellipse x:Name="CheckVectorArt" Grid.Column="1" HeightRequest="20" WidthRequest="20" Stroke="#CBD5E1" StrokeThickness="1" VerticalOptions="Center" />
+                                                </Grid>
+                                                <Label Text="Modern, scalable precision for digital platforms." TextColor="#64748B" FontSize="14" LineHeight="1.4" />
+                                            </VerticalStackLayout>
+                                        </Border>
+                                        <!-- Conceptual -->
+                                        <Border x:Name="StyleConceptual" Grid.Column="3" StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnStyleConceptualTapped" />
+                                            </Border.GestureRecognizers>
+                                            <VerticalStackLayout Spacing="16">
+                                                <Border HeightRequest="180" StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                                                    <Image Source="artist2.png" Aspect="AspectFill" />
+                                                </Border>
+                                                <Grid ColumnDefinitions="*, Auto">
+                                                    <Label Text="Conceptual" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" />
+                                                    <Ellipse x:Name="CheckConceptual" Grid.Column="1" HeightRequest="20" WidthRequest="20" Stroke="#CBD5E1" StrokeThickness="1" VerticalOptions="Center" />
+                                                </Grid>
+                                                <Label Text="Experimental and abstract visual narratives." TextColor="#64748B" FontSize="14" LineHeight="1.4" />
+                                            </VerticalStackLayout>
+                                        </Border>
+                                    </Grid>
+                                </VerticalStackLayout>
+
+                                <!-- Palette & Typography Grid -->
+                                <Grid ColumnDefinitions="*, *" ColumnSpacing="48">
+                                    <!-- Color Palette -->
+                                    <VerticalStackLayout Spacing="24">
+                                        <HorizontalStackLayout Spacing="16">
+                                            <BoxView WidthRequest="4" Color="#0D9488" CornerRadius="2" />
+                                            <Label Text="Color Palette" TextColor="#0F172A" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <Label Text="Define the emotional tone of the work." TextColor="#64748B" FontSize="16" Margin="20,0,0,0" />
+
+                                        <VerticalStackLayout Spacing="16">
+                                            <!-- Corporate Teal -->
+                                            <Border x:Name="PaletteTeal" StrokeShape="RoundRectangle 12" StrokeThickness="2" Stroke="#0D9488" BackgroundColor="White" Padding="20">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnPaletteTealTapped" />
+                                                </Border.GestureRecognizers>
+                                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                                    <HorizontalStackLayout Spacing="12">
+                                                        <Ellipse WidthRequest="32" HeightRequest="32" Fill="#065F46" />
+                                                        <Ellipse WidthRequest="32" HeightRequest="32" Fill="#0D9488" />
+                                                        <Ellipse WidthRequest="32" HeightRequest="32" Fill="#94A3B8" />
+                                                    </HorizontalStackLayout>
+                                                    <VerticalStackLayout Grid.Column="1" Padding="20,0" VerticalOptions="Center">
+                                                        <Label Text="Corporate Teal" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
+                                                        <Label Text="Professional, Reliable, High-end" TextColor="#64748B" FontSize="13" />
+                                                    </VerticalStackLayout>
+                                                    <Path x:Name="CheckPaletteTeal" Grid.Column="2" Data="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M10,17l-5-5l1.41-1.41L10,14.17l7.59-7.59L19,8L10,17z" Fill="#0D9488" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                                                </Grid>
+                                            </Border>
+                                            <!-- Modern Slate -->
+                                            <Border x:Name="PaletteSlate" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnPaletteSlateTapped" />
+                                                </Border.GestureRecognizers>
+                                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                                    <HorizontalStackLayout Spacing="12">
+                                                        <Ellipse WidthRequest="32" HeightRequest="32" Fill="#475569" />
+                                                        <Ellipse WidthRequest="32" HeightRequest="32" Fill="#1E293B" />
+                                                        <Ellipse WidthRequest="32" HeightRequest="32" Fill="#E2E8F0" />
+                                                    </HorizontalStackLayout>
+                                                    <VerticalStackLayout Grid.Column="1" Padding="20,0" VerticalOptions="Center">
+                                                        <Label Text="Modern Slate" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
+                                                        <Label Text="Neutral, Sophisticated, Balanced" TextColor="#64748B" FontSize="13" />
+                                                    </VerticalStackLayout>
+                                                    <Ellipse x:Name="CheckPaletteSlate" Grid.Column="2" WidthRequest="20" HeightRequest="20" Stroke="#CBD5E1" StrokeThickness="1" VerticalOptions="Center" />
+                                                </Grid>
+                                            </Border>
+                                            <!-- Organic Earth -->
+                                            <Border x:Name="PaletteEarth" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnPaletteEarthTapped" />
+                                                </Border.GestureRecognizers>
+                                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                                    <HorizontalStackLayout Spacing="12">
+                                                        <Ellipse WidthRequest="32" HeightRequest="32" Fill="#92400E" />
+                                                        <Ellipse WidthRequest="32" HeightRequest="32" Fill="#D97706" />
+                                                        <Ellipse WidthRequest="32" HeightRequest="32" Fill="#4D7C0F" />
+                                                    </HorizontalStackLayout>
+                                                    <VerticalStackLayout Grid.Column="1" Padding="20,0" VerticalOptions="Center">
+                                                        <Label Text="Organic Earth" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
+                                                        <Label Text="Warm, Grounded, Natural" TextColor="#64748B" FontSize="13" />
+                                                    </VerticalStackLayout>
+                                                    <Ellipse x:Name="CheckPaletteEarth" Grid.Column="2" WidthRequest="20" HeightRequest="20" Stroke="#CBD5E1" StrokeThickness="1" VerticalOptions="Center" />
+                                                </Grid>
+                                            </Border>
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+
+                                    <!-- Typography Style -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="24">
+                                        <HorizontalStackLayout Spacing="16">
+                                            <BoxView WidthRequest="4" Color="#0D9488" CornerRadius="2" />
+                                            <Label Text="Typography Style" TextColor="#0F172A" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <Label TextColor="#64748B" FontSize="16" Margin="20,0,0,0">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Select the typeface that speaks " />
+                                                    <Span Text="your" FontAttributes="Bold" />
+                                                    <Span Text=" brand." />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="32">
+                                            <VerticalStackLayout Spacing="24">
+                                                <VerticalStackLayout Spacing="12">
+                                                    <Label Text="Primary Typeface" TextColor="#64748B" FontSize="14" FontAttributes="Bold" />
+                                                    <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" Padding="12,0" HeightRequest="52">
+                                                        <Picker x:Name="TypefacePicker" TextColor="#0F172A" FontSize="15" VerticalOptions="Center" HorizontalOptions="Fill" SelectedIndexChanged="OnTypefaceChanged">
+                                                            <Picker.ItemsSource>
+                                                                <x:Array Type="{x:Type x:String}">
+                                                                    <x:String>Inter (Modern Sans)</x:String>
+                                                                    <x:String>Playfair Display (Elegant Serif)</x:String>
+                                                                    <x:String>Montserrat (Geometric Sans)</x:String>
+                                                                    <x:String>Roboto (Versatile Neo-Grotesque)</x:String>
+                                                                    <x:String>Lora (Contemporary Serif)</x:String>
+                                                                </x:Array>
+                                                            </Picker.ItemsSource>
+                                                            <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                                                        </Picker>
+                                                    </Border>
+                                                </VerticalStackLayout>
+
+                                                <Grid ColumnDefinitions="*, *" ColumnSpacing="16">
+                                                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#0D9488" BackgroundColor="#F0FDFA" Padding="16" HeightRequest="140">
+                                                        <VerticalStackLayout Spacing="8">
+                                                            <Label Text="Heading Preview" TextColor="#64748B" FontSize="11" FontAttributes="Bold" />
+                                                            <Label x:Name="HeadingPreviewLabel" Text="The&#10;Curated&#10;Canvas" TextColor="#0F172A" FontSize="22" FontAttributes="Bold" LineHeight="1.1" />
+                                                        </VerticalStackLayout>
+                                                    </Border>
+                                                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="#F8FAFC" Padding="16" HeightRequest="140">
+                                                        <VerticalStackLayout Spacing="8">
+                                                            <Label Text="Body Preview" TextColor="#64748B" FontSize="11" FontAttributes="Bold" />
+                                                            <Label x:Name="BodyPreviewLabel" Text="Refined text for&#10;clear&#10;communication." TextColor="#475569" FontSize="14" LineHeight="1.5" />
+                                                        </VerticalStackLayout>
+                                                    </Border>
+                                                </Grid>
+
+                                                <HorizontalStackLayout Spacing="12">
+                                                    <CheckBox x:Name="OwnFontsCheckbox" Color="#0D9488" VerticalOptions="Center" />
+                                                    <Label Text="I will provide my own brand font files later" TextColor="#64748B" FontSize="14" VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
+
+                                <!-- Reference Moodboard -->
+                                <VerticalStackLayout Spacing="24">
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <HorizontalStackLayout Spacing="16">
+                                            <BoxView WidthRequest="4" Color="#0D9488" CornerRadius="2" />
+                                            <Label Text="Reference Moodboard" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <Button Grid.Column="1" Text="Bulk Upload Assets" BackgroundColor="#065F46" TextColor="White" CornerRadius="8" Padding="24,14" FontAttributes="Bold" Clicked="OnBulkUploadTapped">
+                                            <Button.ImageSource>
+                                                <FontImageSource Glyph="&#xE2C3;" FontFamily="MaterialIcons" Color="White" Size="18" />
+                                            </Button.ImageSource>
+                                        </Button>
+                                    </Grid>
+                                    <Label Text="Upload images or link assets to guide the creative process." TextColor="#64748B" FontSize="16" Margin="20,0,0,0" />
+
+                                    <Grid ColumnDefinitions="*, 400" ColumnSpacing="24" HeightRequest="480">
+                                        <!-- Main Drop Zone -->
+                                        <Border Grid.Column="0" StrokeShape="RoundRectangle 24" StrokeThickness="0" BackgroundColor="#F1F5F9">
+                                            <Grid>
+                                                <Border x:Name="DropZonePrompt" HorizontalOptions="Center" VerticalOptions="Center" Padding="48,40" BackgroundColor="White" Opacity="0.95" StrokeShape="RoundRectangle 16" StrokeThickness="0">
+                                                    <Border.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="OnAddReferencesTapped" />
+                                                    </Border.GestureRecognizers>
+                                                    <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
+                                                        <Path Data="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z" Fill="#0D9488" Aspect="Uniform" HeightRequest="40" WidthRequest="40" HorizontalOptions="Center" />
+                                                        <Label Text="Drag &amp; drop inspiration here" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                                                        <Label Text="PNG, JPG or PDF up to 20MB" TextColor="#64748B" FontSize="14" HorizontalOptions="Center" />
+                                                    </VerticalStackLayout>
+                                                </Border>
+
+                                                <!-- Image Preview -->
+                                                <Border x:Name="PreviewContainer" IsVisible="False" StrokeShape="RoundRectangle 24" StrokeThickness="0">
+                                                    <Grid>
+                                                        <Image x:Name="ReferenceImagePreview" Aspect="AspectFill" />
+                                                        <BoxView BackgroundColor="#0F172A" Opacity="0.2" />
+                                                        <Button Text="Change Image" BackgroundColor="White" TextColor="#0F172A" CornerRadius="8" Padding="16,10" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnAddReferencesTapped" />
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+
+                                        <!-- Sidebar Uploads -->
+                                        <VerticalStackLayout Grid.Column="1" Spacing="24">
+                                            <Border HeightRequest="228" StrokeShape="RoundRectangle 20" StrokeThickness="2" StrokeDashArray="6,6" Stroke="#CBD5E1" BackgroundColor="White">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnAddReferencesTapped" />
+                                                </Border.GestureRecognizers>
+                                                <VerticalStackLayout VerticalOptions="Center" Spacing="12">
+                                                    <Path Data="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" />
+                                                    <Label Text="Add Assets" TextColor="#94A3B8" FontSize="14" HorizontalOptions="Center" />
+                                                </VerticalStackLayout>
+                                            </Border>
+                                            <Border HeightRequest="228" StrokeShape="RoundRectangle 20" StrokeThickness="2" StrokeDashArray="6,6" Stroke="#CBD5E1" BackgroundColor="White">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnAddReferencesTapped" />
+                                                </Border.GestureRecognizers>
+                                                <VerticalStackLayout VerticalOptions="Center" Spacing="12">
+                                                    <Path Data="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" />
+                                                    <Label Text="Add Assets" TextColor="#94A3B8" FontSize="14" HorizontalOptions="Center" />
+                                                </VerticalStackLayout>
+                                            </Border>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </VerticalStackLayout>
+
+                                <!-- Step 2 Footer Actions -->
+                                <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,40,0,0">
+                                    <Button Text="Back" BackgroundColor="White" TextColor="#475569" BorderColor="#CBD5E1" BorderWidth="1" CornerRadius="8" Padding="48,16" FontAttributes="Bold" Clicked="OnBackToBriefClicked">
+                                        <Button.ImageSource>
+                                            <FontImageSource Glyph="&#xE5C4;" FontFamily="MaterialIcons" Color="#475569" Size="18" />
+                                        </Button.ImageSource>
+                                    </Button>
+                                    <Label Grid.Column="1" Text="Step 2 of 4" TextColor="#64748B" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    <Button Grid.Column="2" Text="Continue to Review" BackgroundColor="#065F46" TextColor="White" CornerRadius="8" Padding="48,16" FontAttributes="Bold" Clicked="OnContinueToReviewClicked" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <!-- Footer -->
+                    <Grid Padding="48,32" ColumnDefinitions="Auto,*" BackgroundColor="#F1F5F9">
+                        <HorizontalStackLayout Spacing="32">
+                            <Label Text="Terms" TextColor="#64748B" FontSize="13" />
+                                                    <Label Text="Privacy" TextColor="#64748B" FontSize="13" />
+                            <Label Text="Contact" TextColor="#64748B" FontSize="13" />
+                        </HorizontalStackLayout>
+                        <Label Grid.Column="1" Text="© 2024 CreatiSphere. All rights reserved." TextColor="#64748B" FontSize="13" HorizontalOptions="End" />
+                    </Grid>
+                    <!-- STEP 3: REVIEW (Final summary before payment) -->
+                    <VerticalStackLayout x:Name="Step3Content" IsVisible="False" Padding="48,40" Spacing="32">
+                        <!-- Header & Stepper -->
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Spacing="8">
+                                <HorizontalStackLayout Spacing="8" Margin="0,0,0,8">
+                                    <Label Text="Custom Orders" TextColor="#64748B" FontSize="13" />
+                                    <Label Text="›" TextColor="#94A3B8" FontSize="13" />
+                                    <Label Text="New Commission" TextColor="#64748B" FontSize="13" />
+                                    <Label Text="›" TextColor="#94A3B8" FontSize="13" />
+                                    <Label Text="Review" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" />
+                                </HorizontalStackLayout>
+                                <Label Text="Review Your Commission&#10;Details" TextColor="#0F172A" FontSize="32" FontAttributes="Bold" LineHeight="1.1" />
+                            </VerticalStackLayout>
+
+                            <Border Grid.Column="1" BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 24" Padding="24,12" VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="24" VerticalOptions="Center">
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Border HeightRequest="24" WidthRequest="24" StrokeShape="RoundRectangle 12" BackgroundColor="#CBD5E1" StrokeThickness="0">
+                                            <Label Text="1" TextColor="White" FontSize="12" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <Label Text="Brief" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                    <BoxView WidthRequest="40" HeightRequest="1" Color="#CBD5E1" VerticalOptions="Center" />
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Border HeightRequest="24" WidthRequest="24" StrokeShape="RoundRectangle 12" BackgroundColor="#CBD5E1" StrokeThickness="0">
+                                            <Label Text="2" TextColor="White" FontSize="12" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <Label Text="Aesthetic" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                    <BoxView WidthRequest="40" HeightRequest="1" Color="#CBD5E1" VerticalOptions="Center" />
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Border HeightRequest="24" WidthRequest="24" StrokeShape="RoundRectangle 12" BackgroundColor="#0D9488" StrokeThickness="0">
+                                            <Label Text="3" TextColor="White" FontSize="12" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <Label Text="Review" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <!-- Content Cards -->
+                        <Grid ColumnDefinitions="*, 300" ColumnSpacing="24">
+                            <!-- Project Brief Summary -->
+                            <Border Grid.Column="0" StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="32">
+                                <VerticalStackLayout Spacing="32">
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <VerticalStackLayout Spacing="4">
+                                            <Label Text="Project Brief" TextColor="#0F172A" FontSize="20" FontAttributes="Bold" />
+                                            <Label Text="The core foundations of your unique creation." TextColor="#64748B" FontSize="14" />
+                                        </VerticalStackLayout>
+                                        <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Start">
+                                            <Path Data="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" Fill="#0D9488" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                            <Label Text="Edit Brief" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Grid>
+
+                                    <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="40" RowSpacing="32">
+                                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="8">
+                                            <Label Text="PROJECT TITLE" TextColor="#94A3B8" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
+                                            <Label x:Name="ReviewBriefTitle" Text="Neo-Industrial Mural&#10;Concept" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
+                                        </VerticalStackLayout>
+                                        <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="*, *">
+                                            <VerticalStackLayout Spacing="8">
+                                                <Label Text="DIMENSIONS" TextColor="#94A3B8" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
+                                                <Label x:Name="ReviewBriefDimensions" Text="120cm x&#10;180cm" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" />
+                                            </VerticalStackLayout>
+                                            <VerticalStackLayout Grid.Column="1" Spacing="8">
+                                                <Label Text="MATERIAL" TextColor="#94A3B8" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
+                                                <Label Text="Brushed&#10;Canvas" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+
+                                        <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="8">
+                                            <Label Text="INTENT &amp; PURPOSE" TextColor="#94A3B8" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
+                                            <Label x:Name="ReviewBriefIntent" Text="A high-impact feature piece for a modern corporate office lobby. The intent is to inspire innovation while honoring heritage craftsmanship." TextColor="#475569" FontSize="14" LineHeight="1.5" />
+                                        </VerticalStackLayout>
+                                        <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="8">
+                                            <Label Text="MAXIMUM BUDGET" TextColor="#94A3B8" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
+                                            <Border BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 8" Padding="16,12" HorizontalOptions="Start">
+                                                <HorizontalStackLayout Spacing="8">
+                                                    <Label x:Name="ReviewBriefBudget" Text="$2,500.00" TextColor="#0D9488" FontSize="18" FontAttributes="Bold" />
+                                                    <Label Text="USD" TextColor="#94A3B8" FontSize="12" VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Aesthetic Summary -->
+                            <Border Grid.Column="1" StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
+                                <VerticalStackLayout Spacing="20">
+                                    <!-- Header -->
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <Label Text="Aesthetics" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
+                                        <Path Grid.Column="1" Data="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" Fill="#0D9488" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                    </Grid>
+
+                                    <!-- Selected Visual Style -->
+                                    <VerticalStackLayout Spacing="10">
+                                        <Label Text="VISUAL STYLE" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
+                                        <Border StrokeShape="RoundRectangle 12" StrokeThickness="2" Stroke="#0D9488" BackgroundColor="#F0FDFA" Padding="0" HeightRequest="96">
+                                            <Grid>
+                                                <Image x:Name="ReviewStyleBgImage" Source="redesign_bg.png" Aspect="AspectFill" Opacity="0.35" />
+                                                <HorizontalStackLayout Spacing="14" Padding="16" VerticalOptions="Center">
+                                                    <Border HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 10" StrokeThickness="0" BackgroundColor="#0D9488">
+                                                        <Path Data="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M10,17l-5-5l1.41-1.41L10,14.17l7.59-7.59L19,8L10,17z" Fill="White" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                    </Border>
+                                                    <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                                                        <Label x:Name="ReviewStyleNameLabel" Text="Minimalist" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
+                                                        <Label x:Name="ReviewStyleSubtitleLabel" Text="Clean lines · Industrial reliability" TextColor="#475569" FontSize="12" />
+                                                    </VerticalStackLayout>
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <!-- Primary Style Tags -->
+                                    <VerticalStackLayout Spacing="10">
+                                        <Label Text="PRIMARY STYLES" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
+                                        <VerticalStackLayout Spacing="6">
+                                            <HorizontalStackLayout Spacing="6">
+                                                <Border x:Name="ReviewChip1" BackgroundColor="#CCFBF1" StrokeShape="RoundRectangle 10" StrokeThickness="0" Padding="10,5">
+                                                    <Label x:Name="ReviewChip1Label" Text="Minimalism" TextColor="#0F766E" FontSize="12" FontAttributes="Bold" />
+                                                </Border>
+                                                <Border x:Name="ReviewChip2" BackgroundColor="#E2E8F0" StrokeShape="RoundRectangle 10" StrokeThickness="0" Padding="10,5">
+                                                    <Label x:Name="ReviewChip2Label" Text="Industrial Modern" TextColor="#475569" FontSize="12" />
+                                                </Border>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout x:Name="ReviewChip3Row" Spacing="6">
+                                                <Border x:Name="ReviewChip3" BackgroundColor="#E2E8F0" StrokeShape="RoundRectangle 10" StrokeThickness="0" Padding="10,5">
+                                                    <Label x:Name="ReviewChip3Label" Text="Brutalist Influence" TextColor="#475569" FontSize="12" />
+                                                </Border>
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+
+                                    <!-- Divider -->
+                                    <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                                    <!-- Color Palette -->
+                                    <VerticalStackLayout Spacing="10">
+                                        <Label Text="COLOR PALETTE" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
+                                        <Grid ColumnDefinitions="*, *, *, *, *" ColumnSpacing="3" HeightRequest="36">
+                                            <Border x:Name="ReviewPColor1" Grid.Column="0" StrokeShape="RoundRectangle 6,0,0,6" StrokeThickness="0" BackgroundColor="#065F46" />
+                                            <Border x:Name="ReviewPColor2" Grid.Column="1" StrokeShape="RoundRectangle 0" StrokeThickness="0" BackgroundColor="#CBD5E1" />
+                                            <Border x:Name="ReviewPColor3" Grid.Column="2" StrokeShape="RoundRectangle 0" StrokeThickness="0" BackgroundColor="#1E293B" />
+                                            <Border x:Name="ReviewPColor4" Grid.Column="3" StrokeShape="RoundRectangle 0" StrokeThickness="0" BackgroundColor="#475569" />
+                                            <Border x:Name="ReviewPColor5" Grid.Column="4" StrokeShape="RoundRectangle 0,6,6,0" StrokeThickness="0" BackgroundColor="#94A3B8" />
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*, Auto">
+                                            <Label x:Name="ReviewPaletteNameLabel" Text="Teal Emphasis" TextColor="#475569" FontSize="12" />
+                                            <Label x:Name="ReviewPalettePercentLabel" Grid.Column="1" Text="40%" TextColor="#0D9488" FontSize="12" FontAttributes="Bold" />
+                                        </Grid>
+                                        <ProgressBar x:Name="ReviewPaletteProgress" Progress="0.4" ProgressColor="#065F46" BackgroundColor="#E2E8F0" HeightRequest="6" />
+                                    </VerticalStackLayout>
+
+                                    <!-- Divider -->
+                                    <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                                    <!-- Typography -->
+                                    <VerticalStackLayout Spacing="10">
+                                        <Label Text="TYPOGRAPHY" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
+                                        <Grid ColumnDefinitions="Auto, *" ColumnSpacing="12">
+                                            <Border HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8" StrokeThickness="0" BackgroundColor="#F1F5F9">
+                                                <Label Text="Aa" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                            </Border>
+                                            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                                                <Label Text="Inter (Modern Sans)" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                                <Label Text="Professional · Geometric · Clean" TextColor="#64748B" FontSize="11" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <!-- Visual Moodboard Summary -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="32">
+                            <VerticalStackLayout Spacing="24">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="Visual Moodboard" TextColor="#0F172A" FontSize="20" FontAttributes="Bold" />
+                                        <Label Text="AI-curated inspiration for your artisan partner." TextColor="#64748B" FontSize="14" />
+                                    </VerticalStackLayout>
+                                    <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Start">
+                                        <Path Data="M4,11 L4,4 L11,4 L11,11 L4,11 Z M4,20 L4,13 L11,13 L11,20 L4,20 Z M13,11 L13,4 L20,4 L20,11 L13,11 Z M13,20 L13,13 L20,13 L20,20 L13,20 Z" Fill="#0D9488" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                        <Label Text="Expand Moodboard" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+
+                                <Grid ColumnDefinitions="*, *, *" ColumnSpacing="16" HeightRequest="340">
+                                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                                        <Image x:Name="ReviewRefImage1" Source="redesign_bg.png" Aspect="AspectFill" />
+                                    </Border>
+                                    <Border Grid.Column="1" StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                                        <Image x:Name="ReviewRefImage2" Source="artist1.png" Aspect="AspectFill" />
+                                    </Border>
+                                    <Border Grid.Column="2" StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                                        <Image x:Name="ReviewRefImage3" Source="artist2.png" Aspect="AspectFill" />
+                                    </Border>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Footer Terms & Actions -->
+                        <Border BackgroundColor="#F8FAFC" StrokeShape="RoundRectangle 12" Padding="24" Margin="0,16,0,0">
+                            <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="16">
+                                <Grid ColumnDefinitions="Auto, *" ColumnSpacing="16">
+                                    <CheckBox x:Name="AgreementCheckbox" Color="#0D9488" VerticalOptions="Center" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                        <Label Text="I agree to the Terms of Service &amp; Commission Agreement" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" LineBreakMode="WordWrap" />
+                                        <Label Text="By proceeding, you acknowledge that this is a custom order request. Your payment will be held in a secure escrow account and only released upon successful project milestones (50% Downpayment / 50% Final)." TextColor="#64748B" FontSize="12" LineHeight="1.4" LineBreakMode="WordWrap" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                                <Button Grid.Column="1" Text="Back to Aesthetic" BackgroundColor="White" TextColor="#475569" BorderColor="#CBD5E1" BorderWidth="1" CornerRadius="8" Padding="32,14" FontAttributes="Bold" Clicked="OnBackToAestheticsClicked" />
+                                <Button Grid.Column="2" Text="Finalize &amp; Secure" BackgroundColor="#065F46" TextColor="White" CornerRadius="8" Padding="40,14" FontAttributes="Bold" Clicked="OnFinalizeAndSecureClicked" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Page Bottom Footer -->
+                        <Grid ColumnDefinitions="*, Auto" Padding="0,32,0,0">
+                            <Label Text="© 2024 Curated Canvas MSME Portal. All project details are encrypted and secure." TextColor="#94A3B8" FontSize="12" />
+                            <HorizontalStackLayout Grid.Column="1" Spacing="24">
+                                <Label Text="Terms of Service" TextColor="#64748B" FontSize="12" />
+                                <Label Text="Privacy Policy" TextColor="#64748B" FontSize="12" />
+                                <Label Text="Help Center" TextColor="#64748B" FontSize="12" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <!-- ===== STEP 4: PAYMENT ===== -->
+                    <VerticalStackLayout x:Name="Step4Content" IsVisible="False" Padding="48,40" Spacing="32">
+
+                        <!-- Header & Stepper -->
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Spacing="8">
+                                <HorizontalStackLayout Spacing="8" Margin="0,0,0,8">
+                                    <Label Text="Custom Orders" TextColor="#64748B" FontSize="13" />
+                                    <Label Text="›" TextColor="#94A3B8" FontSize="13" />
+                                    <Label Text="New Commission" TextColor="#64748B" FontSize="13" />
+                                    <Label Text="›" TextColor="#94A3B8" FontSize="13" />
+                                    <Label Text="Payment" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" />
+                                </HorizontalStackLayout>
+                                <Label Text="Secure Your Commission" TextColor="#0F172A" FontSize="32" FontAttributes="Bold" />
+                                <Label Text="Your payment is held in escrow and only released after you approve the final artwork." TextColor="#64748B" FontSize="15" />
+                            </VerticalStackLayout>
+
+                            <!-- Step Pills -->
+                            <Border Grid.Column="1" BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 24" Padding="24,12" VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="16" VerticalOptions="Center">
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Border HeightRequest="24" WidthRequest="24" StrokeShape="RoundRectangle 12" BackgroundColor="#CBD5E1" StrokeThickness="0">
+                                            <Path Data="M9,16.17L4.83,12L3.41,13.41L9,19L21,7L19.59,5.59L9,16.17Z" Fill="White" Aspect="Uniform" HeightRequest="12" WidthRequest="12" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <Label Text="Brief" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                    <BoxView WidthRequest="32" HeightRequest="1" Color="#CBD5E1" VerticalOptions="Center" />
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Border HeightRequest="24" WidthRequest="24" StrokeShape="RoundRectangle 12" BackgroundColor="#CBD5E1" StrokeThickness="0">
+                                            <Path Data="M9,16.17L4.83,12L3.41,13.41L9,19L21,7L19.59,5.59L9,16.17Z" Fill="White" Aspect="Uniform" HeightRequest="12" WidthRequest="12" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <Label Text="Aesthetic" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                    <BoxView WidthRequest="32" HeightRequest="1" Color="#CBD5E1" VerticalOptions="Center" />
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Border HeightRequest="24" WidthRequest="24" StrokeShape="RoundRectangle 12" BackgroundColor="#CBD5E1" StrokeThickness="0">
+                                            <Path Data="M9,16.17L4.83,12L3.41,13.41L9,19L21,7L19.59,5.59L9,16.17Z" Fill="White" Aspect="Uniform" HeightRequest="12" WidthRequest="12" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <Label Text="Review" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                    <BoxView WidthRequest="32" HeightRequest="1" Color="#0D9488" VerticalOptions="Center" />
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Border HeightRequest="24" WidthRequest="24" StrokeShape="RoundRectangle 12" BackgroundColor="#0D9488" StrokeThickness="0">
+                                            <Label Text="4" TextColor="White" FontSize="12" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <Label Text="Payment" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <!-- Main Content: Form + Sidebar -->
+                        <Grid ColumnDefinitions="*, 320" ColumnSpacing="32">
+
+                            <!-- LEFT: Payment Form -->
+                            <VerticalStackLayout Grid.Column="0" Spacing="24">
+
+                                <!-- Payment Method Tabs -->
+                                <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="32">
+                                    <VerticalStackLayout Spacing="28">
+                                        <HorizontalStackLayout Spacing="16">
+                                            <BoxView WidthRequest="4" Color="#0D9488" CornerRadius="2" />
+                                            <Label Text="Payment Method" TextColor="#0F172A" FontSize="22" FontAttributes="Bold" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+
+                                        <!-- Tab Switcher -->
+                                        <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                                            <!-- Credit Card Tab -->
+                                            <Border x:Name="CreditCardTab" Grid.Column="0" StrokeShape="RoundRectangle 12" StrokeThickness="2" Stroke="#0D9488" BackgroundColor="#F0FDFA" Padding="20,18">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnCreditCardTabTapped" />
+                                                </Border.GestureRecognizers>
+                                                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                                    <Path Data="M20,4H4C2.9,4,2,4.9,2,6V18C2,19.1,2.9,20,4,20H20C21.1,20,22,19.1,22,18V6C22,4.9,21.1,4,20,4ZM20,18H4V12H20V18ZM20,8H4V6H20V8Z" Fill="#0D9488" Aspect="Uniform" HeightRequest="28" WidthRequest="28" HorizontalOptions="Center" />
+                                                    <Label Text="Credit Card" TextColor="#0D9488" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center" />
+                                                </VerticalStackLayout>
+                                            </Border>
+                                            <!-- Digital Wallet Tab -->
+                                            <Border x:Name="DigitalWalletTab" Grid.Column="1" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20,18">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnDigitalWalletTabTapped" />
+                                                </Border.GestureRecognizers>
+                                                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                                    <Path Data="M21,7.28V5C21,3.9,20.1,3,19,3H5C3.9,3,3,3.9,3,5V19C3,20.1,3.9,21,5,21H19C20.1,21,21,20.1,21,19V12.72C21.59,12.38,22,11.74,22,11C22,10.26,21.59,9.62,21,9.28V7.28ZM20,9V13H14V9H20ZM5,19V5H19V7H13C11.9,7,11,7.9,11,9V13C11,14.1,11.9,15,13,15H19V19H5Z" Fill="#64748B" Aspect="Uniform" HeightRequest="28" WidthRequest="28" HorizontalOptions="Center" />
+                                                    <Label Text="Digital Wallet" TextColor="#64748B" FontSize="15" HorizontalOptions="Center" />
+                                                </VerticalStackLayout>
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Credit Card Panel -->
+                                        <VerticalStackLayout x:Name="CreditCardPanel" Spacing="20">
+                                            <VerticalStackLayout Spacing="8">
+                                                <Label Text="Cardholder Name" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                                                <Border StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#CBD5E1" Padding="16,0" HeightRequest="52">
+                                                    <Entry Placeholder="e.g. Alex Morgan" PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="15" />
+                                                </Border>
+                                            </VerticalStackLayout>
+                                            <VerticalStackLayout Spacing="8">
+                                                <Label Text="Card Number" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                                                <Border StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#CBD5E1" Padding="16,0" HeightRequest="52">
+                                                    <Grid ColumnDefinitions="*, Auto">
+                                                        <Entry Placeholder="XXXX XXXX XXXX XXXX" PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="15" Keyboard="Numeric" />
+                                                        <HorizontalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                                                            <Border BackgroundColor="#1A1F71" StrokeShape="RoundRectangle 4" Padding="6,3" StrokeThickness="0">
+                                                                <Label Text="VISA" TextColor="White" FontSize="10" FontAttributes="Bold" />
+                                                            </Border>
+                                                            <Border BackgroundColor="#EB001B" StrokeShape="RoundRectangle 4" Padding="4,3" StrokeThickness="0">
+                                                                <Label Text="MC" TextColor="White" FontSize="10" FontAttributes="Bold" />
+                                                            </Border>
+                                                        </HorizontalStackLayout>
+                                                    </Grid>
+                                                </Border>
+                                            </VerticalStackLayout>
+                                            <Grid ColumnDefinitions="*, *" ColumnSpacing="16">
+                                                <VerticalStackLayout Spacing="8">
+                                                    <Label Text="Expiry Date" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                                                    <Border StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#CBD5E1" Padding="16,0" HeightRequest="52">
+                                                        <Entry Placeholder="MM / YY" PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="15" Keyboard="Numeric" />
+                                                    </Border>
+                                                </VerticalStackLayout>
+                                                <VerticalStackLayout Grid.Column="1" Spacing="8">
+                                                    <Label Text="CVV" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                                                    <Border StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#CBD5E1" Padding="16,0" HeightRequest="52">
+                                                        <Entry Placeholder="• • •" PlaceholderColor="#94A3B8" TextColor="#0F172A" FontSize="15" Keyboard="Numeric" IsPassword="True" />
+                                                    </Border>
+                                                </VerticalStackLayout>
+                                            </Grid>
+                                        </VerticalStackLayout>
+
+                                        <!-- Digital Wallet Panel -->
+                                        <VerticalStackLayout x:Name="DigitalWalletPanel" IsVisible="False" Spacing="16">
+                                            <Label Text="Select your e-wallet provider" TextColor="#64748B" FontSize="14" />
+                                            <!-- GCash -->
+                                            <Border x:Name="GCashOption" StrokeShape="RoundRectangle 12" StrokeThickness="2" Stroke="#0D9488" BackgroundColor="#F0FDFA" Padding="20,16">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnGCashSelected" />
+                                                </Border.GestureRecognizers>
+                                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                                    <Border HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 10" StrokeThickness="0" BackgroundColor="#007AFF">
+                                                        <Label Text="G" TextColor="White" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                    </Border>
+                                                    <VerticalStackLayout Grid.Column="1" Padding="16,0" VerticalOptions="Center" Spacing="2">
+                                                        <Label Text="GCash" TextColor="#0F172A" FontSize="17" FontAttributes="Bold" />
+                                                        <Label Text="Linked: 09XX XXX 1234" TextColor="#64748B" FontSize="13" />
+                                                    </VerticalStackLayout>
+                                                    <Path Grid.Column="2" Data="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M10,17l-5-5l1.41-1.41L10,14.17l7.59-7.59L19,8L10,17z" Fill="#0D9488" Aspect="Uniform" HeightRequest="22" WidthRequest="22" VerticalOptions="Center" />
+                                                </Grid>
+                                            </Border>
+                                            <!-- PayMaya -->
+                                            <Border x:Name="PayMayaOption" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20,16">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnPayMayaSelected" />
+                                                </Border.GestureRecognizers>
+                                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                                    <Border HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 10" StrokeThickness="0" BackgroundColor="#0A7A55">
+                                                        <Label Text="M" TextColor="White" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                    </Border>
+                                                    <VerticalStackLayout Grid.Column="1" Padding="16,0" VerticalOptions="Center" Spacing="2">
+                                                        <Label Text="Maya (PayMaya)" TextColor="#0F172A" FontSize="17" FontAttributes="Bold" />
+                                                        <Label Text="Linked: 09XX XXX 5678" TextColor="#64748B" FontSize="13" />
+                                                    </VerticalStackLayout>
+                                                    <Ellipse Grid.Column="2" WidthRequest="22" HeightRequest="22" Stroke="#CBD5E1" StrokeThickness="1" VerticalOptions="Center" />
+                                                </Grid>
+                                            </Border>
+                                            <!-- 50/50 Payment Note -->
+                                            <Border BackgroundColor="#FFFBEB" Stroke="#F59E0B" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="16" Margin="0,8,0,0">
+                                                <HorizontalStackLayout Spacing="12">
+                                                    <Path Data="M12,2L1,21H23L12,2M12,6L19.53,19H4.47L12,6M11,10V14H13V10H11M11,16V18H13V16H11Z" Fill="#B45309" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                                    <Label Text="Note: 50% downpayment required to start, 50% upon completion." TextColor="#92400E" FontSize="12" VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <!-- Escrow Notice -->
+                                <Border StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#F0FDFA" Padding="28">
+                                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="20">
+                                        <Border HeightRequest="52" WidthRequest="52" StrokeShape="RoundRectangle 14" BackgroundColor="#0D9488" StrokeThickness="0">
+                                            <Path Data="M12,1L3,5V11C3,16.55,6.84,21.74,12,23C17.16,21.74,21,16.55,21,11V5L12,1ZM10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" Fill="White" Aspect="Uniform" HeightRequest="26" WidthRequest="26" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                            <Label Text="Escrow Protection Enabled" TextColor="#065F46" FontSize="16" FontAttributes="Bold" />
+                                            <Label Text="Your payment is held securely in escrow. Funds are only released to the artist after you approve the final creation." TextColor="#047857" FontSize="13" LineHeight="1.5" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Back Button -->
+                                <Button Text="← Back to Review" BackgroundColor="White" TextColor="#475569" BorderColor="#CBD5E1" BorderWidth="1" CornerRadius="8" Padding="32,14" FontAttributes="Bold" HorizontalOptions="Start" Clicked="OnBackToReviewClicked" />
+                            </VerticalStackLayout>
+
+                            <!-- RIGHT: Order Summary -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="16">
+                                <!-- Commission Image -->
+                                <Border HeightRequest="160" StrokeShape="RoundRectangle 16" StrokeThickness="0">
+                                    <Grid>
+                                        <Image x:Name="PaymentSummaryImage" Source="redesign_bg.png" Aspect="AspectFill" />
+                                        <BoxView BackgroundColor="#0F172A" Opacity="0.45" />
+                                        <VerticalStackLayout VerticalOptions="End" Padding="20">
+                                            <Border BackgroundColor="#065F46" StrokeShape="RoundRectangle 6" Padding="8,4" HorizontalOptions="Start" StrokeThickness="0" Margin="0,0,0,6">
+                                                <Label Text="PENDING APPROVAL" TextColor="White" FontSize="9" FontAttributes="Bold" CharacterSpacing="1" />
+                                            </Border>
+                                            <Label x:Name="PaymentSummaryTitleLabel" Text="Neo-Industrial Mural Concept" TextColor="White" FontSize="16" FontAttributes="Bold" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Summary Card -->
+                                <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
+                                    <VerticalStackLayout Spacing="20">
+                                        <Label Text="Order Summary" TextColor="#0F172A" FontSize="17" FontAttributes="Bold" />
+
+                                        <VerticalStackLayout Spacing="12">
+                                            <Grid ColumnDefinitions="*, Auto">
+                                                <Label Text="Commission Fee" TextColor="#475569" FontSize="14" />
+                                                <Label x:Name="SummaryCommissionFeeLabel" Grid.Column="1" Text="$2,250.00" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                            </Grid>
+                                            <Grid ColumnDefinitions="*, Auto">
+                                                <Label Text="Platform Service Fee" TextColor="#475569" FontSize="14" />
+                                                <Label x:Name="SummaryServiceFeeLabel" Grid.Column="1" Text="$125.00" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                            </Grid>
+                                            <Grid ColumnDefinitions="*, Auto">
+                                                <Label Text="Escrow Hold Fee" TextColor="#475569" FontSize="14" />
+                                                <Label x:Name="SummaryEscrowFeeLabel" Grid.Column="1" Text="$25.00" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                            </Grid>
+                                            <Grid ColumnDefinitions="*, Auto">
+                                                <Label Text="Taxes (Estimated)" TextColor="#475569" FontSize="14" />
+                                                <Label Grid.Column="1" Text="$0.00" TextColor="#94A3B8" FontSize="14" />
+                                            </Grid>
+                                        </VerticalStackLayout>
+
+                                        <BoxView HeightRequest="1" Color="#E2E8F0" />
+
+                                        <VerticalStackLayout Spacing="16">
+                                            <Grid ColumnDefinitions="*, Auto">
+                                                <Label Text="Total Amount" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
+                                                <Label x:Name="SummaryTotalAmountLabel" Grid.Column="1" Text="$2,500.00" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" />
+                                            </Grid>
+
+                                            <Border BackgroundColor="#F0FDFA" Stroke="#0D9488" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="16">
+                                                <VerticalStackLayout Spacing="8">
+                                                    <Grid ColumnDefinitions="*, Auto">
+                                                        <Label Text="Amount Due Now (50%)" TextColor="#0D9488" FontSize="14" FontAttributes="Bold" />
+                                                        <Label x:Name="SummaryDueNowLabel" Grid.Column="1" Text="$1,250.00" TextColor="#0D9488" FontSize="16" FontAttributes="Bold" />
+                                                    </Grid>
+                                                    <Label x:Name="SummaryRemainingBalanceLabel" Text="Remaining Balance: $1,250.00" TextColor="#64748B" FontSize="12" />
+                                                    <Label Text="(Due upon project completion)" TextColor="#64748B" FontSize="11" FontAttributes="Italic" />
+                                                </VerticalStackLayout>
+                                            </Border>
+                                        </VerticalStackLayout>
+
+                                        <Button Text="Pay &amp; Submit Commission" BackgroundColor="#065F46" TextColor="White" CornerRadius="10" Padding="0,18" FontAttributes="Bold" FontSize="15" Clicked="OnPayAndSubmitClicked" />
+
+                                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                            <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+                                                <Path Data="M18,8H17V6C17,3.24,14.76,1,12,1C9.24,1,7,3.24,7,6V8H6C4.9,8,4,8.9,4,10V20C4,21.1,4.9,22,6,22H18C19.1,22,20,21.1,20,20V10C20,8.9,19.1,8,18,8ZM12,17C10.9,17,10,16.1,10,15C10,13.9,10.9,13,12,13C13.1,13,14,13.9,14,15C14,16.1,13.1,17,12,17ZM15.1,8H8.9V6C8.9,4.29,10.29,2.9,12,2.9C13.71,2.9,15.1,4.29,15.1,6V8Z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="13" WidthRequest="13" VerticalOptions="Center" />
+                                                <Label Text="256-bit SSL Encrypted" TextColor="#94A3B8" FontSize="11" VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+                                            <Label Text="By clicking, you agree to the Terms of Service and Refund Policy." TextColor="#94A3B8" FontSize="11" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineHeight="1.4" />
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </Grid>
+</ContentPage>
