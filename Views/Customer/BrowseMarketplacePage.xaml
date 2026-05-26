@@ -240,15 +240,7 @@
                             <Border x:Name="ProductCard1" Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White">
                                 <VerticalStackLayout>
                                     <Grid HeightRequest="220">
-                                        <BoxView>
-                                            <BoxView.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                                    <GradientStop Color="#0F766E" Offset="0" />
-                                                    <GradientStop Color="#22D3EE" Offset="1" />
-                                                </LinearGradientBrush>
-                                            </BoxView.Background>
-                                        </BoxView>
-                                        <Label Text="{Binding Name}" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Image Source="{Binding ImageUrl}" Aspect="AspectFill" BackgroundColor="#E8EDF2" />
                                         <Border HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 18" StrokeThickness="0" BackgroundColor="White" HorizontalOptions="End" VerticalOptions="Start" Margin="16">
                                             <Path Data="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" 
                                                   Fill="Transparent" Stroke="#64748B" StrokeThickness="1.5" Aspect="Uniform" HeightRequest="16" WidthRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
@@ -278,15 +270,7 @@
                             <Border x:Name="ProductCard2" Grid.Column="1" Padding="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White">
                                 <VerticalStackLayout>
                                     <Grid HeightRequest="220">
-                                        <BoxView>
-                                            <BoxView.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                                    <GradientStop Color="#1E293B" Offset="0" />
-                                                    <GradientStop Color="#94A3B8" Offset="1" />
-                                                </LinearGradientBrush>
-                                            </BoxView.Background>
-                                        </BoxView>
-                                        <Label Text="{Binding Name}" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Image Source="{Binding ImageUrl}" Aspect="AspectFill" BackgroundColor="#E8EDF2" />
                                         <Border HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 18" StrokeThickness="0" BackgroundColor="White" HorizontalOptions="End" VerticalOptions="Start" Margin="16">
                                             <Path Data="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" 
                                                   Fill="Transparent" Stroke="#64748B" StrokeThickness="1.5" Aspect="Uniform" HeightRequest="16" WidthRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
@@ -316,15 +300,7 @@
                             <Border x:Name="ProductCard3" Grid.Column="2" Padding="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White">
                                 <VerticalStackLayout>
                                     <Grid HeightRequest="220">
-                                        <BoxView>
-                                            <BoxView.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                                    <GradientStop Color="#7C3AED" Offset="0" />
-                                                    <GradientStop Color="#F472B6" Offset="1" />
-                                                </LinearGradientBrush>
-                                            </BoxView.Background>
-                                        </BoxView>
-                                        <Label Text="{Binding Name}" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Image Source="{Binding ImageUrl}" Aspect="AspectFill" BackgroundColor="#E8EDF2" />
                                         <Border HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 18" StrokeThickness="0" BackgroundColor="White" HorizontalOptions="End" VerticalOptions="Start" Margin="16">
                                             <Path Data="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" 
                                                   Fill="Transparent" Stroke="#64748B" StrokeThickness="1.5" Aspect="Uniform" HeightRequest="16" WidthRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
@@ -354,15 +330,7 @@
                             <Border x:Name="ProductCard4" Grid.Column="3" Padding="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White">
                                 <VerticalStackLayout>
                                     <Grid HeightRequest="220">
-                                        <BoxView>
-                                            <BoxView.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                                    <GradientStop Color="#0F172A" Offset="0" />
-                                                    <GradientStop Color="#14B8A6" Offset="1" />
-                                                </LinearGradientBrush>
-                                            </BoxView.Background>
-                                        </BoxView>
-                                        <Label Text="{Binding Name}" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Image Source="{Binding ImageUrl}" Aspect="AspectFill" BackgroundColor="#E8EDF2" />
                                         <Border HeightRequest="36" WidthRequest="36" StrokeShape="RoundRectangle 18" StrokeThickness="0" BackgroundColor="White" HorizontalOptions="End" VerticalOptions="Start" Margin="16">
                                             <Path Data="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" 
                                                   Fill="Transparent" Stroke="#64748B" StrokeThickness="1.5" Aspect="Uniform" HeightRequest="16" WidthRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />

@@ -34,8 +34,11 @@
                         <Path Data="M19.1,12.9l2.1,1.6c0.2,0.1,0.2,0.4,0.1,0.6l-2,3.5c-0.1,0.2-0.4,0.3-0.6,0.2l-2.5-1c-0.5,0.4-1.1,0.7-1.7,1 l-0.4,2.6c0,0.2-0.2,0.4-0.5,0.4h-4c-0.3,0-0.5-0.2-0.5-0.4l-0.4-2.6c-0.6-0.3-1.2-0.6-1.7-1l-2.5,1c-0.2,0.1-0.5,0-0.6-0.2l-2-3.5 C1.9,14.9,2,14.6,2.2,14.5l2.1-1.6c-0.1-0.3-0.1-0.6-0.1-0.9s0-0.6,0.1-0.9L2.2,8.6c-0.2-0.1-0.2-0.4-0.1-0.6l2-3.5c0.1-0.2,0.4-0.3,0.6-0.2 l2.5,1c0.5-0.4,1.1-0.7,1.7-1L9.4,1.7c0-0.2,0.2-0.4,0.5-0.4h4c0.3,0,0.5,0.2,0.5,0.4l0.4,2.6c0.6,0.3,1.2,0.6,1.7,1l2.5-1 c0.2-0.1,0.5,0,0.6,0.2l2,3.5c0.1,0.2,0,0.5-0.2,0.6l-2.1,1.6c0.1,0.3,0.1,0.6,0.1,0.9S19.2,12.6,19.1,12.9z M12,15c1.7,0,3-1.3,3-3 s-1.3-3-3-3s-3,1.3-3,3S10.3,15,12,15z" 
                               Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
                         
-                        <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0">
-                            <Image Source="avatar.png" Aspect="AspectFill" />
+                        <Border BackgroundColor="{StaticResource DashboardTeal}" HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0">
+                            <Label x:Name="HeaderProfileInitials" Text="AD" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSignOutClicked" />
+                            </Border.GestureRecognizers>
                         </Border>
                     </HorizontalStackLayout>
                 </Grid>
@@ -83,7 +86,7 @@
                         </VisualStateManager.VisualStateGroups>
                         <VerticalStackLayout Spacing="8">
                             <Label Text="TOTAL STOCK VALUE" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
-                            <Label Text="$428,950.00" TextColor="{StaticResource Slate900}" FontSize="26" FontAttributes="Bold" />
+                            <Label x:Name="TotalStockValueLabel" Text="$428,950.00" TextColor="{StaticResource Slate900}" FontSize="26" FontAttributes="Bold" />
                             <Path Data="M21,19V5c0-1.1-0.9-2-2-2H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14C20.1,21,21,20.1,21,19z M8.5,13.5l2.5,3.01L14.5,12l4.5,6H5 L8.5,13.5z" 
                                   Fill="{StaticResource Slate100}" Aspect="Uniform" HeightRequest="64" WidthRequest="64" HorizontalOptions="End" Margin="0,-32,-16,0" />
                         </VerticalStackLayout>
@@ -105,7 +108,7 @@
                         <VerticalStackLayout Spacing="8">
                             <Label Text="LOW STOCK ALERTS" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
                             <HorizontalStackLayout Spacing="8">
-                                <Label Text="12" TextColor="#E11D48" FontSize="26" FontAttributes="Bold" />
+                                <Label x:Name="LowStockAlertsLabel" Text="12" TextColor="#E11D48" FontSize="26" FontAttributes="Bold" />
                                 <Border BackgroundColor="#FFE4E6" Padding="8,4" StrokeShape="RoundRectangle 12" StrokeThickness="0" VerticalOptions="Center">
                                     <Label Text="CRITICAL" TextColor="#E11D48" FontSize="10" FontAttributes="Bold" />
                                 </Border>
@@ -130,7 +133,7 @@
                         </VisualStateManager.VisualStateGroups>
                         <VerticalStackLayout Spacing="8">
                             <Label Text="DIGITAL ASSETS" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
-                            <Label Text="1,402" TextColor="{StaticResource Slate900}" FontSize="26" FontAttributes="Bold" />
+                            <Label x:Name="DigitalAssetsLabel" Text="1,402" TextColor="{StaticResource Slate900}" FontSize="26" FontAttributes="Bold" />
                             <Path Data="M19.35,10.04C18.67,6.59,15.64,4,12,4C9.11,4,6.6,5.64,5.35,8.04C2.34,8.36,0,10.91,0,14c0,3.31,2.69,6,6,6h13c2.76,0,5-2.24,5-5C24,12.36,21.95,10.22,19.35,10.04z" 
                                   Fill="{StaticResource Slate100}" Aspect="Uniform" HeightRequest="64" WidthRequest="64" HorizontalOptions="End" Margin="0,-32,-16,0" />
                         </VerticalStackLayout>
@@ -151,7 +154,7 @@
                         </VisualStateManager.VisualStateGroups>
                         <VerticalStackLayout Spacing="8">
                             <Label Text="ACTIVE SHIPMENTS" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
-                            <Label Text="45" TextColor="{StaticResource DashboardTeal}" FontSize="26" FontAttributes="Bold" />
+                            <Label x:Name="ActiveShipmentsLabel" Text="45" TextColor="{StaticResource DashboardTeal}" FontSize="26" FontAttributes="Bold" />
                             <Path Data="M20,8h-3V4H3c-1.1,0-2,0.9-2,2v11h2c0,1.66,1.34,3,3,3s3-1.34,3-3h6c0,1.66,1.34,3,3,3s3-1.34,3-3h2v-5L20,8z M6,18.5c-0.83,0-1.5-0.67-1.5-1.5s0.67-1.5,1.5-1.5s1.5,0.67,1.5,1.5S6.83,18.5,6,18.5z M19.5,9.5l1.96,2.5H17V9.5H19.5z M18,18.5c-0.83,0-1.5-0.67-1.5-1.5s0.67-1.5,1.5-1.5s1.5,0.67,1.5,1.5S18.83,18.5,18,18.5z" 
                                   Fill="#F0FDFA" Aspect="Uniform" HeightRequest="64" WidthRequest="64" HorizontalOptions="End" Margin="0,-32,-16,0" />
                         </VerticalStackLayout>
@@ -285,7 +288,7 @@
 
                         <!-- Footer Pagination -->
                         <Grid ColumnDefinitions="*, Auto" Padding="24, 16" BackgroundColor="#F8FAFC">
-                            <Label Text="Showing 1-25 of 482 items" TextColor="{StaticResource Slate500}" FontSize="13" VerticalOptions="Center" />
+                            <Label x:Name="InventoryCountLabel" Text="Showing 1-25 of 482 items" TextColor="{StaticResource Slate500}" FontSize="13" VerticalOptions="Center" />
                             <HorizontalStackLayout Grid.Column="1" Spacing="8">
                                 <Button Text="&lt;" TextColor="{StaticResource Slate400}" BackgroundColor="White" BorderColor="{StaticResource Slate200}" BorderWidth="1" CornerRadius="6" Padding="12, 6" FontSize="14" />
                                 <Button Text="1" TextColor="White" BackgroundColor="{StaticResource DashboardTeal}" BorderColor="{StaticResource DashboardTeal}" BorderWidth="1" CornerRadius="6" Padding="16, 6" FontSize="14" />

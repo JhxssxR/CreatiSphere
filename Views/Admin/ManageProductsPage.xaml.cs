@@ -30,6 +30,18 @@ namespace CreatiSphere.Views.Admin
                 _allProducts = products;
                 BindableLayout.SetItemsSource(ProductsList, products);
                 BindableLayout.SetItemsSource(ProductsGrid, products);
+
+                if (Services.UserSession.AccountID > 5)
+                {
+                    ProductCountLabel.Text = "Showing 0 products";
+                    BindableLayout.SetItemsSource(ProductsList, new List<Services.Product>());
+                    BindableLayout.SetItemsSource(ProductsGrid, new List<Services.Product>());
+                }
+
+                if (!string.IsNullOrEmpty(Services.UserSession.Username) && Services.UserSession.Username.Length >= 2)
+                    HeaderProfileInitials.Text = Services.UserSession.Username.Substring(0, 2).ToUpper();
+                else
+                    HeaderProfileInitials.Text = "AD";
             }
             catch (Exception ex)
             {

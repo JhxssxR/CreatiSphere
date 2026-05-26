@@ -37,10 +37,19 @@ namespace CreatiSphere.Views.Customer
                 }
 
                 var commissions = await _databaseService.GetCommissionsAsync(currentUserId);
+                // Remove dummy data that might have been seeded for customer 1002
+                if (currentUserId > 5)
+                {
+                    commissions.RemoveAll(c => c.Title.Contains("Nebula Dreamscape") || c.Title.Contains("Velvet Silence") || c.Title.Contains("Cerulean Drift") || c.Title.Contains("Golden Hour"));
+                }
                 EnsureCommissionImages(commissions);
                 CommissionsCollectionView.ItemsSource = commissions;
 
                 var activities = await _databaseService.GetUserActivityAsync(currentUserId);
+                if (currentUserId > 5)
+                {
+                    activities.RemoveAll(a => a.Title.Contains("Cerulean Drift") || a.Title.Contains("Golden Hour") || a.Title.Contains("Nebula Dreamscape") || a.Title.Contains("Velvet Silence"));
+                }
                 EnsureActivityIcons(activities);
                 ActivityCollectionView.ItemsSource = activities;
 

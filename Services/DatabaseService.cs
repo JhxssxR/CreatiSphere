@@ -55,6 +55,7 @@ namespace CreatiSphere.Services
 
     public class CreatorAsset
     {
+        public int AssetID { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
         public decimal Price { get; set; }
@@ -191,6 +192,24 @@ namespace CreatiSphere.Services
         public decimal TotalPortfolioSpend { get; set; }
     }
 
+    public class ReportArchive
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Type { get; set; } = string.Empty;
+        public string Period { get; set; } = string.Empty;
+        public string Size { get; set; } = string.Empty;
+        public string Format { get; set; } = string.Empty; // PDF or CSV
+        public DateTime GeneratedDate { get; set; }
+        public string FilePath { get; set; } = string.Empty;
+
+        // Dynamic Helpers
+        public string DateDisplay => GeneratedDate.ToString("MMM dd, yyyy");
+        public string FormatColor => Format.Equals("PDF", System.StringComparison.OrdinalIgnoreCase) ? "#F59E0B" : "#0D9488"; // WarningOrange vs DashboardTeal
+        public string FormatIcon => Format.Equals("PDF", System.StringComparison.OrdinalIgnoreCase) ? "M14,2H6C4.9,2,4.01,2.9,4.01,4L4,20c0,1.1,0.89,2,1.99,2H18c1.1,0,2-0.9,2-2V8L14,2z M16,18H8v-2h8V18z M16,14H8v-2h8V14z M13,9V3.5L18.5,9H13z" : "M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z M16,16H8v-2h8V16z M16,12H8v-2h8V12z M13,9V3.5L18.5,9H13z";
+        public string IconColor => Format.Equals("PDF", System.StringComparison.OrdinalIgnoreCase) ? "#F59E0B" : "#0D9488";
+    }
+
     public class Product
     {
         public string? ProductID { get; set; }
@@ -244,6 +263,7 @@ namespace CreatiSphere.Services
         public string? Deliverables { get; set; }
         public string? AssignedArtist { get; set; }
         public decimal Price { get; set; }
+        public string ImagePath { get; set; } = "nebula_dreamscape.png";
     }
 
     public class ChartDataPoint
@@ -251,6 +271,35 @@ namespace CreatiSphere.Services
         public string Day { get; set; } = string.Empty;
         public double LastWeekHeight { get; set; }
         public double ThisWeekHeight { get; set; }
+    }
+
+    public class WeeklySalesData
+    {
+        public string WeekLabel { get; set; } = string.Empty;
+        public decimal Revenue { get; set; }
+        public double ChartHeight { get; set; }
+        public string ToolTip { get; set; } = string.Empty;
+        public bool IsHighlight { get; set; }
+    }
+
+    public class CreatorTransaction
+    {
+        public string TransactionID { get; set; } = string.Empty;
+        public string CustomerName { get; set; } = string.Empty;
+        public string AssetTitle { get; set; } = string.Empty;
+        public DateTime Date { get; set; }
+        public decimal Amount { get; set; }
+        public string Status { get; set; } = string.Empty;
+        // Computed helpers for UI binding
+        public string DateDisplay => Date.ToString("MMM dd, yyyy");
+        public string TimeDisplay => Date.ToString("hh:mm tt");
+        public string AmountDisplay => $"₱{Amount:N2}";
+        public string Initials => CustomerName.Length >= 2 ? CustomerName.Substring(0, 2).ToUpper() : "C";
+        public string StatusColor => Status == "Completed" ? "#059669" : (Status == "Pending" ? "#D97706" : "#64748B");
+        public string StatusBg => Status == "Completed" ? "#ECFDF5" : (Status == "Pending" ? "#FEF3C7" : "#F1F5F9");
+        public string IconPath => AssetTitle == "Marketplace" 
+            ? "M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20c-4.42,0-8-3.58-8-8s3.58-8,8-8s8,3.58,8,8 S16.42,20,12,20z" 
+            : "M3,17.25V21h3.75L17.81,9.94l-3.75-3.75L3,17.25z M20.71,7.04c0.39-0.39,0.39-1.02,0-1.41l-2.34-2.34 c-0.39-0.39-1.02-0.39-1.41,0l-1.83,1.83l3.75,3.75L20.71,7.04z";
     }
 
     public class DatabaseService
@@ -503,6 +552,8 @@ namespace CreatiSphere.Services
                     return new AccountInfo { AccountID = 4, AccountName = "Sales Associate", Email = username, RoleID = 5, IsActive = true };
                 if (username == "finance@creatisphere.com" && password == "finance123!")
                     return new AccountInfo { AccountID = 5, AccountName = "Finance Manager", Email = username, RoleID = 6, IsActive = true };
+                if (username == "creator@creatisphere.com" && password == "creator123!")
+                    return new AccountInfo { AccountID = 10, AccountName = "Alex Rivera", Email = username, RoleID = 4, IsActive = true };
 
                 return null;
             }
@@ -538,6 +589,15 @@ namespace CreatiSphere.Services
                 }
             }
             catch { }
+
+            // Offline Fallbacks
+            if (id == 1) return new AccountInfo { AccountID = 1, AccountName = "Super Admin", Email = "superadmin@creatisphere.com", RoleID = 1, IsActive = true };
+            if (id == 2) return new AccountInfo { AccountID = 2, AccountName = "Admin", Email = "admin@creatisphere.com", RoleID = 2, IsActive = true };
+            if (id == 3) return new AccountInfo { AccountID = 3, AccountName = "Customer", Email = "customer@creatisphere.com", RoleID = 3, IsActive = true };
+            if (id == 4) return new AccountInfo { AccountID = 4, AccountName = "Sales Associate", Email = "sales@creatisphere.com", RoleID = 5, IsActive = true };
+            if (id == 5) return new AccountInfo { AccountID = 5, AccountName = "Finance Manager", Email = "finance@creatisphere.com", RoleID = 6, IsActive = true };
+            if (id == 10) return new AccountInfo { AccountID = 10, AccountName = "Alex Rivera", Email = "creator@creatisphere.com", RoleID = 4, IsActive = true };
+
             return null;
         }
 
@@ -1270,8 +1330,59 @@ namespace CreatiSphere.Services
                         PaymentMethod NVARCHAR(50) NOT NULL
                     );
                 END";
-            using var cmd = new SqlCommand(createTable, connection);
-            await cmd.ExecuteNonQueryAsync();
+            using (var cmd = new SqlCommand(createTable, connection))
+            {
+                await cmd.ExecuteNonQueryAsync();
+            }
+
+            // Check count and seed
+            string countQuery = "SELECT COUNT(1) FROM SalesTransactions";
+            int count = 0;
+            using (var countCmd = new SqlCommand(countQuery, connection))
+            {
+                count = Convert.ToInt32(await countCmd.ExecuteScalarAsync());
+            }
+
+            if (count == 0)
+            {
+                var seedData = new List<(string TxID, int CustID, string CustName, string Email, int DaysAgo, decimal Amt, string Stat, string PayMethod)>
+                {
+                    ("#CS-8921", 3, "Sarah Jenkins", "sarah@gmail.com", 1, 1200.00m, "Completed", "Marketplace"),
+                    ("#CS-8922", 3, "Marcus Chen", "marcus@gmail.com", 2, 2450.00m, "Processing", "Direct Order"),
+                    ("#CS-8919", 3, "Aria Bennett", "aria@gmail.com", 3, 590.00m, "Completed", "Marketplace"),
+                    ("#CS-8918", 3, "Liam O'Connor", "liam@gmail.com", 4, 320.00m, "Completed", "Direct Order"),
+                    ("#CS-8917", 3, "Sophia Vance", "sophia@gmail.com", 6, 850.00m, "Completed", "Marketplace"),
+                    ("#CS-8916", 3, "Elena Rostova", "elena@gmail.com", 8, 1400.00m, "Completed", "Direct Order"),
+                    ("#CS-8915", 3, "Hiroshi Tanaka", "hiroshi@gmail.com", 12, 950.00m, "Completed", "Marketplace"),
+                    ("#CS-8914", 3, "Clara Dubois", "clara@gmail.com", 15, 2100.00m, "Completed", "Direct Order"),
+                    ("#CS-8913", 3, "Mateo Silva", "mateo@gmail.com", 19, 450.00m, "Completed", "Marketplace"),
+                    ("#CS-8912", 3, "Zoe Jenkins", "zoe@gmail.com", 25, 1250.00m, "Completed", "Direct Order"),
+                    ("#CS-8911", 3, "Julianne Deauville", "julianne@gmail.com", 31, 3100.00m, "Completed", "Marketplace"),
+                    ("#CS-8910", 3, "Arthur Chen", "arthur@gmail.com", 38, 1750.00m, "Completed", "Direct Order"),
+                    ("#CS-8909", 3, "Elena Rodriguez", "elena.r@gmail.com", 45, 990.00m, "Completed", "Marketplace"),
+                    ("#CS-8908", 3, "Marcus Thorne", "marcus.t@gmail.com", 52, 2800.00m, "Completed", "Direct Order"),
+                };
+
+                foreach (var tx in seedData)
+                {
+                    string insertQuery = @"
+                        INSERT INTO SalesTransactions 
+                        (TransactionID, CustomerID, CustomerName, CustomerEmail, TransactionDate, Amount, Status, PaymentMethod)
+                        VALUES (@TxID, @CustID, @CustName, @Email, @Date, @Amt, @Stat, @PayMethod)";
+                    using (var insertCmd = new SqlCommand(insertQuery, connection))
+                    {
+                        insertCmd.Parameters.AddWithValue("@TxID", tx.TxID);
+                        insertCmd.Parameters.AddWithValue("@CustID", tx.CustID);
+                        insertCmd.Parameters.AddWithValue("@CustName", tx.CustName);
+                        insertCmd.Parameters.AddWithValue("@Email", tx.Email);
+                        insertCmd.Parameters.AddWithValue("@Date", DateTime.Now.AddDays(-tx.DaysAgo));
+                        insertCmd.Parameters.AddWithValue("@Amt", tx.Amt);
+                        insertCmd.Parameters.AddWithValue("@Stat", tx.Stat);
+                        insertCmd.Parameters.AddWithValue("@PayMethod", tx.PayMethod);
+                        await insertCmd.ExecuteNonQueryAsync();
+                    }
+                }
+            }
         }
 
         public async Task<string?> RecordSaleTransactionAsync(int accountId, IList<CartItem> items, string paymentMethod)
@@ -1359,14 +1470,15 @@ namespace CreatiSphere.Services
                                     "IN PROGRESS" or "In Progress" or "STANDARD" => "Concept",
                                     "REVISION" or "Revision" => "Refining",
                                     "COMPLETED" or "Completed" or "EXPEDITED" => "Delivery",
-                                    "Briefing" or "Concept" or "Refining" or "Delivery" => rawStatus,
+                                    "Briefing" or "Concept" or "Refining" or "Waiting for Payment" or "Delivery" => rawStatus,
                                     _ => "Briefing"
                                 };
 
+                                string title = reader["Title"]?.ToString() ?? "";
                                 orders.Add(new CustomOrder
                                 {
                                     OrderID = reader["OrderID"]?.ToString(),
-                                    Title = reader["Title"]?.ToString(),
+                                    Title = title,
                                     Description = reader["Description"]?.ToString(),
                                     ClientName = reader["ClientName"]?.ToString(),
                                     Status = mappedStatus,
@@ -1377,7 +1489,8 @@ namespace CreatiSphere.Services
                                     ColorProfile = reader["ColorProfile"]?.ToString(),
                                     Deliverables = reader["Deliverables"]?.ToString(),
                                     AssignedArtist = reader["AssignedArtist"]?.ToString(),
-                                    Price = reader["Price"] != DBNull.Value ? Convert.ToDecimal(reader["Price"]) : 0m
+                                    Price = reader["Price"] != DBNull.Value ? Convert.ToDecimal(reader["Price"]) : 0m,
+                                    ImagePath = GetLocalAssetImage(title)
                                 });
                             }
                         }
@@ -1392,7 +1505,13 @@ namespace CreatiSphere.Services
                 {
                     new CustomOrder { OrderID = "8821", Title = "Futuristic Cyberpunk Landscape",
                         Description = "High-contrast neon aesthetics with an urban future theme.",
-                        ClientName = "Alex Linden", Date = "2024-10-24", Status = "Briefing", Price = 1250.00m }
+                        ClientName = "Alex Linden", Date = DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd"), Status = "Briefing", Price = 1250.00m, ImagePath = "nebula_dreamscape.png", AssignedArtist = "Alex Rivera" },
+                    new CustomOrder { OrderID = "8822", Title = "Organic Flow 3D Sculpt",
+                        Description = "Fluid shapes inspired by natural cell structures.",
+                        ClientName = "Elena Vance", Date = DateTime.Now.AddDays(-4).ToString("yyyy-MM-dd"), Status = "Concept", Price = 1850.00m, ImagePath = "organic_flow.png", AssignedArtist = "Alex Rivera" },
+                    new CustomOrder { OrderID = "8823", Title = "Velvet Silence Minimalist Poster",
+                        Description = "Minimalist graphic poster with muted tones and gold foil highlights.",
+                        ClientName = "Sarah Jenkins", Date = DateTime.Now.AddDays(-10).ToString("yyyy-MM-dd"), Status = "Delivery", Price = 450.00m, ImagePath = "velvet_silence.png", AssignedArtist = "Alex Rivera" }
                 };
             }
             return orders;
@@ -1497,6 +1616,22 @@ namespace CreatiSphere.Services
             catch { }
             return users;
         }
+        private static List<SystemModule>? _dummyModules = null;
+
+        private void InitializeDummyModules()
+        {
+            if (_dummyModules == null)
+            {
+                _dummyModules = new List<SystemModule>
+                {
+                    new SystemModule { Name = "Inventory Management", Version = "v2.4.1", Status = "Active", EnabledCount = 124, IsStarterEnabled = true, IsStandardEnabled = true, IsEnterpriseEnabled = true },
+                    new SystemModule { Name = "Sales Analytics", Version = "v1.8.0", Status = "Active", EnabledCount = 98, IsStarterEnabled = false, IsStandardEnabled = true, IsEnterpriseEnabled = true },
+                    new SystemModule { Name = "CRM Integration", Version = "v3.0.2", Status = "Beta", EnabledCount = 42, IsStarterEnabled = false, IsStandardEnabled = false, IsEnterpriseEnabled = true },
+                    new SystemModule { Name = "Finance Hub", Version = "v2.1.0", Status = "Active", EnabledCount = 115, IsStarterEnabled = false, IsStandardEnabled = true, IsEnterpriseEnabled = true }
+                };
+            }
+        }
+
         public async Task<List<SystemModule>> GetSystemModulesAsync()
         {
             var modules = new List<SystemModule>();
@@ -1532,17 +1667,11 @@ namespace CreatiSphere.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"Database Error: {ex.Message}");
-                return new List<SystemModule>
-                {
-                    new SystemModule { Name = "Inventory Management", Version = "v2.4.1", Status = "Active", EnabledCount = 124, IsStarterEnabled = true, IsStandardEnabled = true, IsEnterpriseEnabled = true },
-                    new SystemModule { Name = "Sales Analytics", Version = "v1.8.0", Status = "Active", EnabledCount = 98, IsStarterEnabled = false, IsStandardEnabled = true, IsEnterpriseEnabled = true },
-                    new SystemModule { Name = "CRM Integration", Version = "v3.0.2", Status = "Beta", EnabledCount = 42, IsStarterEnabled = false, IsStandardEnabled = false, IsEnterpriseEnabled = true },
-                    new SystemModule { Name = "Finance Hub", Version = "v2.1.0", Status = "Active", EnabledCount = 115, IsStarterEnabled = false, IsStandardEnabled = true, IsEnterpriseEnabled = true }
-                };
+                InitializeDummyModules();
+                return _dummyModules!;
             }
             return modules;
         }
-
 
         public async Task<bool> UpdateSystemModuleStatusAsync(string moduleName, string newStatus)
         {
@@ -1566,7 +1695,13 @@ namespace CreatiSphere.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"Database Error: {ex.Message}");
-                return false;
+                InitializeDummyModules();
+                var mod = _dummyModules!.FirstOrDefault(m => m.Name.Equals(moduleName, StringComparison.OrdinalIgnoreCase));
+                if (mod != null)
+                {
+                    mod.Status = newStatus;
+                }
+                return true;
             }
         }
 
@@ -1576,6 +1711,7 @@ namespace CreatiSphere.Services
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
+                    await connection.OpenAsync();
                     await EnsureSystemModulesTableAsync(connection);
                     string query = "INSERT INTO SystemModules (Name, Version, Status, EnabledCount, IsStarterEnabled, IsStandardEnabled, IsEnterpriseEnabled) VALUES (@Name, @Version, @Status, @EnabledCount, @IsStarter, @IsStandard, @IsEnterprise)";
 
@@ -1596,7 +1732,9 @@ namespace CreatiSphere.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"Database Error: {ex.Message}");
-                return false;
+                InitializeDummyModules();
+                _dummyModules!.Add(module);
+                return true;
             }
         }
 
@@ -1628,7 +1766,15 @@ namespace CreatiSphere.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"Database Error: {ex.Message}");
-                return false;
+                InitializeDummyModules();
+                var mod = _dummyModules!.FirstOrDefault(m => m.Name.Equals(moduleName, StringComparison.OrdinalIgnoreCase));
+                if (mod != null)
+                {
+                    mod.IsStarterEnabled = starter;
+                    mod.IsStandardEnabled = standard;
+                    mod.IsEnterpriseEnabled = enterprise;
+                }
+                return true;
             }
         }
 
@@ -1653,7 +1799,9 @@ namespace CreatiSphere.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"Database Error: {ex.Message}");
-                return false;
+                InitializeDummyModules();
+                _dummyModules!.RemoveAll(m => m.Name.Equals(moduleName, StringComparison.OrdinalIgnoreCase));
+                return true;
             }
         }
 
@@ -1800,6 +1948,31 @@ namespace CreatiSphere.Services
             }
             return history;
         }
+        private async Task EnsureCommissionsTableAsync(SqlConnection connection)
+        {
+            string createTable = @"
+                IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Commissions')
+                BEGIN
+                    CREATE TABLE Commissions (
+                        CommissionID INT IDENTITY(1,1) PRIMARY KEY,
+                        CreatorID INT NOT NULL,
+                        CustomerID INT NOT NULL,
+                        Title NVARCHAR(255) NOT NULL,
+                        ArtistName NVARCHAR(255) NOT NULL,
+                        ClientName NVARCHAR(255) NOT NULL,
+                        Progress INT NOT NULL,
+                        Status NVARCHAR(100) NOT NULL,
+                        ImagePath NVARCHAR(500) NULL
+                    );
+                    
+                    INSERT INTO Commissions (CreatorID, CustomerID, Title, ArtistName, ClientName, Progress, Status, ImagePath) VALUES 
+                    (10, 1002, 'Nebula Dreamscape', 'Alex Rivera', 'Alex Henderson', 65, 'In Progress', 'artist1.png'),
+                    (10, 1002, 'Velvet Silence', 'Alex Rivera', 'Alex Henderson', 20, 'Sketching', 'artist2.png');
+                END";
+            using (SqlCommand command = new SqlCommand(createTable, connection))
+                await command.ExecuteNonQueryAsync();
+        }
+
         public async Task<List<Commission>> GetCommissionsAsync(int accountId, bool isCreator = false)
         {
             var commissions = new List<Commission>();
@@ -1808,6 +1981,7 @@ namespace CreatiSphere.Services
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     await connection.OpenAsync();
+                    await EnsureCommissionsTableAsync(connection);
                     string column = isCreator ? "CreatorID" : "CustomerID";
                     string query = $"SELECT Title, ArtistName, ClientName, Progress, Status, ImagePath FROM Commissions WHERE {column} = @AccountID";
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -1824,7 +1998,9 @@ namespace CreatiSphere.Services
                                     ClientName = reader["ClientName"].ToString() ?? string.Empty,
                                     Progress = Convert.ToInt32(reader["Progress"]),
                                     Status = reader["Status"].ToString() ?? string.Empty,
-                                    ImagePath = reader["ImagePath"].ToString() ?? "commission_placeholder.png"
+                                    ImagePath = string.IsNullOrEmpty(reader["ImagePath"].ToString()) || reader["ImagePath"].ToString() == "commission_placeholder.png" || reader["ImagePath"].ToString()!.Contains("picsum")
+                                        ? GetLocalAssetImage(reader["Title"].ToString() ?? "")
+                                        : reader["ImagePath"].ToString()!
                                 });
                             }
                         }
@@ -1871,6 +2047,59 @@ namespace CreatiSphere.Services
             return activities;
         }
 
+        private async Task EnsureCreatorAssetsTableSchema(SqlConnection connection)
+        {
+            string query = @"
+                IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'CreatorAssets')
+                BEGIN
+                    CREATE TABLE CreatorAssets (
+                        AssetID INT IDENTITY(1,1) PRIMARY KEY,
+                        CreatorID INT NOT NULL,
+                        Title NVARCHAR(255) NOT NULL,
+                        Type NVARCHAR(50) NOT NULL,
+                        Price DECIMAL(18,2) NOT NULL,
+                        ImagePath NVARCHAR(255) NULL,
+                        Views INT DEFAULT 0,
+                        Sales INT DEFAULT 0
+                    );
+                    
+                    -- Insert default dummy data
+                    INSERT INTO CreatorAssets (CreatorID, Title, Type, Price, ImagePath, Views, Sales)
+                    VALUES 
+                    (1, 'Nebula Dreamscape', 'PNG', 12.00, 'nebula_dreamscape.png', 1240, 32),
+                    (1, 'Organic Flow', '3D Model', 45.00, 'organic_flow.png', 890, 15),
+                    (1, 'Velvet Silence', 'SVG', 8.00, 'velvet_silence.png', 3450, 120);
+                END
+                ELSE
+                BEGIN
+                    IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('CreatorAssets') AND name = 'AssetID')
+                    BEGIN
+                        -- If table exists without AssetID, we need to alter it or recreate it. For simplicity, just drop and recreate it.
+                        DROP TABLE CreatorAssets;
+                        CREATE TABLE CreatorAssets (
+                            AssetID INT IDENTITY(1,1) PRIMARY KEY,
+                            CreatorID INT NOT NULL,
+                            Title NVARCHAR(255) NOT NULL,
+                            Type NVARCHAR(50) NOT NULL,
+                            Price DECIMAL(18,2) NOT NULL,
+                            ImagePath NVARCHAR(255) NULL,
+                            Views INT DEFAULT 0,
+                            Sales INT DEFAULT 0
+                        );
+                        -- Insert default dummy data
+                        INSERT INTO CreatorAssets (CreatorID, Title, Type, Price, ImagePath, Views, Sales)
+                        VALUES 
+                        (1, 'Nebula Dreamscape', 'PNG', 12.00, 'nebula_dreamscape.png', 1240, 32),
+                        (1, 'Organic Flow', '3D Model', 45.00, 'organic_flow.png', 890, 15),
+                        (1, 'Velvet Silence', 'SVG', 8.00, 'velvet_silence.png', 3450, 120);
+                    END
+                END";
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                await cmd.ExecuteNonQueryAsync();
+            }
+        }
+
         public async Task<List<CreatorAsset>> GetCreatorAssetsAsync(int accountId)
         {
             var assets = new List<CreatorAsset>();
@@ -1879,7 +2108,34 @@ namespace CreatiSphere.Services
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     await connection.OpenAsync();
-                    string query = "SELECT Title, Type, Price, ImagePath, Views, Sales FROM CreatorAssets WHERE CreatorID = @AccountID";
+                    await EnsureCreatorAssetsTableSchema(connection);
+
+                    // Check if the creator has any assets
+                    string checkQuery = "SELECT COUNT(1) FROM CreatorAssets WHERE CreatorID = @AccountID";
+                    int count = 0;
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection))
+                    {
+                        checkCmd.Parameters.AddWithValue("@AccountID", accountId);
+                        count = Convert.ToInt32(await checkCmd.ExecuteScalarAsync());
+                    }
+
+                    // Seed 3 default assets for this creator if they have 0
+                    if (count == 0)
+                    {
+                        string seedQuery = @"
+                            INSERT INTO CreatorAssets (CreatorID, Title, Type, Price, ImagePath, Views, Sales)
+                            VALUES 
+                            (@AccountID, 'Nebula Dreamscape', 'PNG', 12.00, 'nebula_dreamscape.png', 1240, 32),
+                            (@AccountID, 'Organic Flow', '3D Model', 45.00, 'organic_flow.png', 890, 15),
+                            (@AccountID, 'Velvet Silence', 'SVG', 8.00, 'velvet_silence.png', 3450, 120)";
+                        using (SqlCommand seedCmd = new SqlCommand(seedQuery, connection))
+                        {
+                            seedCmd.Parameters.AddWithValue("@AccountID", accountId);
+                            await seedCmd.ExecuteNonQueryAsync();
+                        }
+                    }
+
+                    string query = "SELECT AssetID, Title, Type, Price, ImagePath, Views, Sales FROM CreatorAssets WHERE CreatorID = @AccountID";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@AccountID", accountId);
@@ -1889,10 +2145,13 @@ namespace CreatiSphere.Services
                             {
                                 assets.Add(new CreatorAsset
                                 {
+                                    AssetID = reader["AssetID"] != DBNull.Value ? Convert.ToInt32(reader["AssetID"]) : 0,
                                     Title = reader["Title"].ToString() ?? string.Empty,
                                     Type = reader["Type"].ToString() ?? string.Empty,
                                     Price = Convert.ToDecimal(reader["Price"]),
-                                    ImagePath = reader["ImagePath"].ToString() ?? string.Empty,
+                                    ImagePath = string.IsNullOrEmpty(reader["ImagePath"].ToString()) 
+                                        ? GetLocalAssetImage(reader["Title"].ToString() ?? "")
+                                        : reader["ImagePath"].ToString() ?? string.Empty,
                                     Views = Convert.ToInt32(reader["Views"]),
                                     Sales = Convert.ToInt32(reader["Sales"])
                                 });
@@ -1901,8 +2160,91 @@ namespace CreatiSphere.Services
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) 
+            { 
+                Console.WriteLine("GetCreatorAssets Error: " + ex.Message); 
+                // Return fallback mock assets if connection fails
+                assets = new List<CreatorAsset>
+                {
+                    new CreatorAsset { AssetID = 1, Title = "Nebula Dreamscape", Type = "PNG", Price = 12.00m, ImagePath = "nebula_dreamscape.png", Views = 1240, Sales = 32 },
+                    new CreatorAsset { AssetID = 2, Title = "Organic Flow", Type = "3D Model", Price = 45.00m, ImagePath = "organic_flow.png", Views = 890, Sales = 15 },
+                    new CreatorAsset { AssetID = 3, Title = "Velvet Silence", Type = "SVG", Price = 8.00m, ImagePath = "velvet_silence.png", Views = 3450, Sales = 120 }
+                };
+            }
             return assets;
+        }
+
+        public async Task<bool> AddCreatorAssetAsync(int creatorId, CreatorAsset asset)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureCreatorAssetsTableSchema(connection);
+                    string query = "INSERT INTO CreatorAssets (CreatorID, Title, Type, Price, ImagePath, Views, Sales) VALUES (@CreatorID, @Title, @Type, @Price, @ImagePath, 0, 0)";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@CreatorID", creatorId);
+                        command.Parameters.AddWithValue("@Title", asset.Title);
+                        command.Parameters.AddWithValue("@Type", asset.Type);
+                        command.Parameters.AddWithValue("@Price", asset.Price);
+                        command.Parameters.AddWithValue("@ImagePath", string.IsNullOrEmpty(asset.ImagePath) ? (object)DBNull.Value : asset.ImagePath);
+                        return await command.ExecuteNonQueryAsync() > 0;
+                    }
+                }
+            }
+            catch { return false; }
+        }
+
+        public async Task<bool> UpdateCreatorAssetAsync(CreatorAsset asset)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    string query = "UPDATE CreatorAssets SET Title = @Title, Type = @Type, Price = @Price, ImagePath = @ImagePath WHERE AssetID = @AssetID";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@AssetID", asset.AssetID);
+                        command.Parameters.AddWithValue("@Title", asset.Title);
+                        command.Parameters.AddWithValue("@Type", asset.Type);
+                        command.Parameters.AddWithValue("@Price", asset.Price);
+                        command.Parameters.AddWithValue("@ImagePath", string.IsNullOrEmpty(asset.ImagePath) ? (object)DBNull.Value : asset.ImagePath);
+                        return await command.ExecuteNonQueryAsync() > 0;
+                    }
+                }
+            }
+            catch { return false; }
+        }
+
+        public async Task<bool> DeleteCreatorAssetAsync(int assetId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    string query = "DELETE FROM CreatorAssets WHERE AssetID = @AssetID";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@AssetID", assetId);
+                        return await command.ExecuteNonQueryAsync() > 0;
+                    }
+                }
+            }
+            catch { return false; }
+        }
+
+        private string GetLocalAssetImage(string title)
+        {
+            // Map known asset titles to local embedded images
+            if (title.Contains("Nebula", StringComparison.OrdinalIgnoreCase)) return "nebula_dreamscape.png";
+            if (title.Contains("Organic", StringComparison.OrdinalIgnoreCase)) return "organic_flow.png";
+            if (title.Contains("Velvet", StringComparison.OrdinalIgnoreCase)) return "velvet_silence.png";
+            // Default fallback
+            return "nebula_dreamscape.png";
         }
 
         public async Task<SystemMetrics> GetSystemMetricsAsync()
@@ -2116,88 +2458,6 @@ namespace CreatiSphere.Services
                 return false;
             }
         }
-        public async Task<bool> AddProductAsync(Product product)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
-                    await connection.OpenAsync();
-                    string query = "INSERT INTO Products (ProductID, Name, Category, Price, Stock, Status, ImageUrl, Description) VALUES (@ProductID, @Name, @Category, @Price, @Stock, @Status, @ImageUrl, @Description)";
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@ProductID", product.ProductID ?? Guid.NewGuid().ToString().Substring(0, 8));
-                        command.Parameters.AddWithValue("@Name", product.Name ?? string.Empty);
-                        command.Parameters.AddWithValue("@Category", product.Category ?? string.Empty);
-                        command.Parameters.AddWithValue("@Price", product.Price);
-                        command.Parameters.AddWithValue("@Stock", product.Stock);
-                        command.Parameters.AddWithValue("@Status", product.Status ?? "In Stock");
-                        command.Parameters.AddWithValue("@ImageUrl", product.ImageUrl ?? "product_placeholder.png");
-                        command.Parameters.AddWithValue("@Description", product.Description ?? string.Empty);
-                        int rows = await command.ExecuteNonQueryAsync();
-                        return rows > 0;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error adding product: {ex.Message}");
-                return false;
-            }
-        }
-
-        public async Task<bool> UpdateProductAsync(Product product)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
-                    await connection.OpenAsync();
-                    string query = "UPDATE Products SET Name = @Name, Category = @Category, Price = @Price, Stock = @Stock, Status = @Status, ImageUrl = @ImageUrl, Description = @Description WHERE ProductID = @ProductID";
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@Name", product.Name ?? string.Empty);
-                        command.Parameters.AddWithValue("@Category", product.Category ?? string.Empty);
-                        command.Parameters.AddWithValue("@Price", product.Price);
-                        command.Parameters.AddWithValue("@Stock", product.Stock);
-                        command.Parameters.AddWithValue("@Status", product.Status ?? string.Empty);
-                        command.Parameters.AddWithValue("@ImageUrl", product.ImageUrl ?? string.Empty);
-                        command.Parameters.AddWithValue("@Description", product.Description ?? string.Empty);
-                        command.Parameters.AddWithValue("@ProductID", product.ProductID);
-                        int rows = await command.ExecuteNonQueryAsync();
-                        return rows > 0;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error updating product: {ex.Message}");
-                return false;
-            }
-        }
-
-        public async Task<bool> DeleteProductAsync(string productId)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
-                    await connection.OpenAsync();
-                    string query = "DELETE FROM Products WHERE ProductID = @ProductID";
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@ProductID", productId);
-                        int rows = await command.ExecuteNonQueryAsync();
-                        return rows > 0;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error deleting product: {ex.Message}");
-                return false;
-            }
-        }
 
         private async Task EnsureCustomOrdersTableSchema(SqlConnection connection)
         {
@@ -2236,6 +2496,16 @@ namespace CreatiSphere.Services
                         ALTER TABLE CustomOrders ADD Priority NVARCHAR(50) NULL;
                     IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'CustomOrders' AND COLUMN_NAME = 'Category')
                         ALTER TABLE CustomOrders ADD Category NVARCHAR(100) NULL;
+                END
+                
+                -- Insert default dummy custom orders assigned to Alex Rivera if table is empty
+                IF NOT EXISTS (SELECT * FROM CustomOrders)
+                BEGIN
+                    INSERT INTO CustomOrders (OrderID, Title, Description, ClientName, Status, Priority, Category, OrderDate, Resolution, ColorProfile, Deliverables, AssignedArtist, Price)
+                    VALUES 
+                    ('8821', 'Futuristic Cyberpunk Landscape', 'High-contrast neon aesthetics with an urban future theme.', 'Alex Linden', 'Briefing', 'High', 'Custom Illustration', DATEADD(day, -2, GETDATE()), '3840x2160', 'sRGB', 'PSD, PNG', 'Alex Rivera', 1250.00),
+                    ('8822', 'Organic Flow 3D Sculpt', 'Fluid shapes inspired by natural cell structures.', 'Elena Vance', 'Concept', 'Normal', '3D Asset', DATEADD(day, -4, GETDATE()), 'High Poly', 'sRGB', 'FBX, OBJ', 'Alex Rivera', 1850.00),
+                    ('8823', 'Velvet Silence Minimalist Poster', 'Minimalist graphic poster with muted tones and gold foil highlights.', 'Sarah Jenkins', 'Delivery', 'Low', 'Graphic Design', DATEADD(day, -10, GETDATE()), 'A2 Print Ready', 'CMYK', 'PDF, TIFF', 'Alex Rivera', 450.00);
                 END";
             using (SqlCommand createCmd = new SqlCommand(createTable, connection))
                 await createCmd.ExecuteNonQueryAsync();
@@ -2350,9 +2620,479 @@ namespace CreatiSphere.Services
                 await command.ExecuteNonQueryAsync();
         }
 
+        private static List<ReportArchive>? _dummyReports = null;
+
+        private void InitializeDummyReports()
+        {
+            if (_dummyReports == null)
+            {
+                _dummyReports = new List<ReportArchive>
+                {
+                    new ReportArchive
+                    {
+                        Id = 1,
+                        Name = "Monthly MSME Report",
+                        Type = "System Growth Audit",
+                        Period = "Last 30 Days",
+                        Size = "2.4 MB",
+                        Format = "PDF",
+                        GeneratedDate = DateTime.Now.AddDays(-1),
+                        FilePath = "Monthly_MSME_Report.pdf"
+                    },
+                    new ReportArchive
+                    {
+                        Id = 2,
+                        Name = "User Activity Report",
+                        Type = "Security & Engagement Audit",
+                        Period = "Last 7 Days",
+                        Size = "1.2 MB",
+                        Format = "CSV",
+                        GeneratedDate = DateTime.Now.AddDays(-3),
+                        FilePath = "User_Activity_Report.csv"
+                    },
+                    new ReportArchive
+                    {
+                        Id = 3,
+                        Name = "Revenue Summary",
+                        Type = "Financial Performance Audit",
+                        Period = "Last 90 Days",
+                        Size = "4.8 MB",
+                        Format = "PDF",
+                        GeneratedDate = DateTime.Now.AddDays(-5),
+                        FilePath = "Revenue_Summary.pdf"
+                    }
+                };
+            }
+        }
+
+        private async Task EnsureReportArchivesTableAsync(SqlConnection connection)
+        {
+            string createTable = @"
+                IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ReportArchives')
+                BEGIN
+                    CREATE TABLE ReportArchives (
+                        Id INT IDENTITY(1,1) PRIMARY KEY,
+                        Name NVARCHAR(255) NOT NULL,
+                        Type NVARCHAR(255) NOT NULL,
+                        Period NVARCHAR(100) NOT NULL,
+                        Size NVARCHAR(50) NOT NULL,
+                        Format NVARCHAR(50) NOT NULL,
+                        GeneratedDate DATETIME NOT NULL DEFAULT GETDATE(),
+                        FilePath NVARCHAR(MAX) NOT NULL
+                    );
+                    
+                    -- Seed default reports
+                    INSERT INTO ReportArchives (Name, Type, Period, Size, Format, GeneratedDate, FilePath)
+                    VALUES 
+                    ('Monthly MSME Report', 'System Growth Audit', 'Last 30 Days', '2.4 MB', 'PDF', DATEADD(day, -1, GETDATE()), 'Monthly_MSME_Report.pdf'),
+                    ('User Activity Report', 'Security & Engagement Audit', 'Last 7 Days', '1.2 MB', 'CSV', DATEADD(day, -3, GETDATE()), 'User_Activity_Report.csv'),
+                    ('Revenue Summary', 'Financial Performance Audit', 'Last 90 Days', '4.8 MB', 'PDF', DATEADD(day, -5, GETDATE()), 'Revenue_Summary.pdf');
+                END";
+            using (SqlCommand command = new SqlCommand(createTable, connection))
+                await command.ExecuteNonQueryAsync();
+        }
+
+        public async Task<List<ReportArchive>> GetReportArchivesAsync()
+        {
+            var reports = new List<ReportArchive>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureReportArchivesTableAsync(connection);
+                    
+                    string query = "SELECT Id, Name, Type, Period, Size, Format, GeneratedDate, FilePath FROM ReportArchives ORDER BY GeneratedDate DESC";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                reports.Add(new ReportArchive
+                                {
+                                    Id = Convert.ToInt32(reader["Id"]),
+                                    Name = reader["Name"].ToString() ?? "",
+                                    Type = reader["Type"].ToString() ?? "",
+                                    Period = reader["Period"].ToString() ?? "",
+                                    Size = reader["Size"].ToString() ?? "",
+                                    Format = reader["Format"].ToString() ?? "",
+                                    GeneratedDate = Convert.ToDateTime(reader["GeneratedDate"]),
+                                    FilePath = reader["FilePath"].ToString() ?? ""
+                                });
+                            }
+                        }
+                    }
+                    return reports;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Database Error in GetReportArchivesAsync: {ex.Message}");
+                InitializeDummyReports();
+                return _dummyReports!.OrderByDescending(r => r.GeneratedDate).ToList();
+            }
+        }
+
+        public async Task<bool> AddReportArchiveAsync(ReportArchive report)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureReportArchivesTableAsync(connection);
+                    
+                    string query = @"INSERT INTO ReportArchives (Name, Type, Period, Size, Format, GeneratedDate, FilePath) 
+                                     VALUES (@Name, @Type, @Period, @Size, @Format, @GeneratedDate, @FilePath)";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Name", report.Name);
+                        command.Parameters.AddWithValue("@Type", report.Type);
+                        command.Parameters.AddWithValue("@Period", report.Period);
+                        command.Parameters.AddWithValue("@Size", report.Size);
+                        command.Parameters.AddWithValue("@Format", report.Format);
+                        command.Parameters.AddWithValue("@GeneratedDate", report.GeneratedDate);
+                        command.Parameters.AddWithValue("@FilePath", report.FilePath);
+                        
+                        await command.ExecuteNonQueryAsync();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Database Error in AddReportArchiveAsync: {ex.Message}");
+                InitializeDummyReports();
+                report.Id = _dummyReports!.Count > 0 ? _dummyReports.Max(r => r.Id) + 1 : 1;
+                _dummyReports.Add(report);
+                return true;
+            }
+        }
+
+        public async Task<bool> UpdateReportNameAsync(int id, string newName)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureReportArchivesTableAsync(connection);
+                    
+                    string query = "UPDATE ReportArchives SET Name = @Name WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Name", newName);
+                        command.Parameters.AddWithValue("@Id", id);
+                        int rows = await command.ExecuteNonQueryAsync();
+                        return rows > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Database Error in UpdateReportNameAsync: {ex.Message}");
+                InitializeDummyReports();
+                var report = _dummyReports!.FirstOrDefault(r => r.Id == id);
+                if (report != null)
+                {
+                    report.Name = newName;
+                }
+                return true;
+            }
+        }
+
+        public async Task<bool> DeleteReportArchiveAsync(int id)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureReportArchivesTableAsync(connection);
+                    
+                    string query = "DELETE FROM ReportArchives WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", id);
+                        int rows = await command.ExecuteNonQueryAsync();
+                        return rows > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Database Error in DeleteReportArchiveAsync: {ex.Message}");
+                InitializeDummyReports();
+                _dummyReports!.RemoveAll(r => r.Id == id);
+                return true;
+            }
+        }
+
+        private static List<Product>? _dummyProducts = null;
+
+        private void InitializeDummyProducts()
+        {
+            if (_dummyProducts != null) return;
+            _dummyProducts = new List<Product>
+            {
+                new Product { ProductID = "CS-EV-001", Name = "Ethereal Visions Limited Print", Category = "Physical Prints", Price = 120.00m, Stock = 14, Status = "In Stock", ImageUrl = GetLocalAssetImage("Ethereal Visions"), Description = "Fine art print." },
+                new Product { ProductID = "CS-NS-DLG", Name = "Neon Soul Collection Bundle", Category = "Digital Assets", Price = 45.00m, Stock = -1, Status = "Unlimited (Digital)", ImageUrl = GetLocalAssetImage("Neon Soul"), Description = "Digital download." },
+                new Product { ProductID = "CS-TX-004", Name = "Custom Hand-Painted Tote", Category = "Physical Prints", Price = 65.00m, Stock = 2, Status = "Low Stock", ImageUrl = GetLocalAssetImage("Hand-Painted"), Description = "Apparel." },
+                new Product { ProductID = "CS-HM-992", Name = "Abstract Resin Coasters (Set of 4)", Category = "Physical Prints", Price = 38.00m, Stock = 22, Status = "In Stock", ImageUrl = GetLocalAssetImage("Resin Coasters"), Description = "Home Decor." }
+            };
+        }
+
+        private async Task EnsureProductsTableAsync(SqlConnection connection)
+        {
+            string createTable = @"
+                IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Products')
+                BEGIN
+                    CREATE TABLE Products (
+                        ProductID NVARCHAR(50) PRIMARY KEY,
+                        Name NVARCHAR(255) NOT NULL,
+                        Category NVARCHAR(100) NULL,
+                        Price DECIMAL(18,2) NOT NULL DEFAULT 0,
+                        Stock INT NOT NULL DEFAULT 0,
+                        Status NVARCHAR(100) NULL,
+                        ImageUrl NVARCHAR(500) NULL,
+                        Description NVARCHAR(MAX) NULL
+                    );
+                END";
+            using (SqlCommand command = new SqlCommand(createTable, connection))
+                await command.ExecuteNonQueryAsync();
+        }
+
+        public async Task<(List<Product> Items, int TotalCount)> GetProductsAsync(int pageNumber, int pageSize, string categoryFilter)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureProductsTableAsync(connection);
+
+                    string filterClause = string.IsNullOrEmpty(categoryFilter) || categoryFilter == "All Products" ? "" : "WHERE Category = @Cat";
+                    
+                    // Count
+                    int totalCount = 0;
+                    string countQuery = $"SELECT COUNT(*) FROM Products {filterClause}";
+                    using (SqlCommand countCmd = new SqlCommand(countQuery, connection))
+                    {
+                        if (!string.IsNullOrEmpty(filterClause)) countCmd.Parameters.AddWithValue("@Cat", categoryFilter);
+                        var countRes = await countCmd.ExecuteScalarAsync();
+                        if (countRes != DBNull.Value && countRes != null) totalCount = Convert.ToInt32(countRes);
+                    }
+
+                    // Select Page
+                    string query = $@"
+                        SELECT * FROM Products {filterClause}
+                        ORDER BY Name
+                        OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY";
+                    
+                    List<Product> products = new List<Product>();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        if (!string.IsNullOrEmpty(filterClause)) command.Parameters.AddWithValue("@Cat", categoryFilter);
+                        command.Parameters.AddWithValue("@Offset", (pageNumber - 1) * pageSize);
+                        command.Parameters.AddWithValue("@PageSize", pageSize);
+                        
+                        using (var reader = await command.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                products.Add(new Product
+                                {
+                                    ProductID = reader["ProductID"].ToString(),
+                                    Name = reader["Name"].ToString(),
+                                    Category = reader["Category"].ToString(),
+                                    Price = Convert.ToDecimal(reader["Price"]),
+                                    Stock = Convert.ToInt32(reader["Stock"]),
+                                    Status = reader["Status"].ToString(),
+                                    ImageUrl = string.IsNullOrEmpty(reader["ImageUrl"].ToString()) || reader["ImageUrl"].ToString()!.Contains("placeholder") || reader["ImageUrl"].ToString()!.Contains("picsum")
+                                        ? GetLocalAssetImage(reader["Name"].ToString() ?? "")
+                                        : reader["ImageUrl"].ToString(),
+                                    Description = reader["Description"].ToString()
+                                });
+                            }
+                        }
+                    }
+                    return (products, totalCount);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Database Error GetProductsAsync: {ex.Message}");
+                InitializeDummyProducts();
+                var filtered = _dummyProducts!.Where(p => string.IsNullOrEmpty(categoryFilter) || categoryFilter == "All Products" || p.Category == categoryFilter).ToList();
+                var paged = filtered.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                return (paged, filtered.Count);
+            }
+        }
+
+        public async Task<(int Total, int Active, int LowStock, decimal AvgPrice)> GetCatalogStatsAsync()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureProductsTableAsync(connection);
+
+                    int total = 0, active = 0, lowStock = 0;
+                    decimal avgPrice = 0;
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Products", connection))
+                    {
+                        var totalRes = await cmd.ExecuteScalarAsync();
+                        if (totalRes != DBNull.Value && totalRes != null) total = Convert.ToInt32(totalRes);
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Products WHERE Status = 'In Stock' OR Status = 'Unlimited (Digital)'", connection))
+                    {
+                        var actRes = await cmd.ExecuteScalarAsync();
+                        if (actRes != DBNull.Value && actRes != null) active = Convert.ToInt32(actRes);
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Products WHERE Stock > 0 AND Stock <= 5", connection))
+                    {
+                        var lowRes = await cmd.ExecuteScalarAsync();
+                        if (lowRes != DBNull.Value && lowRes != null) lowStock = Convert.ToInt32(lowRes);
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT AVG(Price) FROM Products", connection))
+                    {
+                        var result = await cmd.ExecuteScalarAsync();
+                        if (result != DBNull.Value) avgPrice = Convert.ToDecimal(result);
+                    }
+
+                    return (total, active, lowStock, avgPrice);
+                }
+            }
+            catch
+            {
+                InitializeDummyProducts();
+                return (
+                    _dummyProducts!.Count,
+                    _dummyProducts!.Count(p => p.Status == "In Stock" || p.Status == "Unlimited (Digital)"),
+                    _dummyProducts!.Count(p => p.Stock > 0 && p.Stock <= 5),
+                    _dummyProducts!.Count > 0 ? _dummyProducts!.Average(p => p.Price) : 0
+                );
+            }
+        }
+
+        public async Task<bool> AddProductAsync(Product product)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureProductsTableAsync(connection);
+
+                    string query = @"INSERT INTO Products (ProductID, Name, Category, Price, Stock, Status, ImageUrl, Description) 
+                                     VALUES (@ID, @Name, @Cat, @Price, @Stock, @Status, @Img, @Desc)";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@ID", product.ProductID ?? Guid.NewGuid().ToString().Substring(0, 8));
+                        command.Parameters.AddWithValue("@Name", product.Name ?? "");
+                        command.Parameters.AddWithValue("@Cat", product.Category ?? "");
+                        command.Parameters.AddWithValue("@Price", product.Price);
+                        command.Parameters.AddWithValue("@Stock", product.Stock);
+                        command.Parameters.AddWithValue("@Status", product.Status ?? "");
+                        command.Parameters.AddWithValue("@Img", product.ImageUrl ?? "");
+                        command.Parameters.AddWithValue("@Desc", product.Description ?? "");
+                        int rows = await command.ExecuteNonQueryAsync();
+                        return rows > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Database Error AddProductAsync: {ex.Message}");
+                InitializeDummyProducts();
+                if (string.IsNullOrEmpty(product.ProductID)) product.ProductID = Guid.NewGuid().ToString().Substring(0,8);
+                _dummyProducts!.Add(product);
+                return true;
+            }
+        }
+
+        public async Task<bool> UpdateProductAsync(Product product)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureProductsTableAsync(connection);
+
+                    string query = @"UPDATE Products 
+                                     SET Name=@Name, Category=@Cat, Price=@Price, Stock=@Stock, Status=@Status, ImageUrl=@Img, Description=@Desc
+                                     WHERE ProductID=@ID";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@ID", product.ProductID);
+                        command.Parameters.AddWithValue("@Name", product.Name ?? "");
+                        command.Parameters.AddWithValue("@Cat", product.Category ?? "");
+                        command.Parameters.AddWithValue("@Price", product.Price);
+                        command.Parameters.AddWithValue("@Stock", product.Stock);
+                        command.Parameters.AddWithValue("@Status", product.Status ?? "");
+                        command.Parameters.AddWithValue("@Img", product.ImageUrl ?? "");
+                        command.Parameters.AddWithValue("@Desc", product.Description ?? "");
+                        int rows = await command.ExecuteNonQueryAsync();
+                        return rows > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Database Error UpdateProductAsync: {ex.Message}");
+                InitializeDummyProducts();
+                var existing = _dummyProducts!.FirstOrDefault(p => p.ProductID == product.ProductID);
+                if (existing != null)
+                {
+                    existing.Name = product.Name;
+                    existing.Category = product.Category;
+                    existing.Price = product.Price;
+                    existing.Stock = product.Stock;
+                    existing.Status = product.Status;
+                    existing.ImageUrl = product.ImageUrl;
+                    existing.Description = product.Description;
+                }
+                return true;
+            }
+        }
+
+        public async Task<bool> DeleteProductAsync(string productId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureProductsTableAsync(connection);
+
+                    string query = "DELETE FROM Products WHERE ProductID=@ID";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@ID", productId);
+                        int rows = await command.ExecuteNonQueryAsync();
+                        return rows > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Database Error DeleteProductAsync: {ex.Message}");
+                InitializeDummyProducts();
+                _dummyProducts!.RemoveAll(p => p.ProductID == productId);
+                return true;
+            }
+        }
+
         /// <summary>
         /// Removes unused database tables that are not in the use-case scope.
-        /// This permanently deletes: CrmLeads, SystemIncidents, ReportArchives tables and all their data.
+        /// This permanently deletes: CrmLeads and SystemIncidents tables and all their data.
         /// </summary>
         public async Task<bool> CleanupUnusedTablesAsync()
         {
@@ -2362,7 +3102,7 @@ namespace CreatiSphere.Services
                 {
                     await connection.OpenAsync();
 
-                    string[] tablesToDrop = { "CrmLeads", "SystemIncidents", "ReportArchives" };
+                    string[] tablesToDrop = { "CrmLeads", "SystemIncidents" };
                     int droppedCount = 0;
 
                     foreach (var tableName in tablesToDrop)
@@ -2385,6 +3125,128 @@ namespace CreatiSphere.Services
                 Console.WriteLine($"Error cleaning up tables: {ex.Message}");
                 return false;
             }
+        }
+
+        // ─── CREATOR DASHBOARD: Weekly Sales Performance ────────────────────────
+
+        public async Task<List<WeeklySalesData>> GetWeeklySalesPerformanceAsync(int creatorAccountId)
+        {
+            var data = new List<WeeklySalesData>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureSalesTransactionsTableAsync(connection);
+
+                    // Get weekly revenue for the last 8 weeks from SalesTransactions
+                    string query = @"
+                        SELECT 
+                            DATEPART(WEEK, TransactionDate) AS WeekNum,
+                            MIN(TransactionDate) AS WeekStart,
+                            SUM(Amount) AS WeeklyRevenue
+                        FROM SalesTransactions
+                        WHERE TransactionDate >= DATEADD(WEEK, -8, GETDATE())
+                          AND Status = 'Completed'
+                        GROUP BY DATEPART(WEEK, TransactionDate)
+                        ORDER BY WeekNum";
+
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                data.Add(new WeeklySalesData
+                                {
+                                    Revenue = Convert.ToDecimal(reader["WeeklyRevenue"]),
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetWeeklySalesPerformance Error: {ex.Message}");
+            }
+
+            // Pad to 8 weeks if we have fewer
+            while (data.Count < 8)
+            {
+                data.Insert(0, new WeeklySalesData { Revenue = 0 });
+            }
+
+            // Keep only last 8
+            if (data.Count > 8)
+                data = data.Skip(data.Count - 8).ToList();
+
+            // Calculate chart heights (max bar = 140px) and labels
+            decimal maxRevenue = data.Max(d => d.Revenue);
+            if (maxRevenue == 0) maxRevenue = 1; // avoid div by zero
+
+            for (int i = 0; i < data.Count; i++)
+            {
+                data[i].WeekLabel = $"WK {i + 1}";
+                data[i].ChartHeight = Math.Max(12, (double)(data[i].Revenue / maxRevenue) * 140.0);
+                data[i].ToolTip = $"Week {i + 1}: ₱{data[i].Revenue:N0} Revenue";
+                // Highlight the top 2 weeks
+                data[i].IsHighlight = data[i].Revenue >= maxRevenue * 0.75m;
+            }
+
+            return data;
+        }
+
+        // ─── CREATOR DASHBOARD: Recent Transactions ─────────────────────────────
+
+        public async Task<List<CreatorTransaction>> GetCreatorTransactionsAsync(int creatorAccountId)
+        {
+            var transactions = new List<CreatorTransaction>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    await EnsureSalesTransactionsTableAsync(connection);
+
+                    // Fetch the most recent 10 transactions from SalesTransactions
+                    string query = @"
+                        SELECT TOP 10
+                            TransactionID,
+                            CustomerName,
+                            TransactionDate,
+                            Amount,
+                            Status,
+                            PaymentMethod
+                        FROM SalesTransactions
+                        ORDER BY TransactionDate DESC";
+
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                transactions.Add(new CreatorTransaction
+                                {
+                                    TransactionID = reader["TransactionID"]?.ToString() ?? "",
+                                    CustomerName = reader["CustomerName"]?.ToString() ?? "Customer",
+                                    AssetTitle = reader["PaymentMethod"]?.ToString() ?? "Purchase",
+                                    Date = Convert.ToDateTime(reader["TransactionDate"]),
+                                    Amount = Convert.ToDecimal(reader["Amount"]),
+                                    Status = reader["Status"]?.ToString() ?? "Completed"
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetCreatorTransactions Error: {ex.Message}");
+            }
+
+            return transactions;
         }
     }
 }

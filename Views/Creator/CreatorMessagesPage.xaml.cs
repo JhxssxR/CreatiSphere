@@ -3,14 +3,14 @@ using Microsoft.Maui.Controls;
 using CreatiSphere.Services;
 using System.Threading.Tasks;
 
-namespace CreatiSphere.Views.Customer
+namespace CreatiSphere.Views.Creator
 {
-    public partial class MessagesPage : ContentPage
+    public partial class CreatorMessagesPage : ContentPage
     {
         private readonly DatabaseService _databaseService;
-        private const int CurrentUserId = 1002;
+        private const int CurrentUserId = 1; // Default creator
 
-        public MessagesPage()
+        public CreatorMessagesPage()
         {
             InitializeComponent();
             _databaseService = new DatabaseService();
@@ -22,7 +22,7 @@ namespace CreatiSphere.Views.Customer
             await LoadUserInfo();
             
             ChatCollectionView.ItemsSource = MockMessageService.ChatHistory;
-            MockMessageService.HasNewMessageForCustomer = false; // Mark as read
+            MockMessageService.HasNewMessageForCreator = false; // Mark as read
             
             // Update conversation list visibility
             if (MockMessageService.ChatHistory.Count > 0)
@@ -39,21 +39,7 @@ namespace CreatiSphere.Views.Customer
                 EmptyChatState.IsVisible = true;
             }
             
-            // Check for pending payments
-            try
-            {
-                var orders = await _databaseService.GetCustomOrdersAsync();
-                bool hasPendingPayment = orders.Any(o => o.Status == "Waiting for Payment");
-                PaymentActionBanner.IsVisible = hasPendingPayment;
-            }
-            catch { }
-
             ScrollToBottom();
-        }
-
-        private async void OnPaymentBannerTapped(object? sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("//TrackOrdersPage");
         }
 
         private void OnConversationTapped(object? sender, EventArgs e)
@@ -74,7 +60,7 @@ namespace CreatiSphere.Views.Customer
         {
             if (!string.IsNullOrWhiteSpace(MessageEntry.Text))
             {
-                MockMessageService.AddMessage("Alex (Customer)", MessageEntry.Text, true);
+                MockMessageService.AddMessage("Elena Vance (Creator)", MessageEntry.Text, false);
                 MessageEntry.Text = string.Empty;
                 ScrollToBottom();
             }
@@ -97,37 +83,32 @@ namespace CreatiSphere.Views.Customer
 
         private async void OnDashboardTapped(object? sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//CustomerDashboard");
+            await Shell.Current.GoToAsync("//CreatorDashboardPage");
         }
 
-        private async void OnExploreTapped(object? sender, EventArgs e)
+        private async void OnAssetLibraryTapped(object? sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//BrowseMarketplacePage");
+            await Shell.Current.GoToAsync("//AssetLibraryPage");
         }
 
-        private async void OnCustomOrdersTapped(object? sender, EventArgs e)
+        private async void OnCatalogManagerTapped(object? sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//CustomOrdersPage");
+            await Shell.Current.GoToAsync("//CatalogManagerPage");
         }
 
-        private async void OnTrackOrdersTapped(object? sender, EventArgs e)
+        private async void OnCommissionsTapped(object? sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//TrackOrdersPage");
-        }
-
-        private async void OnFeedbackTapped(object? sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("//FeedbackPage");
-        }
-
-        private async void OnRewardsTapped(object? sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("//RewardsPage");
+            await Shell.Current.GoToAsync("//CommissionsPage");
         }
 
         private async void OnSignOutTapped(object? sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//MainPage");
+        }
+
+        private async void OnUploadNewArtClicked(object? sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AssetEditorPage());
         }
     }
 }

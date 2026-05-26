@@ -19,6 +19,7 @@ namespace CreatiSphere.Views.Admin
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            HeaderProfileInitials.Text = !string.IsNullOrEmpty(UserSession.Username) ? UserSession.Username.Substring(0, 1).ToUpper() : "U";
             await LoadSalesData();
         }
 
@@ -26,6 +27,19 @@ namespace CreatiSphere.Views.Admin
         {
             try
             {
+                if (UserSession.AccountID > 5)
+                {
+                    _allTransactions = new List<SaleTransaction>();
+                    BindableLayout.SetItemsSource(TransactionsList, _allTransactions);
+                    
+                    TotalRevenueLabel.Text = "$0.00";
+                    TodaySalesLabel.Text = "$0.00";
+                    TodayTransactionsLabel.Text = "0 transactions today";
+                    AvgOrderValueLabel.Text = "$0.00";
+                    ConversionRateLabel.Text = "0.0%";
+                    return;
+                }
+
                 // Load Transactions
                 _allTransactions = await _dbService.GetRecentTransactionsAsync();
                 BindableLayout.SetItemsSource(TransactionsList, _allTransactions);

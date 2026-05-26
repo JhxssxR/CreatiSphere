@@ -53,9 +53,19 @@ namespace CreatiSphere.Views.Admin
             try
             {
                 var users = await _dbService.GetUsersAsync();
+                
+                if (Services.UserSession.AccountID > 5)
+                {
+                    users = new List<Services.User>();
+                }
+                
                 _allUsers = users;
                 UpdateList(users);
-                TotalUsersLabel.Text = users.Count.ToString("N0");
+
+                if (!string.IsNullOrEmpty(Services.UserSession.Username) && Services.UserSession.Username.Length >= 2)
+                    HeaderProfileInitials.Text = Services.UserSession.Username.Substring(0, 2).ToUpper();
+                else
+                    HeaderProfileInitials.Text = "AD";
             }
             catch (Exception ex)
             {
@@ -180,6 +190,20 @@ namespace CreatiSphere.Views.Admin
 
         private void OnAddUserClicked(object? sender, EventArgs e)
         {
+            var allowedRoles = new List<string> { "Customer", "Creator" };
+            if (Services.UserSession.Tier == "Standard")
+            {
+                allowedRoles.Add("Sales");
+                allowedRoles.Add("Finance");
+            }
+            else if (Services.UserSession.Tier == "Enterprise Plus")
+            {
+                allowedRoles.Add("Sales");
+                allowedRoles.Add("Finance");
+                allowedRoles.Add("Admin");
+                allowedRoles.Add("Super Admin");
+            }
+            NewUserRolePicker.ItemsSource = allowedRoles;
             AddUserModal.IsVisible = true;
         }
 

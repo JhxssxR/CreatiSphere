@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using CreatiSphere.Services;
 
@@ -20,6 +21,21 @@ namespace CreatiSphere.Views.Creator
         private Label? _profileRoleLabel;
         private Label? _profileInitialsLabel;
         private Label? _accountNameLabel;
+
+        // Modal overlay controls
+        private Grid? _assetEditorModal;
+        private Label? _modalTitleLabel;
+        private Entry? _titleEntry;
+        private Entry? _typeEntry;
+        private Entry? _priceEntry;
+        private Label? _imagePathLabel;
+        private Image? _previewImage;
+        private Button? _saveButton;
+
+        // Modal state
+        private CreatorAsset? _assetToEdit;
+        private string _selectedImagePath = string.Empty;
+        private bool _isEditMode = false;
 
         public AssetLibraryPage()
         {
@@ -110,6 +126,16 @@ namespace CreatiSphere.Views.Creator
             _profileRoleLabel = (Label)FindByName("ProfileRoleLabel");
             _profileInitialsLabel = (Label)FindByName("ProfileInitialsLabel");
             _accountNameLabel = (Label)FindByName("AccountNameLabel");
+
+            // Modal overlay binding
+            _assetEditorModal = (Grid)FindByName("AssetEditorModal");
+            _modalTitleLabel = (Label)FindByName("ModalTitleLabel");
+            _titleEntry = (Entry)FindByName("TitleEntry");
+            _typeEntry = (Entry)FindByName("TypeEntry");
+            _priceEntry = (Entry)FindByName("PriceEntry");
+            _imagePathLabel = (Label)FindByName("ImagePathLabel");
+            _previewImage = (Image)FindByName("PreviewImage");
+            _saveButton = (Button)FindByName("SaveButton");
         }
 
         private async void OnDashboardTapped(object? sender, EventArgs e)
@@ -122,6 +148,11 @@ namespace CreatiSphere.Views.Creator
             await Shell.Current.GoToAsync("//CommissionsPage");
         }
 
+        private async void OnMessagesTapped(object? sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//CreatorMessagesPage");
+        }
+
         private async void OnCatalogManagerTapped(object? sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//CatalogManagerPage");
@@ -130,6 +161,193 @@ namespace CreatiSphere.Views.Creator
         private async void OnSignOutTapped(object? sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//MainPage");
+        }
+
+        private void OnBrowseFilesTapped(object? sender, EventArgs e)
+        {
+            OpenAssetEditorModal(null);
+        }
+
+        private void OnUploadNewArtClicked(object? sender, EventArgs e)
+        {
+            OpenAssetEditorModal(null);
+        }
+
+        private async void OnAssetOptionsTapped(object? sender, TappedEventArgs e)
+        {
+            if (e.Parameter is CreatorAsset asset)
+            {
+                string action = await DisplayActionSheet($"Options for {asset.Title}", "Cancel", "Delete", "Edit");
+                if (action == "Edit")
+                {
+                    OpenAssetEditorModal(asset);
+                }
+                else if (action == "Delete")
+                {
+                    bool confirm = await DisplayAlert("Confirm Delete", $"Are you sure you want to delete '{asset.Title}'?", "Yes, Delete", "Cancel");
+                    if (confirm)
+                    {
+                        bool success = await _databaseService.DeleteCreatorAssetAsync(asset.AssetID);
+                        if (success)
+                        {
+                            await LoadAssetsAsync(); // Reload UI
+                        }
+                        else
+                        {
+                            await DisplayAlert("Error", "Could not delete asset.", "OK");
+                        }
+                    }
+                }
+            }
+        }
+
+        private void OpenAssetEditorModal(CreatorAsset? asset = null)
+        {
+            if (_assetEditorModal == null || _modalTitleLabel == null || _titleEntry == null || 
+                _typeEntry == null || _priceEntry == null || _imagePathLabel == null || 
+                _previewImage == null || _saveButton == null)
+            {
+                return;
+            }
+
+            if (asset != null)
+            {
+                _assetToEdit = asset;
+                _isEditMode = true;
+                _modalTitleLabel.Text = "Edit Asset";
+                _saveButton.Text = "Update Asset";
+                
+                _titleEntry.Text = _assetToEdit.Title;
+                _typeEntry.Text = _assetToEdit.Type;
+                _priceEntry.Text = _assetToEdit.Price.ToString("F2");
+                
+                if (!string.IsNullOrEmpty(_assetToEdit.ImagePath))
+                {
+                    _selectedImagePath = _assetToEdit.ImagePath;
+                    _imagePathLabel.Text = System.IO.Path.GetFileName(_selectedImagePath);
+                    _previewImage.Source = _selectedImagePath;
+                    _previewImage.IsVisible = true;
+                }
+                else
+                {
+                    _selectedImagePath = string.Empty;
+                    _imagePathLabel.Text = "No file selected";
+                    _previewImage.Source = null;
+                    _previewImage.IsVisible = false;
+                }
+            }
+            else
+            {
+                _assetToEdit = new CreatorAsset();
+                _isEditMode = false;
+                _modalTitleLabel.Text = "Upload New Asset";
+                _saveButton.Text = "Save Asset";
+                
+                _titleEntry.Text = string.Empty;
+                _typeEntry.Text = string.Empty;
+                _priceEntry.Text = string.Empty;
+                _selectedImagePath = string.Empty;
+                _imagePathLabel.Text = "No file selected";
+                _previewImage.Source = null;
+                _previewImage.IsVisible = false;
+            }
+            
+            _assetEditorModal.IsVisible = true;
+        }
+
+        private async void OnChooseImageClicked(object? sender, EventArgs e)
+        {
+            if (_imagePathLabel == null || _previewImage == null) return;
+
+            try
+            {
+                var result = await FilePicker.Default.PickAsync(new PickOptions
+                {
+                    PickerTitle = "Select Asset Image",
+                    FileTypes = FilePickerFileType.Images
+                });
+
+                if (result != null)
+                {
+                    // Copy to app data directory for persistence
+                    var localFolder = FileSystem.AppDataDirectory;
+                    var localPath = System.IO.Path.Combine(localFolder, result.FileName);
+
+                    using var stream = await result.OpenReadAsync();
+                    using var localStream = System.IO.File.OpenWrite(localPath);
+                    await stream.CopyToAsync(localStream);
+
+                    _selectedImagePath = localPath;
+                    _imagePathLabel.Text = result.FileName;
+                    _previewImage.Source = localPath;
+                    _previewImage.IsVisible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Failed to pick image: {ex.Message}", "OK");
+            }
+        }
+
+        private void OnCancelModalClicked(object? sender, EventArgs e)
+        {
+            if (_assetEditorModal != null)
+            {
+                _assetEditorModal.IsVisible = false;
+            }
+        }
+
+        private async void OnSaveAssetClicked(object? sender, EventArgs e)
+        {
+            if (_titleEntry == null || _typeEntry == null || _priceEntry == null || _assetEditorModal == null) return;
+
+            if (string.IsNullOrWhiteSpace(_titleEntry.Text) || string.IsNullOrWhiteSpace(_typeEntry.Text))
+            {
+                await DisplayAlert("Validation Error", "Title and Type are required.", "OK");
+                return;
+            }
+
+            if (!decimal.TryParse(_priceEntry.Text, out decimal price))
+            {
+                await DisplayAlert("Validation Error", "Please enter a valid price.", "OK");
+                return;
+            }
+
+            if (_assetToEdit == null)
+            {
+                _assetToEdit = new CreatorAsset();
+            }
+
+            _assetToEdit.Title = _titleEntry.Text.Trim();
+            _assetToEdit.Type = _typeEntry.Text.Trim();
+            _assetToEdit.Price = price;
+            _assetToEdit.ImagePath = _selectedImagePath;
+
+            bool success;
+            if (_isEditMode)
+            {
+                success = await _databaseService.UpdateCreatorAssetAsync(_assetToEdit);
+            }
+            else
+            {
+                success = await _databaseService.AddCreatorAssetAsync(UserSession.AccountID, _assetToEdit);
+            }
+
+            if (success)
+            {
+                await DisplayAlert("Success", "Asset saved successfully.", "OK");
+                _assetEditorModal.IsVisible = false;
+                await LoadAssetsAsync(); // Reload UI
+            }
+            else
+            {
+                await DisplayAlert("Error", "Failed to save asset. Please try again.", "OK");
+            }
+        }
+
+        private async void OnLoadMoreClicked(object? sender, EventArgs e)
+        {
+            await DisplayAlert("Load More", "Fetching more assets from the library...", "OK");
         }
     }
 }

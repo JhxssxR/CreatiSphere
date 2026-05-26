@@ -33,9 +33,11 @@
                               Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
                         <Path Data="M19.1,12.9l2.1,1.6c0.2,0.1,0.2,0.4,0.1,0.6l-2,3.5c-0.1,0.2-0.4,0.3-0.6,0.2l-2.5-1c-0.5,0.4-1.1,0.7-1.7,1 l-0.4,2.6c0,0.2-0.2,0.4-0.5,0.4h-4c-0.3,0-0.5-0.2-0.5-0.4l-0.4-2.6c-0.6-0.3-1.2-0.6-1.7-1l-2.5,1c-0.2,0.1-0.5,0-0.6-0.2l-2-3.5 C1.9,14.9,2,14.6,2.2,14.5l2.1-1.6c-0.1-0.3-0.1-0.6-0.1-0.9s0-0.6,0.1-0.9L2.2,8.6c-0.2-0.1-0.2-0.4-0.1-0.6l2-3.5c0.1-0.2,0.4-0.3,0.6-0.2 l2.5,1c0.5-0.4,1.1-0.7,1.7-1L9.4,1.7c0-0.2,0.2-0.4,0.5-0.4h4c0.3,0,0.5,0.2,0.5,0.4l0.4,2.6c0.6,0.3,1.2,0.6,1.7,1l2.5-1 c0.2-0.1,0.5,0,0.6,0.2l2,3.5c0.1,0.2,0,0.5-0.2,0.6l-2.1,1.6c0.1,0.3,0.1,0.6,0.1,0.9S19.2,12.6,19.1,12.9z M12,15c1.7,0,3-1.3,3-3 s-1.3-3-3-3s-3,1.3-3,3S10.3,15,12,15z" 
                               Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
-                        
-                        <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0">
-                            <Image Source="avatar.png" Aspect="AspectFill" />
+                        <Border BackgroundColor="{StaticResource DashboardTeal}" HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0">
+                            <Label x:Name="HeaderProfileInitials" Text="AD" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSignOutClicked" />
+                            </Border.GestureRecognizers>
                         </Border>
                     </HorizontalStackLayout>
                 </Grid>
@@ -167,7 +169,7 @@
                     <VerticalStackLayout>
                         <Grid ColumnDefinitions="*, Auto" Padding="24, 20">
                             <Label Text="Catalog Details" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
-                            <Label Grid.Column="1" Text="Showing 4 of 124 products" TextColor="{StaticResource Slate500}" FontSize="13" VerticalOptions="Center" />
+                            <Label x:Name="ProductCountLabel" Grid.Column="1" Text="Showing 4 of 124 products" TextColor="{StaticResource Slate500}" FontSize="13" VerticalOptions="Center" />
                         </Grid>
 
                         <BoxView HeightRequest="1" Color="{StaticResource Slate200}" />
@@ -272,157 +274,163 @@
         </ScrollView>
         <!-- Add/Edit Product Modal -->
         <Grid x:Name="ProductModal" Grid.RowSpan="2" Grid.ColumnSpan="2" BackgroundColor="#80000000" IsVisible="False">
-            <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="750" BackgroundColor="White" StrokeShape="RoundRectangle 24" Padding="0" StrokeThickness="0">
+            <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="750" MaximumHeightRequest="800" Margin="0,40" BackgroundColor="White" StrokeShape="RoundRectangle 24" Padding="0" StrokeThickness="0">
                 <Border.Shadow><Shadow Brush="Black" Opacity="0.2" Offset="0,10" Radius="30"/></Border.Shadow>
                 
-                <VerticalStackLayout>
+                <Grid RowDefinitions="Auto, *, Auto">
                     <!-- Header -->
-                    <Grid ColumnDefinitions="Auto, *" Padding="32, 32, 32, 24">
-                        <Border BackgroundColor="#F0FDFA" HeightRequest="56" WidthRequest="56" StrokeShape="RoundRectangle 16" StrokeThickness="0">
-                            <Path Data="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z" Fill="#0D9488" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <VerticalStackLayout Grid.Column="1" Margin="20, 0, 0, 0" VerticalOptions="Center">
-                            <Label x:Name="ModalTitle" Text="Add New Product" TextColor="{StaticResource Slate900}" FontSize="20" FontAttributes="Bold" />
-                            <Label Text="Manage your digital asset catalog details" TextColor="{StaticResource Slate500}" FontSize="13" />
-                        </VerticalStackLayout>
-                    </Grid>
-
-                    <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
-
-                    <Grid ColumnDefinitions="180, *" ColumnSpacing="32" Padding="32, 24, 32, 32">
-                        <!-- Left: Image Preview -->
-                        <VerticalStackLayout Grid.Column="0" Spacing="16">
-                            <Label Text="PRODUCT IMAGE" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
-                            <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="{StaticResource Slate200}" HeightRequest="180" BackgroundColor="{StaticResource Slate50}">
-                                <Grid>
-                                    <!-- Fallback Icon -->
-                                    <Path Data="M21,19V5C21,3.9 20.1,3 19,3H5C3.9,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19M8.5,13.5L11,16.5L14.5,12L19,18H5L8.5,13.5Z" 
-                                          Fill="{StaticResource Slate200}" Aspect="Uniform" HeightRequest="48" WidthRequest="48" HorizontalOptions="Center" VerticalOptions="Center" />
-                                    
-                                    <Image x:Name="ProductImagePreview" Source="product_placeholder.png" Aspect="AspectFill" />
-                                    
-                                    <Border BackgroundColor="#CCFFFFFF" Padding="8,4" VerticalOptions="End" HorizontalOptions="Center" Margin="0,0,0,12" StrokeShape="RoundRectangle 8">
-                                        <Label Text="Preview" TextColor="{StaticResource Slate700}" FontSize="10" FontAttributes="Bold" />
-                                    </Border>
-                                </Grid>
+                    <VerticalStackLayout Grid.Row="0">
+                        <Grid ColumnDefinitions="Auto, *" Padding="32, 32, 32, 24">
+                            <Border BackgroundColor="#F0FDFA" HeightRequest="56" WidthRequest="56" StrokeShape="RoundRectangle 16" StrokeThickness="0">
+                                <Path Data="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z" Fill="#0D9488" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
                             </Border>
-                            <Button Text="Upload Image" Clicked="OnUploadImageClicked" BackgroundColor="White" TextColor="{StaticResource DashboardTeal}" BorderColor="{StaticResource DashboardTeal}" BorderWidth="1" CornerRadius="8" HeightRequest="36" FontSize="12" />
-                        </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Margin="20, 0, 0, 0" VerticalOptions="Center">
+                                <Label x:Name="ModalTitle" Text="Add New Product" TextColor="{StaticResource Slate900}" FontSize="20" FontAttributes="Bold" />
+                                <Label Text="Manage your digital asset catalog details" TextColor="{StaticResource Slate500}" FontSize="13" />
+                            </VerticalStackLayout>
+                        </Grid>
 
-                        <!-- Right: Form Fields -->
-                        <VerticalStackLayout Grid.Column="1" Spacing="20">
-                            <VerticalStackLayout Spacing="8">
-                                <Label Text="PRODUCT NAME" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
-                                <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 12">
-                                    <Entry x:Name="ProductNameEntry" Placeholder="e.g. Neon Cyberpunk Pack" TextColor="{StaticResource Slate900}" />
+                        <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
+                    </VerticalStackLayout>
+
+                    <ScrollView Grid.Row="1">
+                        <Grid ColumnDefinitions="180, *" ColumnSpacing="32" Padding="32, 24, 32, 32">
+                            <!-- Left: Image Preview -->
+                            <VerticalStackLayout Grid.Column="0" Spacing="16">
+                                <Label Text="PRODUCT IMAGE" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
+                                <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="{StaticResource Slate200}" HeightRequest="180" BackgroundColor="{StaticResource Slate50}">
+                                    <Grid>
+                                        <!-- Fallback Icon -->
+                                        <Path Data="M21,19V5C21,3.9 20.1,3 19,3H5C3.9,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19M8.5,13.5L11,16.5L14.5,12L19,18H5L8.5,13.5Z" 
+                                              Fill="{StaticResource Slate200}" Aspect="Uniform" HeightRequest="48" WidthRequest="48" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        
+                                        <Image x:Name="ProductImagePreview" Source="product_placeholder.png" Aspect="AspectFill" />
+                                        
+                                        <Border BackgroundColor="#CCFFFFFF" Padding="8,4" VerticalOptions="End" HorizontalOptions="Center" Margin="0,0,0,12" StrokeShape="RoundRectangle 8">
+                                            <Label Text="Preview" TextColor="{StaticResource Slate700}" FontSize="10" FontAttributes="Bold" />
+                                        </Border>
+                                    </Grid>
                                 </Border>
+                                <Button Text="Upload Image" Clicked="OnUploadImageClicked" BackgroundColor="White" TextColor="{StaticResource DashboardTeal}" BorderColor="{StaticResource DashboardTeal}" BorderWidth="1" CornerRadius="8" HeightRequest="36" FontSize="12" />
                             </VerticalStackLayout>
 
-                            <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
-                                <VerticalStackLayout Grid.Column="0" Spacing="8">
-                                    <Label Text="CATEGORY" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
-                                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="12, 0">
-                                        <Picker x:Name="ProductCategoryPicker" Title="Select category" TextColor="{StaticResource Slate900}" FontSize="14" VerticalOptions="Center">
-                                            <Picker.ItemsSource>
-                                                <x:Array Type="{x:Type x:String}">
-                                                    <x:String>Digital Art</x:String>
-                                                    <x:String>3D Assets</x:String>
-                                                    <x:String>UI Kits</x:String>
-                                                    <x:String>Icons</x:String>
-                                                </x:Array>
-                                            </Picker.ItemsSource>
-                                        </Picker>
-                                    </Border>
-                                </VerticalStackLayout>
-                                <VerticalStackLayout Grid.Column="1" Spacing="8">
-                                    <Label Text="PRICE (USD)" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
+                            <!-- Right: Form Fields -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="20">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="PRODUCT NAME" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
                                     <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 12">
-                                        <Entry x:Name="ProductPriceEntry" Keyboard="Numeric" Placeholder="0.00" TextColor="{StaticResource Slate900}" />
+                                        <Entry x:Name="ProductNameEntry" Placeholder="e.g. Neon Cyberpunk Pack" TextColor="{StaticResource Slate900}" />
                                     </Border>
                                 </VerticalStackLayout>
-                            </Grid>
 
-                            <VerticalStackLayout Spacing="8">
-                                <Label Text="IMAGE SOURCE URL" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
-                                <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 12">
-                                    <Entry x:Name="ProductImageUrlEntry" Placeholder="e.g. product_hero.png" TextColor="{StaticResource Slate900}" TextChanged="OnProductImageUrlChanged" />
-                                </Border>
-                            </VerticalStackLayout>
+                                <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="8">
+                                        <Label Text="CATEGORY" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
+                                        <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="12, 0">
+                                            <Picker x:Name="ProductCategoryPicker" Title="Select category" TextColor="{StaticResource Slate900}" FontSize="14" VerticalOptions="Center">
+                                                <Picker.ItemsSource>
+                                                    <x:Array Type="{x:Type x:String}">
+                                                        <x:String>Digital Art</x:String>
+                                                        <x:String>3D Assets</x:String>
+                                                        <x:String>UI Kits</x:String>
+                                                        <x:String>Icons</x:String>
+                                                    </x:Array>
+                                                </Picker.ItemsSource>
+                                            </Picker>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="8">
+                                        <Label Text="PRICE (USD)" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
+                                        <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 12">
+                                            <Entry x:Name="ProductPriceEntry" Keyboard="Numeric" Placeholder="0.00" TextColor="{StaticResource Slate900}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
 
-                            <VerticalStackLayout Spacing="8">
-                                <Label Text="PRODUCT DESCRIPTION" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
-                                <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 12">
-                                    <Editor x:Name="ProductDescriptionEditor" Placeholder="Describe the features and benefits of this product..." TextColor="{StaticResource Slate900}" AutoSize="TextChanges" MinimumHeightRequest="100" />
-                                </Border>
-                            </VerticalStackLayout>
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="IMAGE SOURCE URL" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
+                                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 12">
+                                        <Entry x:Name="ProductImageUrlEntry" Placeholder="e.g. product_hero.png" TextColor="{StaticResource Slate900}" TextChanged="OnProductImageUrlChanged" />
+                                    </Border>
+                                </VerticalStackLayout>
 
-                            <VerticalStackLayout Spacing="8">
-                                <Label Text="STOCK QUANTITY" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
-                                <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 12">
-                                    <Entry x:Name="ProductStockEntry" Keyboard="Numeric" Placeholder="0" TextColor="{StaticResource Slate900}" />
-                                </Border>
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="PRODUCT DESCRIPTION" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
+                                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 12">
+                                        <Editor x:Name="ProductDescriptionEditor" Placeholder="Describe the features and benefits of this product..." TextColor="{StaticResource Slate900}" AutoSize="TextChanges" MinimumHeightRequest="100" />
+                                    </Border>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="STOCK QUANTITY" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
+                                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 12">
+                                        <Entry x:Name="ProductStockEntry" Keyboard="Numeric" Placeholder="0" TextColor="{StaticResource Slate900}" />
+                                    </Border>
+                                </VerticalStackLayout>
                             </VerticalStackLayout>
-                        </VerticalStackLayout>
-                    </Grid>
+                        </Grid>
+                    </ScrollView>
 
                     <!-- Actions -->
-                    <Grid ColumnDefinitions="*, *" ColumnSpacing="16" Padding="32, 0, 32, 40">
+                    <Grid Grid.Row="2" ColumnDefinitions="*, *" ColumnSpacing="16" Padding="32, 24, 32, 40">
                         <Button Text="Cancel" Clicked="OnCancelClicked" BackgroundColor="White" TextColor="{StaticResource Slate600}" BorderWidth="1" BorderColor="{StaticResource Slate200}" CornerRadius="12" HeightRequest="48" />
                         <Button x:Name="SaveProductBtn" Grid.Column="1" Text="Save Product" Clicked="OnSaveProductClicked" BackgroundColor="{StaticResource DashboardTeal}" TextColor="White" CornerRadius="12" HeightRequest="48" FontAttributes="Bold" />
                     </Grid>
-                </VerticalStackLayout>
+                </Grid>
             </Border>
         </Grid>
 
         <!-- View Details Modal -->
         <Grid x:Name="DetailsModal" Grid.RowSpan="2" Grid.ColumnSpan="2" IsVisible="False" BackgroundColor="#990F172A">
-            <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="600" BackgroundColor="White" StrokeShape="RoundRectangle 24" Padding="0" StrokeThickness="0">
+            <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="600" MaximumHeightRequest="800" Margin="0,40" BackgroundColor="White" StrokeShape="RoundRectangle 24" Padding="0" StrokeThickness="0">
                 <Border.Shadow><Shadow Brush="Black" Opacity="0.3" Offset="0,20" Radius="40"/></Border.Shadow>
                 
-                <VerticalStackLayout>
-                    <Grid HeightRequest="300">
-                        <Image x:Name="DetailImage" Source="product1.png" Aspect="AspectFill" />
-                        <Border BackgroundColor="#CCFBF1" Padding="12, 6" StrokeShape="RoundRectangle 8" HorizontalOptions="End" VerticalOptions="Start" Margin="24">
-                            <Label x:Name="DetailStatus" Text="VISIBLE" TextColor="#0D9488" FontSize="11" FontAttributes="Bold" />
-                        </Border>
-                        <Button Text="✕" Clicked="OnCloseDetailsClicked" BackgroundColor="#80000000" TextColor="White" WidthRequest="40" HeightRequest="40" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="24" FontSize="18" />
-                    </Grid>
-
-                    <VerticalStackLayout Padding="32" Spacing="24">
-                        <Grid ColumnDefinitions="*, Auto">
-                            <VerticalStackLayout Spacing="4">
-                                <Label x:Name="DetailName" Text="Product Name" TextColor="{StaticResource Slate900}" FontSize="24" FontAttributes="Bold" />
-                                <Label x:Name="DetailCategory" Text="Category" TextColor="{StaticResource Slate500}" FontSize="14" />
-                            </VerticalStackLayout>
-                            <Label Grid.Column="1" x:Name="DetailPrice" Text="$0.00" TextColor="{StaticResource DashboardTeal}" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" />
+                <ScrollView>
+                    <VerticalStackLayout>
+                        <Grid HeightRequest="300">
+                            <Image x:Name="DetailImage" Source="product1.png" Aspect="AspectFill" />
+                            <Border BackgroundColor="#CCFBF1" Padding="12, 6" StrokeShape="RoundRectangle 8" HorizontalOptions="End" VerticalOptions="Start" Margin="24">
+                                <Label x:Name="DetailStatus" Text="VISIBLE" TextColor="#0D9488" FontSize="11" FontAttributes="Bold" />
+                            </Border>
+                            <Button Text="✕" Clicked="OnCloseDetailsClicked" BackgroundColor="#80000000" TextColor="White" WidthRequest="40" HeightRequest="40" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="24" FontSize="18" />
                         </Grid>
 
-                        <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
+                        <VerticalStackLayout Padding="32" Spacing="24">
+                            <Grid ColumnDefinitions="*, Auto">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label x:Name="DetailName" Text="Product Name" TextColor="{StaticResource Slate900}" FontSize="24" FontAttributes="Bold" />
+                                    <Label x:Name="DetailCategory" Text="Category" TextColor="{StaticResource Slate500}" FontSize="14" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="1" x:Name="DetailPrice" Text="$0.00" TextColor="{StaticResource DashboardTeal}" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" />
+                            </Grid>
 
-                        <Grid ColumnDefinitions="*, *, *" ColumnSpacing="20">
-                            <VerticalStackLayout Spacing="8">
-                                <Label Text="STOCK LEVEL" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
-                                <Label x:Name="DetailStock" Text="0 Units" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="1" Spacing="8">
-                                <Label Text="PRODUCT ID" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
-                                <Label x:Name="DetailID" Text="#PRD-000" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="2" Spacing="8">
-                                <Label Text="TOTAL SALES" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
-                                <Label Text="1,240 Sales" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" />
-                            </VerticalStackLayout>
-                        </Grid>
+                            <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
 
-                        <VerticalStackLayout Spacing="12">
-                            <Label Text="DESCRIPTION" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
-                            <Label x:Name="DetailDescription" Text="This premium digital asset has been curated by our lead creative team. High-resolution textures and optimized vector paths ensure compatibility across all major design software including Figma, Photoshop, and Illustrator." 
-                                   TextColor="{StaticResource Slate600}" FontSize="14" LineHeight="1.5" />
+                            <Grid ColumnDefinitions="*, *, *" ColumnSpacing="20">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="STOCK LEVEL" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
+                                    <Label x:Name="DetailStock" Text="0 Units" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Spacing="8">
+                                    <Label Text="PRODUCT ID" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
+                                    <Label x:Name="DetailID" Text="#PRD-000" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="2" Spacing="8">
+                                    <Label Text="TOTAL SALES" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
+                                    <Label Text="1,240 Sales" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="DESCRIPTION" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
+                                <Label x:Name="DetailDescription" Text="This premium digital asset has been curated by our lead creative team. High-resolution textures and optimized vector paths ensure compatibility across all major design software including Figma, Photoshop, and Illustrator." 
+                                       TextColor="{StaticResource Slate600}" FontSize="14" LineHeight="1.5" />
+                            </VerticalStackLayout>
+                            
+                            <Button Text="Edit Product Details" Clicked="OnEditFromDetailsClicked" BackgroundColor="{StaticResource DashboardTeal}" TextColor="White" HeightRequest="48" CornerRadius="12" FontAttributes="Bold" Margin="0,8,0,0" />
                         </VerticalStackLayout>
-                        
-                        <Button Text="Edit Product Details" Clicked="OnEditFromDetailsClicked" BackgroundColor="{StaticResource DashboardTeal}" TextColor="White" HeightRequest="48" CornerRadius="12" FontAttributes="Bold" Margin="0,8,0,0" />
                     </VerticalStackLayout>
-                </VerticalStackLayout>
+                </ScrollView>
             </Border>
         </Grid>
 

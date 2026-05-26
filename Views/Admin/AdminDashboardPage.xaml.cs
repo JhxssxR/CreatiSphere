@@ -70,6 +70,15 @@ namespace CreatiSphere.Views.Admin
             await Shell.Current.GoToAsync("//ViewSalesPage", false);
         }
 
+        private async void OnSignOutClicked(object? sender, TappedEventArgs e)
+        {
+            bool confirm = await DisplayAlertAsync("Sign Out", "Are you sure you want to sign out?", "Yes", "Cancel");
+            if (confirm)
+            {
+                await Shell.Current.GoToAsync("//MainPage", false);
+            }
+        }
+
         private async Task LoadDashboardData()
         {
             try
@@ -88,6 +97,12 @@ namespace CreatiSphere.Views.Admin
 
                     BindableLayout.SetItemsSource(RevenueChartLayout, new List<double> { 0, 0, 0, 0, 0, 0, 0 });
                     BindableLayout.SetItemsSource(RecentSalesList, new List<Services.SaleTransaction>());
+                    
+                    if (ArtSalesLabel != null) ArtSalesLabel.Text = "$0.00";
+                    if (DigitalCommLabel != null) DigitalCommLabel.Text = "$0.00";
+                    if (GraphicsDistributionLabel != null) GraphicsDistributionLabel.Text = "0";
+                    if (MotionDistributionLabel != null) MotionDistributionLabel.Text = "0";
+                    if (CrmLeadsContainer != null) CrmLeadsContainer.Children.Clear();
                 }
                 else
                 {
@@ -293,6 +308,10 @@ namespace CreatiSphere.Views.Admin
                     
                     // Refresh all dashboard data to reflect potential capacity changes
                     await LoadDashboardData();
+                    if (Sidebar != null)
+                    {
+                        Sidebar.ApplyTierRestrictions();
+                    }
                 }
                 else
                 {

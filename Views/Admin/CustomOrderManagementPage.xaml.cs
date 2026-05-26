@@ -16,6 +16,7 @@ namespace CreatiSphere.Views.Admin
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            HeaderProfileInitials.Text = !string.IsNullOrEmpty(UserSession.Username) ? UserSession.Username.Substring(0, 1).ToUpper() : "U";
             await LoadOrders();
         }
 
@@ -23,6 +24,19 @@ namespace CreatiSphere.Views.Admin
         {
             try
             {
+                if (UserSession.AccountID > 5)
+                {
+                    BindableLayout.SetItemsSource(NewOrdersList, new List<CustomOrder>());
+                    BindableLayout.SetItemsSource(InProgressOrdersList, new List<CustomOrder>());
+                    BindableLayout.SetItemsSource(ReviewOrdersList, new List<CustomOrder>());
+                    
+                    NewRequestsCountLabel.Text = "0";
+                    InProgressCountLabel.Text = "0";
+                    ReviewCountLabel.Text = "0";
+                    TotalVolumeLabel.Text = "$0";
+                    return;
+                }
+
                 var orders = await _dbService.GetCustomOrdersAsync();
                 
                 var newOrders = orders.Where(o => o.Status == "New Request" || string.IsNullOrEmpty(o.Status)).ToList();

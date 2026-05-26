@@ -145,6 +145,11 @@
         Route="CommissionsPage" />
 
     <ShellContent
+        Title="Creator Messages"
+        ContentTemplate="{DataTemplate creator:CreatorMessagesPage}"
+        Route="CreatorMessagesPage" />
+
+    <ShellContent
         Title="Catalog Manager"
         ContentTemplate="{DataTemplate creator:CatalogManagerPage}"
         Route="CatalogManagerPage" />

@@ -229,19 +229,33 @@ namespace CreatiSphere.Views.Customer
 
         private async Task LoadProductsAsync()
         {
-            _products = await _databaseService.GetProductsAsync();
-            var categoryOrder = new[] { "Stickers", "Art Prints", "Textures", "Brushes" };
-            var ordered = _products
-                .Where(p => !string.IsNullOrWhiteSpace(p.Category))
-                .GroupBy(p => p.Category)
-                .OrderBy(g => Array.IndexOf(categoryOrder, g.Key ?? string.Empty))
-                .Select(g => g.First())
-                .ToList();
+            var (pagedProducts, _) = await _databaseService.GetProductsAsync(1, 4, "All Products");
+            _products = pagedProducts;
 
-            if (ordered.Count > 0 && _productCard1 != null) _productCard1.BindingContext = ordered.ElementAtOrDefault(0);
-            if (ordered.Count > 1 && _productCard2 != null) _productCard2.BindingContext = ordered.ElementAtOrDefault(1);
-            if (ordered.Count > 2 && _productCard3 != null) _productCard3.BindingContext = ordered.ElementAtOrDefault(2);
-            if (ordered.Count > 3 && _productCard4 != null) _productCard4.BindingContext = ordered.ElementAtOrDefault(3);
+            if (_productCard1 != null)
+            {
+                var prod = _products.ElementAtOrDefault(0);
+                _productCard1.BindingContext = prod;
+                _productCard1.IsVisible = prod != null;
+            }
+            if (_productCard2 != null)
+            {
+                var prod = _products.ElementAtOrDefault(1);
+                _productCard2.BindingContext = prod;
+                _productCard2.IsVisible = prod != null;
+            }
+            if (_productCard3 != null)
+            {
+                var prod = _products.ElementAtOrDefault(2);
+                _productCard3.BindingContext = prod;
+                _productCard3.IsVisible = prod != null;
+            }
+            if (_productCard4 != null)
+            {
+                var prod = _products.ElementAtOrDefault(3);
+                _productCard4.BindingContext = prod;
+                _productCard4.IsVisible = prod != null;
+            }
         }
 
         private async Task RefreshCartAsync()

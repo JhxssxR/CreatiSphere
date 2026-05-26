@@ -36,8 +36,11 @@
                         <Path Data="M19.1,12.9l2.1,1.6c0.2,0.1,0.2,0.4,0.1,0.6l-2,3.5c-0.1,0.2-0.4,0.3-0.6,0.2l-2.5-1c-0.5,0.4-1.1,0.7-1.7,1 l-0.4,2.6c0,0.2-0.2,0.4-0.5,0.4h-4c-0.3,0-0.5-0.2-0.5-0.4l-0.4-2.6c-0.6-0.3-1.2-0.6-1.7-1l-2.5,1c-0.2,0.1-0.5,0-0.6-0.2l-2-3.5 C1.9,14.9,2,14.6,2.2,14.5l2.1-1.6c-0.1-0.3-0.1-0.6-0.1-0.9s0-0.6,0.1-0.9L2.2,8.6c-0.2-0.1-0.2-0.4-0.1-0.6l2-3.5c0.1-0.2,0.4-0.3,0.6-0.2 l2.5,1c0.5-0.4,1.1-0.7,1.7-1L9.4,1.7c0-0.2,0.2-0.4,0.5-0.4h4c0.3,0,0.5,0.2,0.5,0.4l0.4,2.6c0.6,0.3,1.2,0.6,1.7,1l2.5-1 c0.2-0.1,0.5,0,0.6,0.2l2,3.5c0.1,0.2,0,0.5-0.2,0.6l-2.1,1.6c0.1,0.3,0.1,0.6,0.1,0.9S19.2,12.6,19.1,12.9z M12,15c1.7,0,3-1.3,3-3 s-1.3-3-3-3s-3,1.3-3,3S10.3,15,12,15z" 
                               Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
                         
-                        <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0">
-                            <Image Source="avatar.png" Aspect="AspectFill" />
+                        <Border BackgroundColor="{StaticResource DashboardTeal}" HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0">
+                            <Label x:Name="HeaderProfileInitials" Text="AD" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSignOutClicked" />
+                            </Border.GestureRecognizers>
                         </Border>
                     </HorizontalStackLayout>
                 </Grid>
@@ -66,76 +69,6 @@
                             Padding="16, 8"
                             FontSize="14"
                             VerticalOptions="Center" />
-                </Grid>
-
-                <!-- Stats Cards Row -->
-                <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
-                    <!-- Total Active Users Card -->
-                    <Border Grid.Column="0" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="Scale" Value="1" />
-                                        <Setter Property="BackgroundColor" Value="White" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="Scale" Value="1.03" />
-                                        <Setter Property="BackgroundColor" Value="#F8FAFC" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <Border.Shadow><Shadow Brush="Black" Opacity="0.05" Offset="0,4" Radius="10"/></Border.Shadow>
-                        <Grid>
-                            <VerticalStackLayout Spacing="8" VerticalOptions="Center">
-                                <Label Text="TOTAL ACTIVE USERS" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Bold" />
-                                <Label x:Name="TotalUsersLabel" Text="0" TextColor="{StaticResource Slate900}" FontSize="32" FontAttributes="Bold" />
-                                <HorizontalStackLayout Spacing="4">
-                                    <Path Data="M7,14l5-5l5,5" Fill="{StaticResource DashboardTeal}" Aspect="Uniform" HeightRequest="10" WidthRequest="10" VerticalOptions="Center" />
-                                    <Label Text="12% increase this month" TextColor="{StaticResource DashboardTeal}" FontSize="13" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                            <Path Data="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" 
-                                  Fill="{StaticResource Slate100}" Aspect="Uniform" HeightRequest="120" WidthRequest="120" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,-24,0" />
-                        </Grid>
-                    </Border>
-
-                    <!-- System Capacity Card -->
-                    <Border Grid.Column="1" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="{StaticResource Slate800}">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="Scale" Value="1" />
-                                        <Setter Property="BackgroundColor" Value="{StaticResource Slate800}" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="Scale" Value="1.03" />
-                                        <Setter Property="BackgroundColor" Value="{StaticResource Slate700}" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <Border.Shadow><Shadow Brush="Black" Opacity="0.2" Offset="0,8" Radius="15"/></Border.Shadow>
-                        <Grid>
-                            <Image Source="dashboard_bg.png" Aspect="AspectFill" Opacity="0.3" />
-                            <VerticalStackLayout Spacing="16" VerticalOptions="Center">
-                                <Label Text="System Capacity" TextColor="White" FontSize="20" FontAttributes="Bold" />
-                                <Border BackgroundColor="{StaticResource Slate700}" HeightRequest="8" StrokeShape="RoundRectangle 4" StrokeThickness="0">
-                                    <BoxView WidthRequest="200" HorizontalOptions="Start" Color="{StaticResource DashboardTeal}" />
-                                </Border>
-                                <Grid ColumnDefinitions="*, Auto">
-                                    <Label Text="64% Resources Utilized" TextColor="{StaticResource Slate300}" FontSize="13" />
-                                    <Label Grid.Column="1" Text="Nodes: 48/75" TextColor="{StaticResource Slate300}" FontSize="13" />
-                                </Grid>
-                            </VerticalStackLayout>
-                        </Grid>
-                    </Border>
                 </Grid>
 
                 <!-- Directory Table Section -->
@@ -528,18 +461,7 @@
                              <VerticalStackLayout Grid.Column="0" Spacing="8">
                                  <Label Text="ROLE TYPE" TextColor="#475569" FontSize="11" FontAttributes="Bold" />
                                  <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="#F8FAFC" Padding="16, 0">
-                                     <Picker x:Name="NewUserRolePicker" Title="Select Role" TextColor="#0F172A" FontSize="14" HeightRequest="48">
-                                         <Picker.ItemsSource>
-                                             <x:Array Type="{x:Type x:String}">
-                                                 <x:String>Super Admin</x:String>
-                                                 <x:String>Admin</x:String>
-                                                 <x:String>Creator</x:String>
-                                                 <x:String>Customer</x:String>
-                                                 <x:String>Sales</x:String>
-                                                 <x:String>Finance</x:String>
-                                             </x:Array>
-                                         </Picker.ItemsSource>
-                                     </Picker>
+                                     <Picker x:Name="NewUserRolePicker" Title="Select Role" TextColor="#0F172A" FontSize="14" HeightRequest="48" />
                                  </Border>
                              </VerticalStackLayout>
 

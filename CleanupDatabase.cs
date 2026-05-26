@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 class DatabaseCleaner
 {
-    static async Task Main()
+    static async Task RunCleanupAsync()
     {
         string connectionString = "Server=DESKTOP-H3Q23FS\\SQLEXPRESS;Database=CreatiSphere;Integrated Security=true;";
 

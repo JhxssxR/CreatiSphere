@@ -7,9 +7,15 @@
 
     <Grid>
         <!-- Main Layout Grid -->
-        <Grid ColumnDefinitions="280, *">
-            <!-- Sidebar -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="SidebarColumn" Width="280" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar Panel -->
             <Grid Grid.Column="0" BackgroundColor="{StaticResource Slate900}" RowDefinitions="Auto, *, Auto">
+                <!-- Sidebar Header -->
                 <HorizontalStackLayout Spacing="16" Padding="24, 32" VerticalOptions="Center">
                     <Border BackgroundColor="{StaticResource DashboardTeal}" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8" StrokeThickness="0">
                         <Label Text="◈" TextColor="White" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
@@ -20,6 +26,7 @@
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
 
+                <!-- Sidebar Nav Links -->
                 <VerticalStackLayout Grid.Row="1" Spacing="4" Padding="0, 16">
                     <Grid Padding="24, 12" ColumnDefinitions="24, *" BackgroundColor="Transparent">
                         <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnDashboardClicked" /></Grid.GestureRecognizers>
@@ -54,6 +61,8 @@
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
+
+                <!-- Footer Sign Out -->
                 <Grid Grid.Row="2" Padding="24, 48" ColumnDefinitions="24, *">
                     <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnSignOutClicked" /></Grid.GestureRecognizers>
                     <Path Data="M17,7l-1.4,1.4L18.2,11H9v2h9.2l-2.6,2.6L17,17l5-5L17,7z M5,5h7V3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h7v-2H5V5z" Fill="{StaticResource WarningOrange}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
@@ -61,250 +70,318 @@
                 </Grid>
             </Grid>
 
-            <!-- Main Content Area -->
+            <!-- Main Scrollable Content -->
             <ScrollView Grid.Column="1" VerticalScrollBarVisibility="Never">
-                <VerticalStackLayout Padding="48" Spacing="40">
-                    <Grid ColumnDefinitions="*, Auto">
-                        <Border Grid.Column="0" StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White" HorizontalOptions="Start" WidthRequest="450" Padding="20, 12">
-                            <Border.Shadow><Shadow Brush="Black" Opacity="0.03" Offset="0,2" Radius="8"/></Border.Shadow>
+                <VerticalStackLayout Padding="40" Spacing="32">
+                    
+                    <!-- Modern Top Navbar -->
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="24" VerticalOptions="Center">
+                        <!-- Hamburger Toggle & Brand Title -->
+                        <HorizontalStackLayout Grid.Column="0" Spacing="16" VerticalOptions="Center">
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" HeightRequest="40" WidthRequest="40">
+                                <Border.Shadow><Shadow Brush="Black" Opacity="0.02" Offset="0,1" Radius="4"/></Border.Shadow>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnHamburgerClicked" />
+                                </Border.GestureRecognizers>
+                                <Label Text="☰" TextColor="{StaticResource Slate700}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,-2,0,0" />
+                            </Border>
+                            <Label Text="CreatiSphere" TextColor="{StaticResource Slate900}" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <!-- Search Bar -->
+                        <Border Grid.Column="1" StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" HorizontalOptions="Start" WidthRequest="360" Padding="16, 8" VerticalOptions="Center">
+                            <Border.Shadow><Shadow Brush="Black" Opacity="0.02" Offset="0,1" Radius="4"/></Border.Shadow>
                             <Grid ColumnDefinitions="Auto, *">
-                                <Path Data="M15.5,14h-0.79l-0.28-0.27C15.41,12.59,16,11.11,16,9.5C16,5.91,13.09,3,9.5,3S3,5.91,3,9.5S5.91,16,9.5,16 c1.61,0,3.09-0.59,4.23-1.57l0.27,0.28v0.79l5,4.99L20.49,19L15.5,14z M9.5,14C7.01,14,5,11.99,5,9.5S7.01,5,9.5,5S14,7.01,14,9.5 S11.99,14,9.5,14z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
-                                <Entry Grid.Column="1" Placeholder="Search reports or audit logs..." PlaceholderColor="{StaticResource Slate300}" TextColor="{StaticResource Slate900}" BackgroundColor="Transparent" Margin="16,0,0,0" FontSize="14" />
+                                <Path Data="M15.5,14h-0.79l-0.28-0.27C15.41,12.59,16,11.11,16,9.5C16,5.91,13.09,3,9.5,3S3,5.91,3,9.5S5.91,16,9.5,16 c1.61,0,3.09-0.59,4.23-1.57l0.27,0.28v0.79l5,4.99L20.49,19L15.5,14z M9.5,14C7.01,14,5,11.99,5,9.5S7.01,5,9.5,5S14,7.01,14,9.5 S11.99,14,9.5,14z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                <Entry Grid.Column="1" Placeholder="Search reports or audits..." PlaceholderColor="{StaticResource Slate300}" TextColor="{StaticResource Slate900}" BackgroundColor="Transparent" Margin="12,0,0,0" FontSize="13" />
                             </Grid>
                         </Border>
-                        <HorizontalStackLayout Grid.Column="1" Spacing="24" VerticalOptions="Center">
-                            <Grid HeightRequest="44" WidthRequest="44">
+
+                        <!-- User Profile & Action Area -->
+                        <HorizontalStackLayout Grid.Column="2" Spacing="20" VerticalOptions="Center">
+                            <!-- Notification Button -->
+                            <Grid HeightRequest="40" WidthRequest="40">
                                 <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnNotificationClicked" /></Grid.GestureRecognizers>
-                                <Border BackgroundColor="White" StrokeShape="RoundRectangle 22" StrokeThickness="0" Padding="10">
+                                <Border BackgroundColor="White" StrokeShape="RoundRectangle 20" StrokeThickness="1" Stroke="{StaticResource Slate200}" Padding="8">
                                     <Path Data="M12,22c1.1,0,2-0.9,2-2h-4C10,21.1,10.9,22,12,22z M18,16v-5c0-3.1-1.6-5.6-4.5-6.3V4c0-0.8-0.7-1.5-1.5-1.5 S10.5,3.2,10.5,4v0.7C7.6,5.4,6,7.9,6,11v5l-2,2v1h16v-1L18,16z" Fill="{StaticResource Slate600}" Aspect="Uniform" />
                                 </Border>
-                                <Ellipse x:Name="NotificationBadge" Fill="#F43F5E" WidthRequest="10" HeightRequest="10" HorizontalOptions="End" VerticalOptions="Start" Margin="0,4,4,0" />
+                                <Ellipse x:Name="NotificationBadge" Fill="#F43F5E" WidthRequest="8" HeightRequest="8" HorizontalOptions="End" VerticalOptions="Start" Margin="0,2,2,0" />
                             </Grid>
 
+                            <!-- Custom Profile with User Initials badge -->
                             <HorizontalStackLayout Spacing="12">
                                 <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnProfileClicked" /></Grid.GestureRecognizers>
                                 <VerticalStackLayout VerticalOptions="Center">
-                                    <Label x:Name="UserNameLabel" Text="Alexander Thorne" TextColor="{StaticResource Slate900}" FontSize="14" FontAttributes="Bold" HorizontalOptions="End" />
-                                    <Label x:Name="UserRoleLabel" Text="SUPER ADMIN" TextColor="{StaticResource DashboardTeal}" FontSize="10" FontAttributes="Bold" HorizontalOptions="End" CharacterSpacing="0.5" />
+                                    <Label x:Name="UserNameLabel" Text="Alexander Thorne" TextColor="{StaticResource Slate900}" FontSize="13" FontAttributes="Bold" HorizontalOptions="End" />
+                                    <Label x:Name="UserRoleLabel" Text="SUPER ADMIN" TextColor="{StaticResource DashboardTeal}" FontSize="9" FontAttributes="Bold" HorizontalOptions="End" CharacterSpacing="0.5" />
                                 </VerticalStackLayout>
                                 <Grid>
-                                    <Border HeightRequest="44" WidthRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="2" Stroke="White">
-                                        <Image Source="avatar.png" Aspect="AspectFill" />
+                                    <!-- Initials Circular Badge -->
+                                    <Border HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate100}">
+                                        <Label x:Name="UserInitialsLabel" Text="S" TextColor="{StaticResource DashboardTeal}" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
                                     </Border>
-                                    <Border BackgroundColor="#22C55E" HeightRequest="10" WidthRequest="10" StrokeShape="RoundRectangle 5" StrokeThickness="2" Stroke="White" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,0,2" />
+                                    <!-- Active Online Dot -->
+                                    <Border BackgroundColor="{StaticResource SuccessGreen}" HeightRequest="10" WidthRequest="10" StrokeShape="RoundRectangle 5" StrokeThickness="2" Stroke="White" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,0,1" />
                                 </Grid>
                             </HorizontalStackLayout>
                         </HorizontalStackLayout>
                     </Grid>
 
-                    <Grid ColumnDefinitions="*">
-                        <VerticalStackLayout Spacing="8">
-                            <Label Text="System Analytics" TextColor="{StaticResource Slate900}" FontSize="32" FontAttributes="Bold" />
-                            <Label Text="Real-time performance audit and financial reconciliation center." TextColor="{StaticResource Slate500}" FontSize="15" />
+                    <Border HeightRequest="1" BackgroundColor="{StaticResource Slate200}" StrokeThickness="0" Margin="0,-8,0,0" />
+
+                    <!-- Header Content Panel -->
+                    <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="System Reports" TextColor="{StaticResource Slate900}" FontSize="30" FontAttributes="Bold" />
+                            <Label Text="Analyze operations, monitor metrics, and export data summaries." TextColor="{StaticResource Slate500}" FontSize="14" />
                         </VerticalStackLayout>
+                        
+                        <Button Grid.Column="1" 
+                                Text="Generate New Report" 
+                                Clicked="OnGenerateNewReportClicked" 
+                                BackgroundColor="{StaticResource DashboardTeal}" 
+                                TextColor="White" 
+                                HeightRequest="42" 
+                                CornerRadius="8" 
+                                FontSize="13" 
+                                FontAttributes="Bold" 
+                                Padding="16, 0">
+                            <Button.Shadow><Shadow Brush="Black" Opacity="0.08" Offset="0,2" Radius="6"/></Button.Shadow>
+                        </Button>
                     </Grid>
 
-                    <Grid ColumnDefinitions="*, *, *" ColumnSpacing="24">
-                        <!-- Revenue Card -->
-                        <Border Padding="24" StrokeShape="RoundRectangle 20" StrokeThickness="0" BackgroundColor="White">
-                            <Border.Shadow><Shadow Brush="Black" Opacity="0.05" Offset="0,4" Radius="12"/></Border.Shadow>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroupList>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal" />
-                                        <VisualState x:Name="PointerOver">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="#F1F5F9" />
-                                                <Setter Property="Scale" Value="1.01" />
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateGroupList>
-                            </VisualStateManager.VisualStateGroups>
-                            <HorizontalStackLayout Spacing="20">
-                                <Border BackgroundColor="#F0FDF4" HeightRequest="52" WidthRequest="52" StrokeShape="RoundRectangle 16" StrokeThickness="0">
-                                    <Path Data="M11.8,2.1L3,5.1V11c0,5.5,3.8,10.7,9,12c5.2-1.3,9-6.5,9-12V5.1L11.8,2.1z" Fill="{StaticResource DashboardTeal}" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <!-- Compact Metrics Section -->
+                    <Grid ColumnDefinitions="*, *, *" ColumnSpacing="20">
+                        <!-- Revenue Stats Mini-Card -->
+                        <Border Padding="20" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                            <Border.Shadow><Shadow Brush="Black" Opacity="0.01" Offset="0,2" Radius="4"/></Border.Shadow>
+                            <HorizontalStackLayout Spacing="16" VerticalOptions="Center">
+                                <Border BackgroundColor="#F0FDF4" HeightRequest="44" WidthRequest="44" StrokeShape="RoundRectangle 10" StrokeThickness="0">
+                                    <Path Data="M11.8,2.1L3,5.1V11c0,5.5,3.8,10.7,9,12c5.2-1.3,9-6.5,9-12V5.1L11.8,2.1z" Fill="{StaticResource SuccessGreen}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
-                                <VerticalStackLayout VerticalOptions="Center" Spacing="4">
-                                    <Label Text="TOTAL REVENUE" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
-                                    <Label x:Name="TotalRevenueLabel" Text="₱1,691" TextColor="{StaticResource Slate900}" FontSize="26" FontAttributes="Bold" />
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                    <Label Text="TOTAL REVENUE" TextColor="{StaticResource Slate400}" FontSize="10" FontAttributes="Bold" CharacterSpacing="0.5" />
+                                    <Label x:Name="TotalRevenueLabel" Text="₱0.00" TextColor="{StaticResource Slate900}" FontSize="20" FontAttributes="Bold" />
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
                         </Border>
 
-                        <!-- Creators Card -->
-                        <Border Grid.Column="1" Padding="24" StrokeShape="RoundRectangle 20" StrokeThickness="0" BackgroundColor="White">
-                            <Border.Shadow><Shadow Brush="Black" Opacity="0.05" Offset="0,4" Radius="12"/></Border.Shadow>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroupList>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal" />
-                                        <VisualState x:Name="PointerOver">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="#F1F5F9" />
-                                                <Setter Property="Scale" Value="1.01" />
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateGroupList>
-                            </VisualStateManager.VisualStateGroups>
-                            <HorizontalStackLayout Spacing="20">
-                                <Border BackgroundColor="#EFF6FF" HeightRequest="52" WidthRequest="52" StrokeShape="RoundRectangle 16" StrokeThickness="0">
-                                    <Path Data="M12,12c2.2,0,4-1.8,4-4s-1.8-4-4-4s-4,1.8-4,4S9.8,12,12,12z M12,14c-2.7,0-8,1.3-8,4v2h16v-2C20,15.3,14.7,14,12,14z" Fill="#3B82F6" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <!-- Creators Stats Mini-Card -->
+                        <Border Grid.Column="1" Padding="20" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                            <Border.Shadow><Shadow Brush="Black" Opacity="0.01" Offset="0,2" Radius="4"/></Border.Shadow>
+                            <HorizontalStackLayout Spacing="16" VerticalOptions="Center">
+                                <Border BackgroundColor="#EFF6FF" HeightRequest="44" WidthRequest="44" StrokeShape="RoundRectangle 10" StrokeThickness="0">
+                                    <Path Data="M12,12c2.2,0,4-1.8,4-4s-1.8-4-4-4s-4,1.8-4,4S9.8,12,12,12z M12,14c-2.7,0-8,1.3-8,4v2h16v-2C20,15.3,14.7,14,12,14z" Fill="#3B82F6" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
-                                <VerticalStackLayout VerticalOptions="Center" Spacing="4">
-                                    <Label Text="NEW CREATORS" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
-                                    <Label x:Name="NewCreatorsLabel" Text="2" TextColor="{StaticResource Slate900}" FontSize="26" FontAttributes="Bold" />
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                    <Label Text="NEW CREATORS" TextColor="{StaticResource Slate400}" FontSize="10" FontAttributes="Bold" CharacterSpacing="0.5" />
+                                    <Label x:Name="NewCreatorsLabel" Text="0" TextColor="{StaticResource Slate900}" FontSize="20" FontAttributes="Bold" />
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
                         </Border>
 
-                        <!-- Conversion Card -->
-                        <Border Grid.Column="2" Padding="24" StrokeShape="RoundRectangle 20" StrokeThickness="0" BackgroundColor="White">
-                            <Border.Shadow><Shadow Brush="Black" Opacity="0.05" Offset="0,4" Radius="12"/></Border.Shadow>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroupList>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal" />
-                                        <VisualState x:Name="PointerOver">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="#F1F5F9" />
-                                                <Setter Property="Scale" Value="1.01" />
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateGroupList>
-                            </VisualStateManager.VisualStateGroups>
-                            <HorizontalStackLayout Spacing="20">
-                                <Border BackgroundColor="#FDF2F8" HeightRequest="52" WidthRequest="52" StrokeShape="RoundRectangle 16" StrokeThickness="0">
-                                    <Path Data="M16,6l2.29,2.29l-4.88,4.88l-4-4L2,16.59L3.41,18l6-6l4,4l6.3-6.29L22,12V6H16z" Fill="#DB2777" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <!-- Conversion Rate Mini-Card -->
+                        <Border Grid.Column="2" Padding="20" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                            <Border.Shadow><Shadow Brush="Black" Opacity="0.01" Offset="0,2" Radius="4"/></Border.Shadow>
+                            <HorizontalStackLayout Spacing="16" VerticalOptions="Center">
+                                <Border BackgroundColor="#FDF2F8" HeightRequest="44" WidthRequest="44" StrokeShape="RoundRectangle 10" StrokeThickness="0">
+                                    <Path Data="M16,6l2.29,2.29l-4.88,4.88l-4-4L2,16.59L3.41,18l6-6l4,4l6.3-6.29L22,12V6H16z" Fill="#DB2777" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
-                                <VerticalStackLayout VerticalOptions="Center" Spacing="4">
-                                    <Label Text="CONVERSION" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
-                                    <Label x:Name="ConversionRateLabel" Text="4.8%" TextColor="{StaticResource Slate900}" FontSize="26" FontAttributes="Bold" />
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                    <Label Text="CONVERSION" TextColor="{StaticResource Slate400}" FontSize="10" FontAttributes="Bold" CharacterSpacing="0.5" />
+                                    <Label x:Name="ConversionRateLabel" Text="0.0%" TextColor="{StaticResource Slate900}" FontSize="20" FontAttributes="Bold" />
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
                         </Border>
                     </Grid>
 
-                    <Border Padding="32" StrokeShape="RoundRectangle 24" StrokeThickness="0" BackgroundColor="White">
-                        <Border.Shadow><Shadow Brush="Black" Opacity="0.05" Offset="0,4" Radius="16"/></Border.Shadow>
-                        <Grid ColumnDefinitions="*, *, *, 200" ColumnSpacing="24">
-                            <VerticalStackLayout Spacing="10">
-                                <Label Text="REPORTING ENGINE" TextColor="{StaticResource Slate500}" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
-                                <Border StrokeShape="RoundRectangle 12" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 4">
-                                    <HorizontalStackLayout Spacing="12">
-                                        <Path Data="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
-                                        <Entry x:Name="ReportTypeEntry" Text="Financial Audit v2" TextColor="{StaticResource Slate900}" FontSize="14" BackgroundColor="Transparent" MinimumWidthRequest="150" />
-                                    </HorizontalStackLayout>
-                                </Border>
-                            </VerticalStackLayout>
+                    <!-- Main Report List Section -->
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="Available Report Archives" TextColor="{StaticResource Slate900}" FontSize="18" FontAttributes="Bold" />
+                        
+                        <CollectionView x:Name="ReportArchivesCollectionView" SelectionMode="None" Margin="0, 4, 0, 0">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout>
+                                        <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" Margin="0, 0, 0, 16" Padding="20">
+                                            <Border.Shadow><Shadow Brush="Black" Opacity="0.02" Offset="0,2" Radius="6"/></Border.Shadow>
+                                            
+                                            <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="20" VerticalOptions="Center">
+                                                <!-- Format Icon Container -->
+                                                <Border Grid.Column="0" BackgroundColor="{Binding FormatColor}" HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 10" StrokeThickness="0" Opacity="0.9">
+                                                    <Path Data="{Binding FormatIcon}" Fill="White" Aspect="Uniform" HeightRequest="22" WidthRequest="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                </Border>
+                                                
+                                                <!-- Details Container -->
+                                                <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                                    <Label Text="{Binding Name}" TextColor="{StaticResource Slate900}" FontSize="15" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Type}" TextColor="{StaticResource Slate500}" FontSize="12" />
+                                                    <HorizontalStackLayout Spacing="8" Margin="0, 2, 0, 0">
+                                                        <Label Text="{Binding Period}" TextColor="{StaticResource Slate400}" FontSize="11" />
+                                                        <Label Text="•" TextColor="{StaticResource Slate300}" FontSize="11" />
+                                                        <Label Text="{Binding Size}" TextColor="{StaticResource Slate400}" FontSize="11" />
+                                                        <Label Text="•" TextColor="{StaticResource Slate300}" FontSize="11" />
+                                                        <Label Text="{Binding DateDisplay}" TextColor="{StaticResource Slate400}" FontSize="11" />
+                                                    </HorizontalStackLayout>
+                                                </VerticalStackLayout>
+                                                
+                                                <!-- Actions Container -->
+                                                <HorizontalStackLayout Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                                                    <!-- Rename Button -->
+                                                    <Button Text="Rename" 
+                                                            Clicked="OnRenameReportClicked" 
+                                                            CommandParameter="{Binding .}"
+                                                            BackgroundColor="Transparent" 
+                                                            TextColor="{StaticResource Slate600}" 
+                                                            BorderColor="{StaticResource Slate200}" 
+                                                            BorderWidth="1" 
+                                                            FontSize="12" 
+                                                            FontAttributes="Bold" 
+                                                            Padding="12,0" 
+                                                            HeightRequest="36" 
+                                                            CornerRadius="6" />
 
-                            <VerticalStackLayout Grid.Column="1" Spacing="10">
-                                <Label Text="AUDIT WINDOW" TextColor="{StaticResource Slate500}" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
-                                <Border StrokeShape="RoundRectangle 12" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 4">
-                                    <HorizontalStackLayout Spacing="12">
-                                        <Path Data="M19,4h-1V2h-2v2H8V2H6v2H5C3.89,4,3,4.9,3,6v14c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V6C21,4.9,20.1,4,19,4z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
-                                        <Entry x:Name="ReportWindowEntry" Text="Last 90 Days" TextColor="{StaticResource Slate900}" FontSize="14" BackgroundColor="Transparent" MinimumWidthRequest="120" />
-                                    </HorizontalStackLayout>
-                                </Border>
-                            </VerticalStackLayout>
+                                                    <!-- Delete Button -->
+                                                    <Button Text="Delete" 
+                                                            Clicked="OnDeleteReportClicked" 
+                                                            CommandParameter="{Binding .}"
+                                                            BackgroundColor="Transparent" 
+                                                            TextColor="#EF4444" 
+                                                            BorderColor="{StaticResource Slate200}" 
+                                                            BorderWidth="1" 
+                                                            FontSize="12" 
+                                                            FontAttributes="Bold" 
+                                                            Padding="12,0" 
+                                                            HeightRequest="36" 
+                                                            CornerRadius="6" />
 
-                            <VerticalStackLayout Grid.Column="2" Spacing="10">
-                                <Label Text="OUTPUT SCHEME" TextColor="{StaticResource Slate500}" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
-                                <Border StrokeShape="RoundRectangle 12" Stroke="{StaticResource Slate200}" BackgroundColor="{StaticResource Slate50}" Padding="16, 4">
-                                    <HorizontalStackLayout Spacing="12">
-                                        <Path Data="M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
-                                        <Picker x:Name="ReportFormatPicker" Title="Format" TextColor="{StaticResource Slate900}" FontSize="14" BackgroundColor="Transparent" MinimumWidthRequest="120">
-                                            <Picker.ItemsSource>
-                                                <x:Array Type="{x:Type x:String}">
-                                                    <x:String>PDF Document</x:String>
-                                                    <x:String>CSV Spreadsheet</x:String>
-                                                </x:Array>
-                                            </Picker.ItemsSource>
-                                            <Picker.SelectedIndex>0</Picker.SelectedIndex>
-                                        </Picker>
-                                    </HorizontalStackLayout>
-                                </Border>
-                            </VerticalStackLayout>
-                            <Button Grid.Column="3" Text="GENERATE AUDIT" Clicked="OnCompileParametersClicked" BackgroundColor="{StaticResource Slate900}" TextColor="White" HeightRequest="52" CornerRadius="14" FontSize="13" FontAttributes="Bold" VerticalOptions="End" />
-                        </Grid>
-                    </Border>
-
-                    <VerticalStackLayout Spacing="20">
-                        <Grid ColumnDefinitions="*, Auto">
-                            <Label Text="Recent Generated Audits" TextColor="{StaticResource Slate900}" FontSize="20" FontAttributes="Bold" />
-                            <Label Grid.Column="1" Text="Archive Repository →" TextColor="{StaticResource DashboardTeal}" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                        </Grid>
-                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="0" BackgroundColor="White" Padding="0">
-                            <Border.Shadow><Shadow Brush="Black" Opacity="0.04" Offset="0,4" Radius="16"/></Border.Shadow>
-                            <VerticalStackLayout>
-                                <CollectionView x:Name="ReportArchivesCollectionView" SelectionMode="None">
-                                    <CollectionView.ItemTemplate>
-                                        <DataTemplate>
-                                            <VerticalStackLayout>
-                                                <Grid Padding="24, 16" ColumnDefinitions="Auto, *, Auto, Auto, Auto" ColumnSpacing="16" VerticalOptions="Center">
-                                                    <!-- Modern Format Icon -->
-                                                    <Border BackgroundColor="{Binding FormatColor}" HeightRequest="44" WidthRequest="44" StrokeShape="RoundRectangle 12" StrokeThickness="0">
-                                                        <Path Data="{Binding FormatIcon}" Fill="{Binding IconColor}" Aspect="Uniform" HeightRequest="18" WidthRequest="18" HorizontalOptions="Center" VerticalOptions="Center" />
-                                                    </Border>
-                                                    
-                                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                                        <Label Text="{Binding Name}" TextColor="{StaticResource Slate900}" FontSize="14" FontAttributes="Bold" />
-                                                        <Label Text="{Binding Type}" TextColor="{StaticResource Slate400}" FontSize="11" />
-                                                    </VerticalStackLayout>
-
-                                                    <Label Grid.Column="2" Text="{Binding Date}" TextColor="{StaticResource Slate500}" FontSize="12" VerticalOptions="Center" Margin="0,0,12,0" />
-                                                    
-                                                    <!-- Edit Action -->
-                                                    <Button Grid.Column="3" Text="✎" Clicked="OnRenameReportClicked" CommandParameter="{Binding .}"
-                                                            BackgroundColor="Transparent" TextColor="{StaticResource Slate400}" 
-                                                            FontSize="18" Padding="12,0" HeightRequest="36" WidthRequest="44" />
-
-                                                    <Button Grid.Column="4" Text="Download" Clicked="OnDownloadReportClicked" CommandParameter="{Binding .}"
-                                                            BackgroundColor="{StaticResource Slate50}" TextColor="{StaticResource DashboardTeal}" 
-                                                            FontSize="12" FontAttributes="Bold" Padding="16,0" HeightRequest="36" CornerRadius="8" />
-                                                </Grid>
-                                                <BoxView HeightRequest="1" BackgroundColor="{StaticResource Slate50}" Margin="24,0" />
-                                            </VerticalStackLayout>
-                                        </DataTemplate>
-                                    </CollectionView.ItemTemplate>
-                                </CollectionView>
-                            </VerticalStackLayout>
-                        </Border>
+                                                    <!-- Download Button -->
+                                                    <Button Text="Download" 
+                                                            Clicked="OnDownloadReportClicked" 
+                                                            CommandParameter="{Binding .}"
+                                                            BackgroundColor="{StaticResource DashboardTeal}" 
+                                                            TextColor="White" 
+                                                            FontSize="12" 
+                                                            FontAttributes="Bold" 
+                                                            Padding="16,0" 
+                                                            HeightRequest="36" 
+                                                            CornerRadius="6" />
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                     </VerticalStackLayout>
                 </VerticalStackLayout>
             </ScrollView>
 
             <!-- Generation Loading Overlay -->
-            <Grid x:Name="LoadingOverlay" IsVisible="False" BackgroundColor="#80000000">
-                <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="300" Padding="32" BackgroundColor="White" StrokeShape="RoundRectangle 24">
+            <Grid x:Name="LoadingOverlay" IsVisible="False" BackgroundColor="#80000000" Grid.ColumnSpan="2">
+                <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="320" Padding="32" BackgroundColor="White" StrokeShape="RoundRectangle 16">
                     <Border.Shadow><Shadow Brush="Black" Opacity="0.1" Offset="0,10" Radius="30"/></Border.Shadow>
                     <VerticalStackLayout Spacing="24" HorizontalOptions="Center">
                         <ActivityIndicator IsRunning="True" Color="{StaticResource DashboardTeal}" HeightRequest="48" WidthRequest="48" />
                         <VerticalStackLayout Spacing="8">
                             <Label Text="Synthesizing Audit Data" TextColor="{StaticResource Slate900}" FontAttributes="Bold" FontSize="16" HorizontalTextAlignment="Center" />
-                            <Label Text="Please wait while the engine reconciles MSME records..." TextColor="{StaticResource Slate500}" FontSize="12" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                            <Label Text="Please wait while the engine compiles the records..." TextColor="{StaticResource Slate500}" FontSize="12" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
             </Grid>
 
             <!-- Rename Report Modal -->
-            <Grid x:Name="RenameModal" IsVisible="False" BackgroundColor="#80000000">
-                <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="400" Padding="32" BackgroundColor="White" StrokeShape="RoundRectangle 24">
+            <Grid x:Name="RenameModal" IsVisible="False" BackgroundColor="#80000000" Grid.ColumnSpan="2">
+                <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="400" Padding="32" BackgroundColor="White" StrokeShape="RoundRectangle 16">
                     <Border.Shadow><Shadow Brush="Black" Opacity="0.1" Offset="0,10" Radius="30"/></Border.Shadow>
                     <VerticalStackLayout Spacing="24">
-                        <Label Text="Rename Generated Audit" TextColor="{StaticResource Slate900}" FontAttributes="Bold" FontSize="20" />
+                        <Label Text="Rename Generated Audit" TextColor="{StaticResource Slate900}" FontAttributes="Bold" FontSize="18" />
                         <VerticalStackLayout Spacing="8">
                             <Label Text="NEW AUDIT NAME" TextColor="{StaticResource Slate500}" FontSize="10" FontAttributes="Bold" />
-                            <Border StrokeShape="RoundRectangle 12" Stroke="{StaticResource Slate200}" Padding="16, 4">
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" Padding="16, 4">
                                 <Entry x:Name="NewReportNameEntry" Placeholder="Enter report name..." TextColor="{StaticResource Slate900}" FontSize="14" BackgroundColor="Transparent" />
                             </Border>
                         </VerticalStackLayout>
                         <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
-                            <Button Grid.Column="0" Text="CANCEL" Clicked="OnCloseRenameModalClicked" BackgroundColor="{StaticResource Slate50}" TextColor="{StaticResource Slate900}" HeightRequest="44" CornerRadius="12" />
-                            <Button Grid.Column="1" Text="SAVE CHANGES" Clicked="OnSaveRenameClicked" BackgroundColor="{StaticResource DashboardTeal}" TextColor="White" HeightRequest="44" CornerRadius="12" FontAttributes="Bold" />
+                            <Button Grid.Column="0" Text="CANCEL" Clicked="OnCloseRenameModalClicked" BackgroundColor="{StaticResource Slate100}" TextColor="{StaticResource Slate700}" HeightRequest="40" CornerRadius="8" FontAttributes="Bold" />
+                            <Button Grid.Column="1" Text="SAVE CHANGES" Clicked="OnSaveRenameClicked" BackgroundColor="{StaticResource DashboardTeal}" TextColor="White" HeightRequest="40" CornerRadius="8" FontAttributes="Bold" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Generate New Report Modal -->
+            <Grid x:Name="GenerateModal" IsVisible="False" BackgroundColor="#80000000" Grid.ColumnSpan="2">
+                <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="450" Padding="32" BackgroundColor="White" StrokeShape="RoundRectangle 16">
+                    <Border.Shadow><Shadow Brush="Black" Opacity="0.1" Offset="0,10" Radius="30"/></Border.Shadow>
+                    <VerticalStackLayout Spacing="24">
+                        <Label Text="Generate Custom Report" TextColor="{StaticResource Slate900}" FontAttributes="Bold" FontSize="20" />
+                        
+                        <!-- Report Name Input -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="REPORT NAME" TextColor="{StaticResource Slate500}" FontSize="10" FontAttributes="Bold" />
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" Padding="16, 4">
+                                <Entry x:Name="NewReportNameInput" Placeholder="e.g. Q2 Performance Review" TextColor="{StaticResource Slate900}" FontSize="14" BackgroundColor="Transparent" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Report Type Selection -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="REPORT ENGINE TYPE" TextColor="{StaticResource Slate500}" FontSize="10" FontAttributes="Bold" />
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" Padding="16, 4">
+                                <Picker x:Name="NewReportTypePicker" TextColor="{StaticResource Slate900}" FontSize="14" BackgroundColor="Transparent">
+                                    <Picker.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                            <x:String>System Growth Audit</x:String>
+                                            <x:String>Security &amp; Engagement Audit</x:String>
+                                            <x:String>Financial Performance Audit</x:String>
+                                            <x:String>Creator Activity Summary</x:String>
+                                        </x:Array>
+                                    </Picker.ItemsSource>
+                                    <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                                </Picker>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Period / Audit Window Selection -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="AUDIT WINDOW (PERIOD)" TextColor="{StaticResource Slate500}" FontSize="10" FontAttributes="Bold" />
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" Padding="16, 4">
+                                <Picker x:Name="NewReportPeriodPicker" TextColor="{StaticResource Slate900}" FontSize="14" BackgroundColor="Transparent">
+                                    <Picker.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                            <x:String>Last 24 Hours</x:String>
+                                            <x:String>Last 7 Days</x:String>
+                                            <x:String>Last 30 Days</x:String>
+                                            <x:String>Last 90 Days</x:String>
+                                            <x:String>Year to Date</x:String>
+                                        </x:Array>
+                                    </Picker.ItemsSource>
+                                    <Picker.SelectedIndex>2</Picker.SelectedIndex>
+                                </Picker>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Format Selection -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="OUTPUT FORMAT" TextColor="{StaticResource Slate500}" FontSize="10" FontAttributes="Bold" />
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" Padding="16, 4">
+                                <Picker x:Name="NewReportFormatPicker" TextColor="{StaticResource Slate900}" FontSize="14" BackgroundColor="Transparent">
+                                    <Picker.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                            <x:String>PDF Document</x:String>
+                                            <x:String>CSV Spreadsheet</x:String>
+                                        </x:Array>
+                                    </Picker.ItemsSource>
+                                    <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                                </Picker>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                            <Button Grid.Column="0" Text="CANCEL" Clicked="OnCloseGenerateModalClicked" BackgroundColor="{StaticResource Slate100}" TextColor="{StaticResource Slate700}" HeightRequest="44" CornerRadius="8" FontAttributes="Bold" />
+                            <Button Grid.Column="1" Text="GENERATE REPORT" Clicked="OnGenerateSubmitClicked" BackgroundColor="{StaticResource DashboardTeal}" TextColor="White" HeightRequest="44" CornerRadius="8" FontAttributes="Bold" />
                         </Grid>
                     </VerticalStackLayout>
                 </Border>

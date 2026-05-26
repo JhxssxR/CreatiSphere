@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls;
+using CreatiSphere.Services;
 
 namespace CreatiSphere.Views.Admin
 {
@@ -36,6 +37,7 @@ namespace CreatiSphere.Views.Admin
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            HeaderProfileInitials.Text = !string.IsNullOrEmpty(UserSession.Username) ? UserSession.Username.Substring(0, 1).ToUpper() : "U";
             await LoadAssets();
         }
 
@@ -43,6 +45,13 @@ namespace CreatiSphere.Views.Admin
         {
             try
             {
+                if (UserSession.AccountID > 5)
+                {
+                    Folders.Clear();
+                    BindableLayout.SetItemsSource(AssetsList, new List<Services.DigitalAsset>());
+                    return;
+                }
+
                 var assets = await _dbService.GetAssetsAsync();
                 BindableLayout.SetItemsSource(AssetsList, assets);
             }

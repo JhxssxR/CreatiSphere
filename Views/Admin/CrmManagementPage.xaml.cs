@@ -1,5 +1,5 @@
 using Microsoft.Maui.Controls;
-
+using CreatiSphere.Services;
 namespace CreatiSphere.Views.Admin
 {
     public partial class CrmManagementPage : ContentPage
@@ -15,6 +15,7 @@ namespace CreatiSphere.Views.Admin
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            HeaderProfileInitials.Text = !string.IsNullOrEmpty(UserSession.Username) ? UserSession.Username.Substring(0, 1).ToUpper() : "U";
             await LoadStats();
         }
 
@@ -22,6 +23,14 @@ namespace CreatiSphere.Views.Admin
         {
             try
             {
+                if (UserSession.AccountID > 5)
+                {
+                    TotalCustomersLabel.Text = "0";
+                    ActiveLeadsLabel.Text = "0";
+                    TotalPortfolioSpendLabel.Text = "$0.0M";
+                    return;
+                }
+
                 var stats = await _dbService.GetReportStatsAsync();
                 TotalCustomersLabel.Text = stats.TotalCustomers.ToString("N0");
                 ActiveLeadsLabel.Text = stats.ActiveLeads.ToString("N0");

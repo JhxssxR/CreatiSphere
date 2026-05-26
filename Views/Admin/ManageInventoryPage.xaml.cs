@@ -27,6 +27,23 @@ namespace CreatiSphere.Views.Admin
             {
                 _allInventory = await _dbService.GetInventoryAsync();
                 ApplyFilter(_currentFilter);
+
+                if (Services.UserSession.AccountID > 5)
+                {
+                    _allInventory = new List<Services.InventoryItem>();
+                    ApplyFilter(_currentFilter);
+
+                    TotalStockValueLabel.Text = "$0.00";
+                    LowStockAlertsLabel.Text = "0";
+                    DigitalAssetsLabel.Text = "0";
+                    ActiveShipmentsLabel.Text = "0";
+                    InventoryCountLabel.Text = "Showing 0 items";
+                }
+
+                if (!string.IsNullOrEmpty(Services.UserSession.Username) && Services.UserSession.Username.Length >= 2)
+                    HeaderProfileInitials.Text = Services.UserSession.Username.Substring(0, 2).ToUpper();
+                else
+                    HeaderProfileInitials.Text = "AD";
             }
             catch (Exception ex)
             {

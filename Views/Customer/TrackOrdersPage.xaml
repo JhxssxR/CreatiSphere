@@ -162,14 +162,21 @@
                         <Grid ColumnDefinitions="*,Auto">
                             <Border StrokeShape="RoundRectangle 8" StrokeThickness="0" BackgroundColor="#E2E8F0" Padding="4">
                                 <HorizontalStackLayout Spacing="4">
-                                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="24,8">
-                                        <Label Text="Active" TextColor="#0D9488" FontSize="14" FontAttributes="Bold" />
+                                    <Border x:Name="TabActive" BackgroundColor="White" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="24,8">
+                                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="Active" /></Border.GestureRecognizers>
+                                        <Label x:Name="LblActive" Text="Active" TextColor="#0D9488" FontSize="14" FontAttributes="Bold" />
                                     </Border>
-                                    <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="24,8">
-                                        <Label Text="Completed" TextColor="#64748B" FontSize="14" />
+                                    <Border x:Name="TabWaitingForPayment" BackgroundColor="Transparent" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="24,8">
+                                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="Waiting for Payment" /></Border.GestureRecognizers>
+                                        <Label x:Name="LblWaitingForPayment" Text="Waiting for Payment" TextColor="#64748B" FontSize="14" />
                                     </Border>
-                                    <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="24,8">
-                                        <Label Text="Drafts" TextColor="#64748B" FontSize="14" />
+                                    <Border x:Name="TabCompleted" BackgroundColor="Transparent" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="24,8">
+                                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="Completed" /></Border.GestureRecognizers>
+                                        <Label x:Name="LblCompleted" Text="Completed" TextColor="#64748B" FontSize="14" />
+                                    </Border>
+                                    <Border x:Name="TabDrafts" BackgroundColor="Transparent" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="24,8">
+                                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="Drafts" /></Border.GestureRecognizers>
+                                        <Label x:Name="LblDrafts" Text="Drafts" TextColor="#64748B" FontSize="14" />
                                     </Border>
                                 </HorizontalStackLayout>
                             </Border>
@@ -200,7 +207,14 @@
                                                     <Label Text="{Binding Date, StringFormat='Date Placed: {0}'}" TextColor="#64748B" FontSize="13" />
                                                 </VerticalStackLayout>
                                                 <HorizontalStackLayout Grid.Column="2" Spacing="12" VerticalOptions="Start">
-                                                    <Button Text="Message Artist" BackgroundColor="Transparent" TextColor="#0F172A" BorderColor="#CBD5E1" BorderWidth="1" CornerRadius="6" Padding="16,10" FontAttributes="Bold" />
+                                                    <Button IsVisible="False" Text="Pay Balance" BackgroundColor="#F59E0B" TextColor="White" CornerRadius="6" Padding="16,10" FontAttributes="Bold" Clicked="OnPayBalanceClicked" CommandParameter="{Binding .}">
+                                                        <Button.Triggers>
+                                                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="Waiting for Payment">
+                                                                <Setter Property="IsVisible" Value="True" />
+                                                            </DataTrigger>
+                                                        </Button.Triggers>
+                                                    </Button>
+                                                    <Button Text="Message Artist" BackgroundColor="Transparent" TextColor="#0F172A" BorderColor="#CBD5E1" BorderWidth="1" CornerRadius="6" Padding="16,10" FontAttributes="Bold" Clicked="OnMessageArtistClicked" CommandParameter="{Binding .}" />
                                                     <Button Text="View Details" BackgroundColor="#0D9488" TextColor="White" CornerRadius="6" Padding="16,10" FontAttributes="Bold" Clicked="OnViewDetailsClicked" CommandParameter="{Binding .}" />
                                                 </HorizontalStackLayout>
                                             </Grid>
@@ -208,7 +222,7 @@
                                             <!-- Progress Tracker (Simplified for Dynamic) -->
                                             <Grid Padding="32,0,32,32">
                                                 <BoxView HeightRequest="2" Color="#E2E8F0" VerticalOptions="Center" Margin="30,0,30,12" />
-                                                <Grid ColumnDefinitions="*,*,*,*">
+                                                <Grid ColumnDefinitions="*,*,*,*,*">
                                                     <!-- Briefing Step -->
                                                     <VerticalStackLayout Grid.Column="0" Spacing="12" HorizontalOptions="Center">
                                                         <Border HeightRequest="24" WidthRequest="24" StrokeShape="RoundRectangle 12" StrokeThickness="0" HorizontalOptions="Center">
@@ -219,6 +233,7 @@
                                                                         <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Briefing"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
                                                                         <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Concept"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
                                                                         <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Refining"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
+                                                                        <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Waiting for Payment"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
                                                                         <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Delivery"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
@@ -231,6 +246,7 @@
                                                                             <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Briefing"><Setter Property="Fill" Value="White" /></DataTrigger>
                                                                             <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Concept"><Setter Property="Fill" Value="White" /></DataTrigger>
                                                                             <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Refining"><Setter Property="Fill" Value="White" /></DataTrigger>
+                                                                            <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Waiting for Payment"><Setter Property="Fill" Value="White" /></DataTrigger>
                                                                             <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Delivery"><Setter Property="Fill" Value="White" /></DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
@@ -250,6 +266,7 @@
                                                                         <!-- Keep highlighted if past this step -->
                                                                         <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Concept"><Setter Property="TextColor" Value="#0D9488" /></DataTrigger>
                                                                         <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Refining"><Setter Property="TextColor" Value="#0D9488" /></DataTrigger>
+                                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Waiting for Payment"><Setter Property="TextColor" Value="#0D9488" /></DataTrigger>
                                                                         <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Delivery"><Setter Property="TextColor" Value="#0D9488" /></DataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
@@ -266,6 +283,7 @@
                                                                     <Style.Triggers>
                                                                         <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Concept"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
                                                                         <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Refining"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
+                                                                        <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Waiting for Payment"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
                                                                         <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Delivery"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
@@ -277,6 +295,7 @@
                                                                         <Style.Triggers>
                                                                             <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Concept"><Setter Property="Fill" Value="White" /></DataTrigger>
                                                                             <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Refining"><Setter Property="Fill" Value="White" /></DataTrigger>
+                                                                            <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Waiting for Payment"><Setter Property="Fill" Value="White" /></DataTrigger>
                                                                             <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Delivery"><Setter Property="Fill" Value="White" /></DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
@@ -294,6 +313,7 @@
                                                                             <Setter Property="FontAttributes" Value="Bold" />
                                                                         </DataTrigger>
                                                                         <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Refining"><Setter Property="TextColor" Value="#0D9488" /></DataTrigger>
+                                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Waiting for Payment"><Setter Property="TextColor" Value="#0D9488" /></DataTrigger>
                                                                         <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Delivery"><Setter Property="TextColor" Value="#0D9488" /></DataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
@@ -309,6 +329,7 @@
                                                                     <Setter Property="BackgroundColor" Value="#F1F5F9" />
                                                                     <Style.Triggers>
                                                                         <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Refining"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
+                                                                        <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Waiting for Payment"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
                                                                         <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Delivery"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
@@ -319,6 +340,7 @@
                                                                         <Setter Property="Fill" Value="#94A3B8" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Refining"><Setter Property="Fill" Value="White" /></DataTrigger>
+                                                                            <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Waiting for Payment"><Setter Property="Fill" Value="White" /></DataTrigger>
                                                                             <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Delivery"><Setter Property="Fill" Value="White" /></DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
@@ -335,6 +357,48 @@
                                                                             <Setter Property="TextColor" Value="#0D9488" />
                                                                             <Setter Property="FontAttributes" Value="Bold" />
                                                                         </DataTrigger>
+                                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Waiting for Payment"><Setter Property="TextColor" Value="#0D9488" /></DataTrigger>
+                                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Delivery"><Setter Property="TextColor" Value="#0D9488" /></DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Label.Style>
+                                                        </Label>
+                                                    </VerticalStackLayout>
+
+                                                    <!-- Waiting for Payment Step -->
+                                                    <VerticalStackLayout Grid.Column="3" Spacing="12" HorizontalOptions="Center">
+                                                        <Border HeightRequest="24" WidthRequest="24" StrokeShape="RoundRectangle 12" StrokeThickness="0" HorizontalOptions="Center">
+                                                            <Border.Style>
+                                                                <Style TargetType="Border">
+                                                                    <Setter Property="BackgroundColor" Value="#F1F5F9" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Waiting for Payment"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
+                                                                        <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Delivery"><Setter Property="BackgroundColor" Value="#0D9488" /></DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+                                                            <Path Data="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" Aspect="Uniform" HeightRequest="12" WidthRequest="12" VerticalOptions="Center" HorizontalOptions="Center">
+                                                                <Path.Style>
+                                                                    <Style TargetType="Path">
+                                                                        <Setter Property="Fill" Value="#94A3B8" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Waiting for Payment"><Setter Property="Fill" Value="White" /></DataTrigger>
+                                                                            <DataTrigger TargetType="Path" Binding="{Binding Status}" Value="Delivery"><Setter Property="Fill" Value="White" /></DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Path.Style>
+                                                            </Path>
+                                                        </Border>
+                                                        <Label Text="Payment" HorizontalOptions="Center">
+                                                            <Label.Style>
+                                                                <Style TargetType="Label">
+                                                                    <Setter Property="TextColor" Value="#64748B" />
+                                                                    <Setter Property="FontAttributes" Value="None" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Waiting for Payment">
+                                                                            <Setter Property="TextColor" Value="#0D9488" />
+                                                                            <Setter Property="FontAttributes" Value="Bold" />
+                                                                        </DataTrigger>
                                                                         <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Delivery"><Setter Property="TextColor" Value="#0D9488" /></DataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
@@ -343,7 +407,7 @@
                                                     </VerticalStackLayout>
 
                                                     <!-- Delivery Step -->
-                                                    <VerticalStackLayout Grid.Column="3" Spacing="12" HorizontalOptions="Center">
+                                                    <VerticalStackLayout Grid.Column="4" Spacing="12" HorizontalOptions="Center">
                                                         <Border HeightRequest="24" WidthRequest="24" StrokeShape="RoundRectangle 12" StrokeThickness="0" HorizontalOptions="Center">
                                                             <Border.Style>
                                                                 <Style TargetType="Border">

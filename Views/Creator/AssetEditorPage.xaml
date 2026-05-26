@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CreatiSphere.Views.Creator.AssetEditorPage"
+             Title="Asset Editor"
+             BackgroundColor="#F8FAFC">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="40" Spacing="24" MaximumWidthRequest="600" HorizontalOptions="Center">
+            
+            <Label x:Name="PageTitleLabel" Text="New Asset" FontSize="28" FontAttributes="Bold" TextColor="#0F172A" />
+            
+            <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
+                <VerticalStackLayout Spacing="20">
+                    
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Asset Title" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                        <Entry x:Name="TitleEntry" Placeholder="e.g. Nebula Dreamscape" TextColor="#0F172A" BackgroundColor="#F1F5F9" />
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Type" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                        <Entry x:Name="TypeEntry" Placeholder="e.g. PNG, SVG, 3D Model" TextColor="#0F172A" BackgroundColor="#F1F5F9" />
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Price (₱)" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                        <Entry x:Name="PriceEntry" Placeholder="0.00" Keyboard="Numeric" TextColor="#0F172A" BackgroundColor="#F1F5F9" />
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Cover Image" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
+                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="16">
+                            <Label x:Name="ImagePathLabel" Text="No file selected" TextColor="#94A3B8" VerticalOptions="Center" />
+                            <Button Grid.Column="1" Text="Choose Image" Clicked="OnChooseImageClicked" BackgroundColor="#E2E8F0" TextColor="#0F172A" />
+                        </Grid>
+                        <Image x:Name="PreviewImage" HeightRequest="150" Aspect="AspectFit" Margin="0,16,0,0" IsVisible="false" />
+                    </VerticalStackLayout>
+                    
+                </VerticalStackLayout>
+            </Border>
+            
+            <HorizontalStackLayout Spacing="16" HorizontalOptions="End">
+                <Button Text="Cancel" Clicked="OnCancelClicked" BackgroundColor="Transparent" TextColor="#64748B" />
+                <Button x:Name="SaveButton" Text="Save Asset" Clicked="OnSaveClicked" BackgroundColor="#0D9488" TextColor="White" CornerRadius="8" Padding="24,12" />
+            </HorizontalStackLayout>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

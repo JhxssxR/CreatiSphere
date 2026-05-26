@@ -42,6 +42,7 @@
                         <Label Text="Commissions" TextColor="#9CA3AF" FontSize="14" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
                 </Border>
+                <!-- Catalog Manager -->
                 <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
                     <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnCatalogManagerTapped"/></Border.GestureRecognizers>
                     <HorizontalStackLayout Spacing="14">
@@ -49,8 +50,17 @@
                         <Label Text="Catalog Manager" TextColor="#9CA3AF" FontSize="14" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
                 </Border>
+
+                <!-- Messages -->
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16,12">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnMessagesTapped"/></Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="14">
+                        <Path Data="M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z" Fill="#9CA3AF" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                        <Label Text="Messages" TextColor="#9CA3AF" FontSize="14" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
                 <BoxView HeightRequest="40" Color="Transparent" />
-                <Button Text="Upload New Art" BackgroundColor="#0D9488" TextColor="White" CornerRadius="8" HeightRequest="44" FontAttributes="Bold" Margin="4,0">
+                <Button Text="Upload New Art" Clicked="OnUploadNewArtClicked" BackgroundColor="#0D9488" TextColor="White" CornerRadius="8" HeightRequest="44" FontAttributes="Bold" Margin="4,0">
                     <Button.ImageSource><FontImageSource Glyph="+" FontFamily="FontAwesome" Size="16" /></Button.ImageSource>
                 </Button>
             </VerticalStackLayout>
@@ -99,7 +109,9 @@
                     <Path Data="M12,22c1.1,0,2-0.9,2-2h-4C10,21.1,10.9,22,12,22z M18,16v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-0.83-0.67-1.5-1.5-1.5 s-1.5,0.67-1.5,1.5v0.68C7.64,5.36,6,7.92,6,11v5l-2,2v1h16v-1L18,16z" Fill="#64748B" Aspect="Uniform" HeightRequest="20" WidthRequest="20" />
                     <Path Data="M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z" Fill="#64748B" Aspect="Uniform" HeightRequest="20" WidthRequest="20" />
                         <Label x:Name="AccountNameLabel" Text="My Account" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" />
-                    <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" BackgroundColor="#E2E8F0" StrokeThickness="0" />
+                    <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" BackgroundColor="#0D9488" StrokeThickness="0">
+                        <Label Text="CR" TextColor="White" FontSize="11" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
                 </HorizontalStackLayout>
             </Grid>
 
@@ -148,7 +160,9 @@
                         <Border x:Name="FeaturedAssetCard" StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White">
                             <VerticalStackLayout Padding="24" Spacing="24">
                                 <Grid HeightRequest="380">
-                                    <Border BackgroundColor="#F8FAFC" StrokeShape="RoundRectangle 12" />
+                                    <Border BackgroundColor="#F8FAFC" StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                                        <Image Source="{Binding ImagePath}" Aspect="AspectFill" />
+                                    </Border>
                                     <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Start" Padding="16" Spacing="8">
                                         <Border BackgroundColor="#94A3B8" StrokeShape="RoundRectangle 4" Padding="8,4">
                                             <Label Text="{Binding Type}" TextColor="White" FontSize="9" FontAttributes="Bold" />
@@ -162,6 +176,9 @@
                                 <Grid ColumnDefinitions="*, Auto">
                                     <Label Text="{Binding Views, StringFormat='Views: {0:N0}'}" TextColor="#94A3B8" FontSize="12" VerticalOptions="Center" />
                                     <HorizontalStackLayout Grid.Column="1" Spacing="20">
+                                        <HorizontalStackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnAssetOptionsTapped" CommandParameter="{Binding .}" />
+                                        </HorizontalStackLayout.GestureRecognizers>
                                         <Path Data="M3,17.25V21h3.75L17.81,9.94l-3.75-3.75L3,17.25z" Fill="#64748B" Aspect="Uniform" HeightRequest="18" WidthRequest="18" />
                                         <Label Text="⋮" TextColor="#64748B" FontSize="20" VerticalOptions="Center" />
                                     </HorizontalStackLayout>
@@ -178,7 +195,9 @@
                                     <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White">
                                         <VerticalStackLayout Padding="16" Spacing="16">
                                             <Grid HeightRequest="160">
-                                                <Border BackgroundColor="#F8FAFC" StrokeShape="RoundRectangle 8" />
+                                                <Border BackgroundColor="#F8FAFC" StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                                                    <Image Source="{Binding ImagePath}" Aspect="AspectFill" />
+                                                </Border>
                                                 <Border HorizontalOptions="Start" VerticalOptions="Start" BackgroundColor="#E2E8F0" StrokeShape="RoundRectangle 4" Padding="6,3" Margin="12">
                                                     <Label Text="{Binding Type}" TextColor="#475569" FontSize="8" FontAttributes="Bold" />
                                                 </Border>
@@ -186,8 +205,13 @@
                                             <VerticalStackLayout Spacing="4">
                                                 <Label Text="{Binding Title}" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" />
                                                 <Grid ColumnDefinitions="*, Auto">
-                                                    <Label Text="{Binding Views, StringFormat='Views: {0:N0}'}" TextColor="#94A3B8" FontSize="11" />
-                                                    <Ellipse Grid.Column="1" Fill="#0D9488" HeightRequest="6" WidthRequest="6" />
+                                                    <Label Text="{Binding Views, StringFormat='Views: {0:N0}'}" TextColor="#94A3B8" FontSize="11" VerticalOptions="Center" />
+                                                    <HorizontalStackLayout Grid.Column="1" Spacing="12">
+                                                        <HorizontalStackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="OnAssetOptionsTapped" CommandParameter="{Binding .}" />
+                                                        </HorizontalStackLayout.GestureRecognizers>
+                                                        <Label Text="⋮" TextColor="#64748B" FontSize="16" VerticalOptions="Center" />
+                                                    </HorizontalStackLayout>
                                                 </Grid>
                                             </VerticalStackLayout>
                                         </VerticalStackLayout>
@@ -198,6 +222,9 @@
                     </Grid>
 
                     <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" StrokeDashArray="4,2" Padding="24">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBrowseFilesTapped" />
+                        </Border.GestureRecognizers>
                         <VerticalStackLayout VerticalOptions="Center" Spacing="16">
                             <Border BackgroundColor="#F0FDFA" HeightRequest="56" WidthRequest="56" StrokeShape="RoundRectangle 28">
                                 <Path Data="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z" Fill="#0D9488" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
@@ -212,7 +239,7 @@
 
                     <!-- Load More -->
                     <VerticalStackLayout Spacing="12" HorizontalOptions="Center" Margin="0,40">
-                        <Button Text="Load More Assets" BackgroundColor="White" TextColor="#0F172A" BorderColor="#E2E8F0" BorderWidth="1" CornerRadius="20" Padding="40,12" FontAttributes="Bold" />
+                        <Button Text="Load More Assets" BackgroundColor="White" TextColor="#0F172A" BorderColor="#E2E8F0" BorderWidth="1" CornerRadius="20" Padding="40,12" FontAttributes="Bold" Clicked="OnLoadMoreClicked" />
                         <Label x:Name="AssetsCountLabel" Text="Showing 0 assets" TextColor="#94A3B8" FontSize="12" HorizontalOptions="Center" />
                     </VerticalStackLayout>
 
@@ -222,9 +249,62 @@
 
         <!-- Floating Add Button -->
         <Border Grid.Column="1" HeightRequest="56" WidthRequest="56" StrokeShape="RoundRectangle 28" BackgroundColor="#064E3B" VerticalOptions="End" HorizontalOptions="End" Margin="40">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnBrowseFilesTapped" />
+            </Border.GestureRecognizers>
             <Border.Shadow><Shadow Brush="Black" Offset="0,10" Radius="20" Opacity="0.1" /></Border.Shadow>
             <Path Data="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z" Fill="White" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
         </Border>
+
+        <!-- Custom Modal Overlay for Asset Editor -->
+        <Grid x:Name="AssetEditorModal" Grid.ColumnSpan="2" IsVisible="False" BackgroundColor="#990F172A" Padding="20">
+            <Border VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="480" BackgroundColor="White" StrokeShape="RoundRectangle 16" Padding="32" StrokeThickness="0">
+                <Border.Shadow><Shadow Brush="Black" Opacity="0.2" Offset="0,10" Radius="30"/></Border.Shadow>
+                
+                <VerticalStackLayout Spacing="24">
+                    <Label x:Name="ModalTitleLabel" Text="Upload New Asset" FontSize="24" FontAttributes="Bold" TextColor="#0F172A" />
+                    
+                    <VerticalStackLayout Spacing="16">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Asset Title" FontSize="13" FontAttributes="Bold" TextColor="#475569" />
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E2E8F0" Padding="12, 0" BackgroundColor="#F8FAFC">
+                                <Entry x:Name="TitleEntry" Placeholder="e.g. Nebula Dreamscape" TextColor="#0F172A" FontSize="14" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Type" FontSize="13" FontAttributes="Bold" TextColor="#475569" />
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E2E8F0" Padding="12, 0" BackgroundColor="#F8FAFC">
+                                <Entry x:Name="TypeEntry" Placeholder="e.g. PNG, SVG, 3D Model" TextColor="#0F172A" FontSize="14" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Price (₱)" FontSize="13" FontAttributes="Bold" TextColor="#475569" />
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E2E8F0" Padding="12, 0" BackgroundColor="#F8FAFC">
+                                <Entry x:Name="PriceEntry" Placeholder="0.00" Keyboard="Numeric" TextColor="#0F172A" FontSize="14" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Cover Image" FontSize="13" FontAttributes="Bold" TextColor="#475569" />
+                            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12">
+                                <Label x:Name="ImagePathLabel" Text="No file selected" TextColor="#94A3B8" FontSize="13" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                <Button Grid.Column="1" Text="Choose Image" Clicked="OnChooseImageClicked" BackgroundColor="#E2E8F0" TextColor="#0F172A" HeightRequest="36" Padding="12, 0" FontSize="13" CornerRadius="6" />
+                            </Grid>
+                            <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#E2E8F0" HeightRequest="150" BackgroundColor="#F8FAFC" Margin="0,8,0,0" Padding="4">
+                                <Image x:Name="PreviewImage" Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="16" Margin="0, 8, 0, 0">
+                        <Button Grid.Column="0" Text="Cancel" Clicked="OnCancelModalClicked" BackgroundColor="Transparent" TextColor="#64748B" HeightRequest="44" CornerRadius="8" />
+                        <Button Grid.Column="1" x:Name="SaveButton" Text="Save Asset" Clicked="OnSaveAssetClicked" BackgroundColor="#0D9488" TextColor="White" FontAttributes="Bold" HeightRequest="44" CornerRadius="8" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
 
     </Grid>
 </ContentPage>
