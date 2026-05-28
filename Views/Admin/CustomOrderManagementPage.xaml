@@ -147,319 +147,146 @@
                     </Border>
                 </Grid>
 
-                <!-- Kanban Board Section -->
-                <Grid ColumnDefinitions="*, *, *" ColumnSpacing="24">
-                    <!-- New Requests -->
-                    <VerticalStackLayout Grid.Column="0" Spacing="16">
-                        <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
-                            <Ellipse WidthRequest="8" HeightRequest="8" Fill="#3B82F6" VerticalOptions="Center" />
-                            <Label Text="New Requests" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
-                            <Border BackgroundColor="#E0E7FF" Padding="8, 2" StrokeShape="RoundRectangle 12" StrokeThickness="0" VerticalOptions="Center">
-                                <Label x:Name="NewRequestsCountLabel" Text="0" TextColor="#3B82F6" FontSize="11" FontAttributes="Bold" />
-                            </Border>
-                        </HorizontalStackLayout>
-
-                        <VerticalStackLayout x:Name="NewOrdersList" BindableLayout.ItemsSource="{Binding .}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Padding="16" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" Margin="0,0,0,12">
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroup Name="CommonStates">
-                                                <VisualState Name="Normal" />
-                                                <VisualState Name="PointerOver">
-                                                    <VisualState.Setters>
-                                                        <Setter Property="BackgroundColor" Value="#F8FAFC" />
-                                                        <Setter Property="Stroke" Value="{StaticResource DashboardTeal}" />
-                                                        <Setter Property="TranslationX" Value="4" />
-                                                    </VisualState.Setters>
-                                                </VisualState>
-                                            </VisualStateGroup>
-                                        </VisualStateManager.VisualStateGroups>
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="OnOrderSelected" CommandParameter="{Binding .}" />
-                                        </Border.GestureRecognizers>
-                                        <VerticalStackLayout Spacing="12">
-                                            <Grid ColumnDefinitions="Auto, *">
-                                                <Border BackgroundColor="#EFF6FF" Padding="8, 2" StrokeShape="RoundRectangle 4" StrokeThickness="0">
-                                                    <Label Text="{Binding Priority}" TextColor="#3B82F6" FontSize="9" FontAttributes="Bold" />
-                                                </Border>
-                                                <Label Grid.Column="1" Text="{Binding OrderID, StringFormat='#{0}'}" TextColor="{StaticResource Slate400}" FontSize="10" HorizontalOptions="End" />
-                                            </Grid>
-                                            <Label Text="{Binding Title}" TextColor="{StaticResource Slate900}" FontSize="14" FontAttributes="Bold" />
-                                            <Label Text="{Binding Description}" TextColor="{StaticResource Slate500}" FontSize="12" LineBreakMode="WordWrap" MaxLines="2" />
-                                            <Grid ColumnDefinitions="Auto, *, Auto">
-                                                <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
-                                                    <Path Data="M19,3h-1V1h-2v2H8V1H6v2H5C3.89,3,3,3.9,3,5v14c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.11,3,19,3z M19,19H5V8h14V19z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="12" WidthRequest="12" VerticalOptions="Center" />
-                                                    <Label Text="{Binding Date}" TextColor="{StaticResource Slate400}" FontSize="11" VerticalOptions="Center" />
-                                                </HorizontalStackLayout>
-                                                <Border Grid.Column="2" HeightRequest="24" WidthRequest="24" StrokeShape="RoundRectangle 12" StrokeThickness="0">
-                                                    <Image Source="avatar.png" Aspect="AspectFill" />
-                                                </Border>
-                                            </Grid>
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
-                    </VerticalStackLayout>
-
-                    <!-- In Progress -->
-                    <VerticalStackLayout Grid.Column="1" Spacing="16">
-                        <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
-                            <Ellipse WidthRequest="8" HeightRequest="8" Fill="{StaticResource DashboardTeal}" VerticalOptions="Center" />
-                            <Label Text="In Progress" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
-                            <Border BackgroundColor="#CCFBF1" Padding="8, 2" StrokeShape="RoundRectangle 12" StrokeThickness="0" VerticalOptions="Center">
-                                <Label x:Name="InProgressCountLabel" Text="0" TextColor="{StaticResource DashboardTeal}" FontSize="11" FontAttributes="Bold" />
-                            </Border>
-                        </HorizontalStackLayout>
-
-                        <!-- In Progress List -->
-                        <VerticalStackLayout x:Name="InProgressOrdersList" BindableLayout.ItemsSource="{Binding .}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Padding="16" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" Margin="0,0,0,12">
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroup Name="CommonStates">
-                                                <VisualState Name="Normal" />
-                                                <VisualState Name="PointerOver">
-                                                    <VisualState.Setters>
-                                                        <Setter Property="BackgroundColor" Value="#F8FAFC" />
-                                                        <Setter Property="Stroke" Value="{StaticResource DashboardTeal}" />
-                                                        <Setter Property="TranslationX" Value="4" />
-                                                    </VisualState.Setters>
-                                                </VisualState>
-                                            </VisualStateGroup>
-                                        </VisualStateManager.VisualStateGroups>
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="OnOrderSelected" CommandParameter="{Binding .}" />
-                                        </Border.GestureRecognizers>
-                                        <VerticalStackLayout Spacing="12">
-                                            <Grid ColumnDefinitions="Auto, *">
-                                                <Border BackgroundColor="#ECFDF5" Padding="8, 2" StrokeShape="RoundRectangle 4" StrokeThickness="0">
-                                                    <Label Text="SKETCHING" TextColor="#10B981" FontSize="9" FontAttributes="Bold" />
-                                                </Border>
-                                                <Label Grid.Column="1" Text="{Binding OrderID, StringFormat='#{0}'}" TextColor="{StaticResource Slate400}" FontSize="10" HorizontalOptions="End" />
-                                            </Grid>
-                                            <Label Text="{Binding Title}" TextColor="{StaticResource Slate900}" FontSize="14" FontAttributes="Bold" />
-                                            <Grid ColumnDefinitions="Auto, *, Auto">
-                                                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                                                    <Border HeightRequest="20" WidthRequest="20" StrokeShape="RoundRectangle 10" StrokeThickness="0">
-                                                        <Image Source="artist1.png" Aspect="AspectFill" />
-                                                    </Border>
-                                                    <Label Text="Elena S." TextColor="{StaticResource Slate500}" FontSize="11" VerticalOptions="Center" />
-                                                </HorizontalStackLayout>
-                                                <Label Grid.Column="2" Text="60%" TextColor="{StaticResource DashboardTeal}" FontSize="11" FontAttributes="Bold" VerticalOptions="Center" />
-                                            </Grid>
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
-                    </VerticalStackLayout>
-
-                    <!-- Review -->
-                    <VerticalStackLayout Grid.Column="2" Spacing="16">
-                        <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
-                            <Ellipse WidthRequest="8" HeightRequest="8" Fill="#F59E0B" VerticalOptions="Center" />
-                            <Label Text="Review" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
-                            <Border BackgroundColor="#FEF3C7" Padding="8, 2" StrokeShape="RoundRectangle 12" StrokeThickness="0" VerticalOptions="Center">
-                                <Label x:Name="ReviewCountLabel" Text="0" TextColor="#F59E0B" FontSize="11" FontAttributes="Bold" />
-                            </Border>
-                        </HorizontalStackLayout>
-
-                        <!-- Review List -->
-                        <VerticalStackLayout x:Name="ReviewOrdersList" BindableLayout.ItemsSource="{Binding .}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Padding="16" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" Margin="0,0,0,12">
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroup Name="CommonStates">
-                                                <VisualState Name="Normal" />
-                                                <VisualState Name="PointerOver">
-                                                    <VisualState.Setters>
-                                                        <Setter Property="BackgroundColor" Value="#F8FAFC" />
-                                                        <Setter Property="Stroke" Value="{StaticResource DashboardTeal}" />
-                                                        <Setter Property="TranslationX" Value="4" />
-                                                    </VisualState.Setters>
-                                                </VisualState>
-                                            </VisualStateGroup>
-                                        </VisualStateManager.VisualStateGroups>
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="OnOrderSelected" CommandParameter="{Binding .}" />
-                                        </Border.GestureRecognizers>
-                                        <VerticalStackLayout Spacing="12">
-                                            <Grid ColumnDefinitions="Auto, *">
-                                                <Border BackgroundColor="#FFF7ED" Padding="8, 2" StrokeShape="RoundRectangle 4" StrokeThickness="0">
-                                                    <Label Text="FEEDBACK" TextColor="#F97316" FontSize="9" FontAttributes="Bold" />
-                                                </Border>
-                                                <Label Grid.Column="1" Text="{Binding OrderID, StringFormat='#{0}'}" TextColor="{StaticResource Slate400}" FontSize="10" HorizontalOptions="End" />
-                                            </Grid>
-                                            <Label Text="{Binding Title}" TextColor="{StaticResource Slate900}" FontSize="14" FontAttributes="Bold" />
-                                            <Border BackgroundColor="#F8FAFC" Padding="12" StrokeShape="RoundRectangle 4" StrokeThickness="0">
-                                                <Label Text="&quot;Client awaiting review...&quot;" TextColor="{StaticResource Slate500}" FontSize="11" FontAttributes="Italic" />
-                                            </Border>
-                                            <Grid ColumnDefinitions="Auto, *, Auto">
-                                                <Label Text="VIEW DRAFT" TextColor="{StaticResource DashboardTeal}" FontSize="10" FontAttributes="Bold" VerticalOptions="Center" />
-                                                <Label Grid.Column="2" Text="Marcus K." TextColor="{StaticResource Slate500}" FontSize="11" VerticalOptions="Center" />
-                                            </Grid>
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
-                    </VerticalStackLayout>
-                </Grid>
-
-                <!-- Detailed View Area -->
-                <Border Padding="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
-                    <Grid ColumnDefinitions="*, 300">
-                        <!-- Left Details -->
-                        <VerticalStackLayout Grid.Column="0" Padding="32" Spacing="32">
-                            <HorizontalStackLayout Spacing="16">
-                                <Border BackgroundColor="#CCFBF1" Padding="12, 4" StrokeShape="RoundRectangle 12" StrokeThickness="0">
-                                    <Label Text="CURRENTLY VIEWING" TextColor="{StaticResource DashboardTeal}" FontSize="10" FontAttributes="Bold" />
-                                </Border>
+                <!-- Main Commission Dashboard Row -->
+                <Grid ColumnDefinitions="2*, *" ColumnSpacing="24">
+                    
+                    <!-- List Column -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="24">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Text="Active Custom Orders" TextColor="{StaticResource Slate900}" FontSize="20" FontAttributes="Bold" />
+                            <HorizontalStackLayout Grid.Column="1" Spacing="6">
+                                <Path Data="M3,18h6v-2H3V18z M3,6v2h18V6H3z M3,13h12v-2H3V13z" Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
+                                <Label Text="Sort by Deadline" TextColor="{StaticResource Slate600}" FontSize="12" FontAttributes="Bold" VerticalOptions="Center" />
                             </HorizontalStackLayout>
+                        </Grid>
 
-                            <HorizontalStackLayout Spacing="12">
-                                <Label x:Name="DetailTitleLabel" Text="Cyberpunk Landscape" TextColor="{StaticResource Slate900}" FontSize="32" FontAttributes="Bold" />
-                                <Label x:Name="DetailIdLabel" Text="#CO-8821" TextColor="{StaticResource Slate400}" FontSize="32" VerticalOptions="End" />
-                            </HorizontalStackLayout>
-
-                            <HorizontalStackLayout Spacing="24">
-                                <HorizontalStackLayout Spacing="8">
-                                    <Path Data="M11.99,2C6.47,2,2,6.48,2,12s4.47,10,9.99,10C17.52,22,22,17.52,22,12S17.52,2,11.99,2z M12,20c-4.42,0-8-3.58-8-8 s3.58-8,8-8s8,3.58,8,8S16.42,20,12,20z M12.5,7H11v6l5.25,3.15l0.75-1.23L12.5,12.5V7z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
-                                    <Label x:Name="DetailPriorityLabel" Text="Priority: High (Expedited)" TextColor="{StaticResource Slate600}" FontSize="13" VerticalOptions="Center" />
-                                </HorizontalStackLayout>
-                                <HorizontalStackLayout Spacing="8">
-                                    <Path Data="M20,6h-4V4c0-1.11-.89-2-2-2h-4c-1.11,0-2,.89-2,2v2H4c-1.11,0-1.99.89-1.99,2L2,19c0,1.11.89,2,2,2h16c1.11,0,2-.89,2-2V8c0-1.11-.89-2-2-2zm-6,0h-4V4h4v2z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
-                                    <Label x:Name="DetailCategoryLabel" Text="Digital Mural Asset Pack" TextColor="{StaticResource Slate600}" FontSize="13" VerticalOptions="Center" />
-                                </HorizontalStackLayout>
-                            </HorizontalStackLayout>
-
-                            <VerticalStackLayout Spacing="32">
-                                <VerticalStackLayout Spacing="16">
-                                    <Label Text="CLIENT BRIEF" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
-                                    <Border BackgroundColor="#F8FAFC" Padding="24" StrokeShape="RoundRectangle 8" StrokeThickness="0">
-                                        <Label x:Name="DetailBriefLabel" Text="Create an ultra-wide panoramic digital painting of a futuristic metropolis. Focus on verticality and dense atmospheric haze." 
-                                               TextColor="{StaticResource Slate600}" FontSize="14" LineBreakMode="WordWrap" LineHeight="1.5" />
-                                    </Border>
-                                </VerticalStackLayout>
-
-                                <VerticalStackLayout Spacing="16">
-                                    <Label Text="TECHNICAL SPECS" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
-                                    <VerticalStackLayout Spacing="1">
-                                        <Grid ColumnDefinitions="*, *" Padding="0, 12">
-                                            <Label Text="Resolution" TextColor="{StaticResource Slate500}" FontSize="13" />
-                                            <Label x:Name="DetailResolutionLabel" Grid.Column="1" Text="7680 × 2160 (8K)" TextColor="{StaticResource Slate900}" FontSize="13" FontAttributes="Bold" HorizontalOptions="End" />
-                                        </Grid>
-                                        <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
-                                        <Grid ColumnDefinitions="*, *" Padding="0, 12">
-                                            <Label Text="Color Profile" TextColor="{StaticResource Slate500}" FontSize="13" />
-                                            <Label x:Name="DetailColorProfileLabel" Grid.Column="1" Text="Adobe RGB (1998)" TextColor="{StaticResource Slate900}" FontSize="13" FontAttributes="Bold" HorizontalOptions="End" />
-                                        </Grid>
-                                        <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
-                                        <Grid ColumnDefinitions="*, *" Padding="0, 12">
-                                            <Label Text="Deliverables" TextColor="{StaticResource Slate500}" FontSize="13" />
-                                            <Label x:Name="DetailDeliverablesLabel" Grid.Column="1" Text="PSD, TIFF, 4K Proxy" TextColor="{StaticResource Slate900}" FontSize="13" FontAttributes="Bold" HorizontalOptions="End" />
-                                        </Grid>
-                                    </VerticalStackLayout>
-                                </VerticalStackLayout>
-                            </VerticalStackLayout>
-
-                            <HorizontalStackLayout Spacing="16" Margin="0,16,0,0">
-                                <Button Text="Update Order Status" 
-                                        Clicked="OnUpdateStatusClicked"
-                                        TextColor="White" 
-                                        BackgroundColor="#065F46"
-                                        CornerRadius="8"
-                                        Padding="24, 12"
-                                        FontAttributes="Bold" />
-                                <Button Text="Contact Client" 
-                                        TextColor="{StaticResource Slate900}" 
-                                        BackgroundColor="White"
-                                        BorderColor="{StaticResource Slate200}"
-                                        BorderWidth="1"
-                                        CornerRadius="8"
-                                        Padding="24, 12" />
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
-
-                        <!-- Right Sidebar (Execution Path) -->
-                        <Border Grid.Column="1" BackgroundColor="#F8FAFC" StrokeThickness="0" StrokeShape="RoundRectangle 0" Padding="24">
-                            <VerticalStackLayout Spacing="32">
-                                <Grid ColumnDefinitions="*, Auto">
-                                    <Label Text="Execution Path" TextColor="{StaticResource Slate900}" FontSize="18" FontAttributes="Bold" />
-                                    <Label Grid.Column="1" Text="⋮" TextColor="{StaticResource Slate400}" FontSize="20" VerticalOptions="Center" />
+                        <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                            <VerticalStackLayout>
+                                <Grid ColumnDefinitions="2*, *, *, *, Auto" Padding="20,16" BackgroundColor="#F8FAFC">
+                                    <Label Text="PROJECT DETAILS" TextColor="{StaticResource Slate600}" FontSize="10" FontAttributes="Bold" />
+                                    <Label Grid.Column="1" Text="DEADLINE" TextColor="{StaticResource Slate600}" FontSize="10" FontAttributes="Bold" />
+                                    <Label Grid.Column="2" Text="PRIORITY" TextColor="{StaticResource Slate600}" FontSize="10" FontAttributes="Bold" />
+                                    <Label Grid.Column="3" Text="STATUS" TextColor="{StaticResource Slate600}" FontSize="10" FontAttributes="Bold" />
                                 </Grid>
 
-                                <VerticalStackLayout Spacing="12">
-                                    <Label Text="ASSIGNED ARTIST" TextColor="{StaticResource Slate400}" FontSize="10" FontAttributes="Bold" />
-                                    <Border BackgroundColor="White" Padding="12" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}">
-                                        <Grid ColumnDefinitions="Auto, *">
-                                            <Border HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8" StrokeThickness="0">
-                                                <Image Source="artist2.png" Aspect="AspectFill" />
-                                            </Border>
-                                            <VerticalStackLayout Grid.Column="1" Margin="12,0" Spacing="2">
-                                                <Label x:Name="DetailArtistNameLabel" Text="Unassigned" TextColor="{StaticResource Slate900}" FontSize="14" FontAttributes="Bold" />
-                                                <Label Text="Elite Concept Artist" TextColor="{StaticResource DashboardTeal}" FontSize="11" FontAttributes="Bold" />
+                                <!-- Dynamic Rows -->
+                                <VerticalStackLayout x:Name="AllOrdersList" BindableLayout.ItemsSource="{Binding .}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <VerticalStackLayout>
+                                                <VerticalStackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnOrderSelected" CommandParameter="{Binding .}" />
+                                                </VerticalStackLayout.GestureRecognizers>
+                                                <Grid ColumnDefinitions="2*, *, *, *, Auto" Padding="20">
+                                                    <HorizontalStackLayout Spacing="12">
+                                                        <Border HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" BackgroundColor="{StaticResource Slate200}" StrokeThickness="0">
+                                                            <Label Text="CO" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource DashboardTeal}" />
+                                                        </Border>
+                                                        <VerticalStackLayout VerticalOptions="Center">
+                                                            <Label Text="{Binding Title}" TextColor="{StaticResource Slate900}" FontSize="13" FontAttributes="Bold" />
+                                                            <Label Text="{Binding Category}" TextColor="{StaticResource Slate600}" FontSize="11" FontAttributes="Italic" />
+                                                        </VerticalStackLayout>
+                                                    </HorizontalStackLayout>
+                                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                                        <Label Text="{Binding Date}" TextColor="{StaticResource Slate700}" FontSize="12" />
+                                                    </VerticalStackLayout>
+                                                    <Label Grid.Column="2" Text="{Binding Priority}" TextColor="{StaticResource Slate900}" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                                                    <Border Grid.Column="3" StrokeShape="RoundRectangle 12" Padding="10,4" HorizontalOptions="Start">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="BackgroundColor" Value="#DBEAFE" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Completed">
+                                                                        <Setter Property="BackgroundColor" Value="#DCFCE7" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <Label Text="{Binding Status}" FontSize="9" FontAttributes="Bold">
+                                                            <Label.Style>
+                                                                <Style TargetType="Label">
+                                                                    <Setter Property="TextColor" Value="#3B82F6" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Completed">
+                                                                            <Setter Property="TextColor" Value="#15803D" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Label.Style>
+                                                        </Label>
+                                                    </Border>
+                                                    <HorizontalStackLayout Grid.Column="4" Spacing="12" VerticalOptions="Center">
+                                                        <Path Data="M20,4H4C2.9,4,2,4.9,2,6v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V6C22,4.9,21.1,4,20,4z M18,8l-6,4L6,8V6l6,4l6,-4V8z" Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="16" WidthRequest="16" />
+                                                        <Border BackgroundColor="{StaticResource DashboardTeal}" StrokeShape="RoundRectangle 4" Padding="8,4">
+                                                            <Border.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="OnUpdateStatusClicked" CommandParameter="{Binding .}" />
+                                                            </Border.GestureRecognizers>
+                                                            <Label Text="Update" TextColor="White" FontSize="10" FontAttributes="Bold" />
+                                                        </Border>
+                                                    </HorizontalStackLayout>
+                                                </Grid>
+                                                <BoxView HeightRequest="1" Color="{StaticResource Slate200}" />
                                             </VerticalStackLayout>
-                                        </Grid>
-                                    </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
                                 </VerticalStackLayout>
 
-                                <VerticalStackLayout Spacing="16">
-                                    <Label Text="ORDER TIMELINE" TextColor="{StaticResource Slate400}" FontSize="10" FontAttributes="Bold" />
-                                    
-                                    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto" RowSpacing="24">
-                                        <!-- Step 1 -->
-                                        <VerticalStackLayout Grid.Column="0" Grid.Row="0" Spacing="0" HorizontalOptions="Center">
-                                            <Border BackgroundColor="{StaticResource DashboardTeal}" HeightRequest="20" WidthRequest="20" StrokeShape="RoundRectangle 10" StrokeThickness="0">
-                                                <Label Text="✓" TextColor="White" FontSize="10" HorizontalOptions="Center" VerticalOptions="Center" />
-                                            </Border>
-                                            <BoxView WidthRequest="2" Color="{StaticResource DashboardTeal}" HeightRequest="24" HorizontalOptions="Center" />
-                                        </VerticalStackLayout>
-                                        <VerticalStackLayout Grid.Column="1" Grid.Row="0" Margin="12,0">
-                                            <Label Text="Concept Approval" TextColor="{StaticResource Slate900}" FontSize="13" FontAttributes="Bold" />
-                                            <Label Text="Oct 18, 2026 • Completed" TextColor="{StaticResource Slate400}" FontSize="11" />
-                                        </VerticalStackLayout>
-
-                                        <!-- Step 2 -->
-                                        <VerticalStackLayout Grid.Column="0" Grid.Row="1" Spacing="0" HorizontalOptions="Center">
-                                            <Border BackgroundColor="White" Stroke="{StaticResource DashboardTeal}" StrokeThickness="2" HeightRequest="20" WidthRequest="20" StrokeShape="RoundRectangle 10">
-                                                <Ellipse Fill="{StaticResource DashboardTeal}" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" />
-                                            </Border>
-                                            <BoxView WidthRequest="2" Color="{StaticResource Slate200}" HeightRequest="24" HorizontalOptions="Center" />
-                                        </VerticalStackLayout>
-                                        <VerticalStackLayout Grid.Column="1" Grid.Row="1" Margin="12,0">
-                                            <Label Text="Final Render Submission" TextColor="{StaticResource Slate900}" FontSize="13" FontAttributes="Bold" />
-                                            <Label Text="Oct 24, 2026 • Current Task" TextColor="{StaticResource DashboardTeal}" FontSize="11" FontAttributes="Bold" />
-                                        </VerticalStackLayout>
-
-                                        <!-- Step 3 -->
-                                        <VerticalStackLayout Grid.Column="0" Grid.Row="2" Spacing="0" HorizontalOptions="Center">
-                                            <Border BackgroundColor="{StaticResource Slate200}" HeightRequest="20" WidthRequest="20" StrokeShape="RoundRectangle 10" StrokeThickness="0" />
-                                        </VerticalStackLayout>
-                                        <VerticalStackLayout Grid.Column="1" Grid.Row="2" Margin="12,0">
-                                            <Label Text="Client Handover" TextColor="{StaticResource Slate400}" FontSize="13" />
-                                            <Label Text="Oct 26, 2026 • Upcoming" TextColor="{StaticResource Slate400}" FontSize="11" />
-                                        </VerticalStackLayout>
-                                    </Grid>
-                                </VerticalStackLayout>
-
-                                <Border BackgroundColor="#FEF2F2" Padding="16" StrokeShape="RoundRectangle 8" StrokeThickness="0">
-                                    <VerticalStackLayout Spacing="8">
-                                        <HorizontalStackLayout Spacing="8">
-                                            <Path Data="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M13,17h-2v-2h2V17z M13,13h-2V7h2V13z" Fill="#EF4444" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
-                                            <Label Text="ACTION REQUIRED" TextColor="#EF4444" FontSize="10" FontAttributes="Bold" VerticalOptions="Center" />
-                                        </HorizontalStackLayout>
-                                        <Label Text="Client requested a progress update by EOD today. Victor Chen has not logged activity for 14 hours." TextColor="#991B1B" FontSize="11" LineBreakMode="WordWrap" />
-                                    </VerticalStackLayout>
-                                </Border>
+                                <Label x:Name="ViewAllLabel" Text="View All Orders" TextColor="{StaticResource DashboardTeal}" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,16" />
                             </VerticalStackLayout>
                         </Border>
-                    </Grid>
-                </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Preview Column -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="24">
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" Padding="24">
+                            <VerticalStackLayout Spacing="24">
+                                <Grid ColumnDefinitions="*">
+                                    <Label Text="SELECTED PREVIEW" TextColor="{StaticResource Slate600}" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
+                                </Grid>
+
+                                <Border HeightRequest="200" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" StrokeThickness="0">
+                                    <Image x:Name="PreviewImage" Source="organic_flow.png" Aspect="AspectFill" />
+                                </Border>
+
+                                <VerticalStackLayout Spacing="8">
+                                    <Label x:Name="DetailTitleLabel" Text="Select an order" TextColor="{StaticResource Slate900}" FontSize="18" FontAttributes="Bold" />
+                                    <Label x:Name="DetailCategoryLabel" Text="To view details" TextColor="{StaticResource DashboardTeal}" FontSize="13" FontAttributes="Bold" />
+                                </VerticalStackLayout>
+
+                                <Border BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 12" Padding="20">
+                                    <VerticalStackLayout Spacing="12">
+                                        <Label Text="THE CLIENT BRIEF" TextColor="{StaticResource Slate600}" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
+                                        <Label x:Name="DetailBriefLabel" Text="Order description will appear here..." 
+                                               TextColor="{StaticResource Slate700}" FontSize="13" LineHeight="1.5" FontAttributes="Italic" />
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Grid ColumnDefinitions="*, *">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="DIMENSIONS" TextColor="{StaticResource Slate400}" FontSize="9" FontAttributes="Bold" />
+                                        <Border BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 8" Padding="12,8">
+                                            <Label x:Name="DetailResolutionLabel" Text="N/A" TextColor="{StaticResource Slate900}" FontSize="12" FontAttributes="Bold" />
+                                        </Border>
+                                    </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="4" Margin="12,0,0,0">
+                                        <Label Text="FORMAT" TextColor="{StaticResource Slate400}" FontSize="9" FontAttributes="Bold" />
+                                        <Border BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 8" Padding="12,8">
+                                            <Label x:Name="DetailDeliverablesLabel" Text="N/A" TextColor="{StaticResource Slate900}" FontSize="12" FontAttributes="Bold" />
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
+
+                                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12">
+                                    <Button Text="Send Update" BackgroundColor="#065F46" TextColor="White" CornerRadius="8" HeightRequest="44" FontAttributes="Bold" />
+                                    <Border Grid.Column="1" BackgroundColor="White" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" HeightRequest="44" WidthRequest="44">
+                                        <Label Text="•••" TextColor="{StaticResource Slate900}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,8" />
+                                    </Border>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </VerticalStackLayout>
+                </Grid>
             </VerticalStackLayout>
         </ScrollView>
 

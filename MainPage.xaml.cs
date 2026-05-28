@@ -81,9 +81,18 @@ public partial class MainPage : ContentPage
                 // Assign tiers based on role or fetch from DB for Admin
                 if (account.RoleID == 2) // Admin
                 {
-                    var msmes = await _databaseService.GetMsmesAsync();
-                    var userMsme = msmes.FirstOrDefault(m => m.OwnerName == account.AccountName);
-                    UserSession.Tier = userMsme?.ErpTier ?? "Starter";
+                    // Check local storage first for a persisted tier (survives logout)
+                    string savedTier = Preferences.Get($"Tier_{account.AccountID}", "");
+                    if (!string.IsNullOrEmpty(savedTier))
+                    {
+                        UserSession.Tier = savedTier;
+                    }
+                    else
+                    {
+                        var msmes = await _databaseService.GetMsmesAsync();
+                        var userMsme = msmes.FirstOrDefault(m => m.OwnerName == account.AccountName);
+                        UserSession.Tier = userMsme?.ErpTier ?? "Starter";
+                    }
                 }
                 else if (account.RoleID == 1) // Super Admin
                 {

@@ -253,22 +253,16 @@
                             <!-- Pagination Footer -->
                             <BoxView HeightRequest="1" Color="{StaticResource Slate200}" />
                             <Grid ColumnDefinitions="*, Auto" Padding="24, 16" BackgroundColor="#F8FAFC">
-                                <Label Text="Showing 1-10 of 12,842 customers" TextColor="{StaticResource Slate500}" FontSize="13" VerticalOptions="Center" />
+                                <Label x:Name="PaginationLabel" Text="Showing 1 of 1 customer" TextColor="{StaticResource Slate500}" FontSize="13" VerticalOptions="Center" />
                                 <HorizontalStackLayout Grid.Column="1" Spacing="8">
-                                    <Border BackgroundColor="White" Stroke="{StaticResource Slate200}" StrokeThickness="1" StrokeShape="RoundRectangle 6" Padding="8, 4">
+                                    <Border BackgroundColor="White" Stroke="{StaticResource Slate200}" StrokeThickness="1" StrokeShape="RoundRectangle 6" Padding="8, 4" Opacity="0.5">
                                         <Label Text="‹" TextColor="{StaticResource Slate400}" FontSize="16" />
                                     </Border>
                                     <Border BackgroundColor="{StaticResource DashboardTeal}" StrokeThickness="0" StrokeShape="RoundRectangle 6" Padding="12, 4">
                                         <Label Text="1" TextColor="White" FontSize="13" FontAttributes="Bold" />
                                     </Border>
-                                    <Border BackgroundColor="White" Stroke="{StaticResource Slate200}" StrokeThickness="1" StrokeShape="RoundRectangle 6" Padding="12, 4">
-                                        <Label Text="2" TextColor="{StaticResource Slate600}" FontSize="13" />
-                                    </Border>
-                                    <Border BackgroundColor="White" Stroke="{StaticResource Slate200}" StrokeThickness="1" StrokeShape="RoundRectangle 6" Padding="12, 4">
-                                        <Label Text="3" TextColor="{StaticResource Slate600}" FontSize="13" />
-                                    </Border>
-                                    <Border BackgroundColor="White" Stroke="{StaticResource Slate200}" StrokeThickness="1" StrokeShape="RoundRectangle 6" Padding="8, 4">
-                                        <Label Text="›" TextColor="{StaticResource Slate600}" FontSize="16" />
+                                    <Border BackgroundColor="White" Stroke="{StaticResource Slate200}" StrokeThickness="1" StrokeShape="RoundRectangle 6" Padding="8, 4" Opacity="0.5">
+                                        <Label Text="›" TextColor="{StaticResource Slate400}" FontSize="16" />
                                     </Border>
                                 </HorizontalStackLayout>
                             </Grid>
@@ -296,44 +290,25 @@
                                     </Border.Background>
                                 </Border>
                                 <Border HeightRequest="88" WidthRequest="88" StrokeShape="RoundRectangle 44" StrokeThickness="4" Stroke="White" VerticalOptions="End" HorizontalOptions="Center" Margin="0,0,0,-44" BackgroundColor="#F8FAFC">
-                                    <Label Text="NG" TextColor="{StaticResource Slate700}" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    <Label x:Name="ProfileInitialsLabel" Text="--" TextColor="{StaticResource Slate700}" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
                             </Grid>
                             <VerticalStackLayout Padding="32, 60, 32, 32" Spacing="12" HorizontalOptions="Center">
-                                <Label Text="Nexus Global Corp" TextColor="{StaticResource Slate900}" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" />
+                                <Label x:Name="ProfileNameLabel" Text="—" TextColor="{StaticResource Slate900}" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" />
                                 <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
                                     <Path Data="M12,2c-4.41,0-8,3.59-8,8c0,5.25,8,12,8,12s8-6.75,8-12c0-4.41-3.59-8-8-8zm0,11c-1.66,0-3-1.34-3-3s1.34-3,3-3s3,1.34,3,3s-1.34,3-3,3z" 
                                           Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
-                                    <Label Text="New York, USA" TextColor="{StaticResource Slate500}" FontSize="13" VerticalOptions="Center" />
+                                    <Label x:Name="ProfileLocationLabel" Text="—" TextColor="{StaticResource Slate500}" FontSize="13" VerticalOptions="Center" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
 
                             <Border Margin="32, 0, 32, 24" Padding="20" BackgroundColor="#F8FAFC" StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="{StaticResource Slate200}">
                                 <VerticalStackLayout Spacing="6">
-                                    <Label Text="KEY CONTACT" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
-                                    <Label Text="Marcus Sterling" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" />
-                                    <Label Text="VP of Strategic Operations" TextColor="{StaticResource Slate500}" FontSize="13" />
+                                    <Label Text="OWNER" TextColor="{StaticResource Slate400}" FontSize="11" FontAttributes="Bold" />
+                                    <Label x:Name="ProfileContactLabel" Text="—" TextColor="{StaticResource Slate900}" FontSize="16" FontAttributes="Bold" />
+                                    <Label x:Name="ProfileRoleLabel" Text="—" TextColor="{StaticResource Slate500}" FontSize="13" />
                                 </VerticalStackLayout>
                             </Border>
-
-                            <VerticalStackLayout Padding="32, 0, 32, 32" Spacing="16">
-                                <Button Text="Quick Email" 
-                                        TextColor="White" 
-                                        BackgroundColor="{StaticResource DashboardTeal}"
-                                        CornerRadius="12"
-                                        Padding="16, 14"
-                                        FontAttributes="Bold"
-                                        FontSize="14" />
-                                <Button Text="Create Task" 
-                                        TextColor="{StaticResource Slate700}" 
-                                        BackgroundColor="White"
-                                        BorderColor="{StaticResource Slate300}"
-                                        BorderWidth="1"
-                                        CornerRadius="12"
-                                        Padding="16, 14"
-                                        FontAttributes="Bold"
-                                        FontSize="14" />
-                            </VerticalStackLayout>
                         </VerticalStackLayout>
                     </Border>
 
@@ -366,16 +341,6 @@
             </ScrollView>
         </Grid>
 
-        <!-- Floating Action Button -->
-        <Border Grid.Column="1" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,32,32" 
-                HeightRequest="56" WidthRequest="56" StrokeShape="RoundRectangle 28" StrokeThickness="0" 
-                BackgroundColor="{StaticResource DashboardTeal}">
-            <Border.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnAddCustomerClicked" />
-            </Border.GestureRecognizers>
-            <Border.Shadow><Shadow Brush="Black" Opacity="0.3" Offset="0,4" Radius="8"/></Border.Shadow>
-            <Label Text="+" TextColor="White" FontSize="32" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,2" />
-        </Border>
     </Grid>
 
 </ContentPage>

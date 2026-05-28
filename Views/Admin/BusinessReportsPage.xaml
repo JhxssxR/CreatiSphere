@@ -6,6 +6,31 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource Slate50}">
 
+    <ContentPage.Resources>
+        <Style x:Key="HoverCardStyle" TargetType="Border">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Stroke" Value="{StaticResource Slate200}" />
+                                <Setter Property="BackgroundColor" Value="White" />
+                                <Setter Property="TranslationY" Value="0" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Stroke" Value="{StaticResource DashboardTeal}" />
+                                <Setter Property="BackgroundColor" Value="#F8FAFC" />
+                                <Setter Property="TranslationY" Value="-4" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
     <Grid ColumnDefinitions="280, *">
         <!-- Sidebar -->
         <admin:AdminSidebar Grid.Column="0" ActivePage="BusinessReports" />
@@ -91,20 +116,7 @@
                 <!-- Analytics Summary Cards -->
                 <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="20">
                     <!-- Total Revenue -->
-                    <!-- Total Revenue -->
-                    <Border Grid.Column="0" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup Name="CommonStates">
-                                <VisualState Name="Normal" />
-                                <VisualState Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="#F8FAFC" />
-                                        <Setter Property="Stroke" Value="{StaticResource DashboardTeal}" />
-                                        <Setter Property="TranslationY" Value="-4" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
+                    <Border Grid.Column="0" Style="{StaticResource HoverCardStyle}" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
                         <VerticalStackLayout Spacing="16">
                             <Grid ColumnDefinitions="Auto, *">
                                 <Border BackgroundColor="{StaticResource DashboardTealLight}" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8" StrokeThickness="0">
@@ -121,13 +133,13 @@
                             </Grid>
                             <VerticalStackLayout Spacing="4">
                                 <Label Text="Total Revenue" TextColor="{StaticResource Slate500}" FontSize="12" />
-                                <Label x:Name="TotalRevenueLabel" Text="$0.00" TextColor="{StaticResource Slate900}" FontSize="28" FontAttributes="Bold" />
+                                <Label x:Name="TotalRevenueLabel" Text="₱0.00" TextColor="{StaticResource Slate900}" FontSize="28" FontAttributes="Bold" />
                             </VerticalStackLayout>
                         </VerticalStackLayout>
                     </Border>
 
                     <!-- New Creators -->
-                    <Border Grid.Column="1" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                    <Border Grid.Column="1" Style="{StaticResource HoverCardStyle}" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
                         <VerticalStackLayout Spacing="16">
                             <Grid ColumnDefinitions="Auto, *">
                                 <Border BackgroundColor="#EFF6FF" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8" StrokeThickness="0">
@@ -150,7 +162,7 @@
                     </Border>
 
                     <!-- Total Orders -->
-                    <Border Grid.Column="2" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                    <Border Grid.Column="2" Style="{StaticResource HoverCardStyle}" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
                         <VerticalStackLayout Spacing="16">
                             <Grid ColumnDefinitions="Auto, *">
                                 <Border BackgroundColor="#F5F3FF" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8" StrokeThickness="0">
@@ -239,11 +251,19 @@
                             <FlexLayout x:Name="ChartFlexLayout" Grid.Row="0" Grid.RowSpan="2" Margin="40, 20, 40, 0" JustifyContent="SpaceBetween" AlignItems="End">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
-                                        <VerticalStackLayout Spacing="16" VerticalOptions="End">
+                                        <VerticalStackLayout Spacing="8" VerticalOptions="End">
+                                            <Label Text="{Binding ThisWeekRevenueFormatted}" TextColor="{StaticResource DashboardTeal}" FontSize="10" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,4" />
                                             <HorizontalStackLayout Spacing="8" HorizontalOptions="Center" VerticalOptions="End">
-                                                <Border HeightRequest="{Binding LastWeekHeight}" WidthRequest="24" BackgroundColor="{StaticResource Slate200}" StrokeThickness="0" StrokeShape="RoundRectangle 6,6,0,0" VerticalOptions="End" />
+                                                <Border HeightRequest="{Binding LastWeekHeight}" WidthRequest="24" BackgroundColor="{StaticResource Slate200}" StrokeThickness="0" StrokeShape="RoundRectangle 6,6,0,0" VerticalOptions="End">
+                                                    <ToolTipProperties.Text>
+                                                        <Binding Path="LastWeekRevenueFormatted" />
+                                                    </ToolTipProperties.Text>
+                                                </Border>
                                                 <Border HeightRequest="{Binding ThisWeekHeight}" WidthRequest="24" BackgroundColor="{StaticResource DashboardTeal}" StrokeThickness="0" StrokeShape="RoundRectangle 6,6,0,0" VerticalOptions="End">
                                                     <Border.Shadow><Shadow Brush="{StaticResource DashboardTeal}" Opacity="0.3" Offset="0,4" Radius="8"/></Border.Shadow>
+                                                    <ToolTipProperties.Text>
+                                                        <Binding Path="ThisWeekRevenueFormatted" />
+                                                    </ToolTipProperties.Text>
                                                 </Border>
                                             </HorizontalStackLayout>
                                             <Label Text="{Binding Day}" TextColor="{StaticResource Slate500}" FontSize="12" HorizontalOptions="Center" />

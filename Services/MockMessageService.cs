@@ -11,10 +11,15 @@ namespace CreatiSphere.Services
         public bool IsFromCustomer { get; set; }
         public bool IsFromCreator => !IsFromCustomer;
         
-        // For UI binding
-        public Microsoft.Maui.Graphics.Color BackgroundColor => IsFromCustomer ? Microsoft.Maui.Graphics.Color.FromArgb("#0D9488") : Microsoft.Maui.Graphics.Color.FromArgb("#F1F5F9");
-        public Microsoft.Maui.Graphics.Color TextColor => IsFromCustomer ? Microsoft.Maui.Graphics.Colors.White : Microsoft.Maui.Graphics.Color.FromArgb("#0F172A");
+        // For Customer Portal binding
+        public Microsoft.Maui.Graphics.Color BackgroundColor => IsFromCustomer ? Microsoft.Maui.Graphics.Color.FromArgb("#0D9488") : Microsoft.Maui.Graphics.Color.FromArgb("#FFFFFF");
+        public Microsoft.Maui.Graphics.Color TextColor => IsFromCustomer ? Microsoft.Maui.Graphics.Colors.White : Microsoft.Maui.Graphics.Color.FromArgb("#334155");
         public Microsoft.Maui.Controls.LayoutOptions Alignment => IsFromCustomer ? Microsoft.Maui.Controls.LayoutOptions.End : Microsoft.Maui.Controls.LayoutOptions.Start;
+
+        // For Creator Portal binding
+        public Microsoft.Maui.Graphics.Color CreatorBackgroundColor => !IsFromCustomer ? Microsoft.Maui.Graphics.Color.FromArgb("#0D9488") : Microsoft.Maui.Graphics.Color.FromArgb("#FFFFFF");
+        public Microsoft.Maui.Graphics.Color CreatorTextColor => !IsFromCustomer ? Microsoft.Maui.Graphics.Colors.White : Microsoft.Maui.Graphics.Color.FromArgb("#334155");
+        public Microsoft.Maui.Controls.LayoutOptions CreatorAlignment => !IsFromCustomer ? Microsoft.Maui.Controls.LayoutOptions.End : Microsoft.Maui.Controls.LayoutOptions.Start;
     }
 
     public static class MockMessageService

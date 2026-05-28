@@ -448,7 +448,7 @@
 
                         <Grid ColumnDefinitions="*, Auto">
                             <Label Text="Total" TextColor="#475569" FontSize="13" FontAttributes="Bold" />
-                            <Label x:Name="PaymentTotalLabel" Grid.Column="1" Text="$0.00" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" HorizontalOptions="End" />
+                            <Label x:Name="PaymentTotalLabel" Grid.Column="1" Text="₱0.00" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" HorizontalOptions="End" />
                         </Grid>
 
                         <Button Text="Confirm Payment" BackgroundColor="#0D9488" TextColor="White" CornerRadius="10" HeightRequest="44" FontAttributes="Bold" Clicked="OnConfirmPaymentClicked" />
@@ -486,12 +486,19 @@
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
                                     <Border StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="#F8FAFC" Padding="12" Margin="0,0,0,8">
-                                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="12">
-                                            <Label Text="{Binding Name}" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" />
-                                            <Label Grid.Column="1" Text="{Binding Price, StringFormat='{}{0:C2}'}" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" HorizontalOptions="End" />
-                                            <Label Grid.Row="1" Text="{Binding Category}" TextColor="#94A3B8" FontSize="11" />
-                                            <Label Grid.Row="1" Grid.Column="1" Text="Qty 1" TextColor="#94A3B8" FontSize="11" HorizontalOptions="End" />
-                                        </Grid>
+                                          <Grid ColumnDefinitions="*, Auto, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="12">
+                                              <Label Text="{Binding Name}" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" />
+                                              <Label Grid.Column="1" Text="{Binding Price, StringFormat='{}{0:C2}'}" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" HorizontalOptions="End" />
+                                              <!-- Delete Button -->
+                                              <Border Grid.RowSpan="2" Grid.Column="2" BackgroundColor="Transparent" StrokeThickness="0" Padding="8" VerticalOptions="Center">
+                                                  <Border.GestureRecognizers>
+                                                      <TapGestureRecognizer Tapped="OnRemoveFromCartTapped" CommandParameter="{Binding ProductId}"/>
+                                                  </Border.GestureRecognizers>
+                                                  <Label Text="✕" TextColor="#EF4444" FontSize="16" FontAttributes="Bold" />
+                                              </Border>
+                                              <Label Grid.Row="1" Text="{Binding Category}" TextColor="#94A3B8" FontSize="11" />
+                                              <Label Grid.Row="1" Grid.Column="1" Text="Qty 1" TextColor="#94A3B8" FontSize="11" HorizontalOptions="End" />
+                                          </Grid>
                                     </Border>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
@@ -499,10 +506,25 @@
 
                         <Grid ColumnDefinitions="*, Auto" Padding="8,0,8,8">
                             <Label Text="Total" TextColor="#475569" FontSize="13" FontAttributes="Bold" />
-                            <Label x:Name="CartTotalLabel" Grid.Column="1" Text="$0.00" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" HorizontalOptions="End" />
+                            <Label x:Name="CartTotalLabel" Grid.Column="1" Text="₱0.00" TextColor="#0F172A" FontSize="15" FontAttributes="Bold" HorizontalOptions="End" />
                         </Grid>
 
                         <Button Text="Checkout" BackgroundColor="#0D9488" TextColor="White" CornerRadius="10" HeightRequest="44" FontAttributes="Bold" Clicked="OnCheckoutClicked" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Success Overlay -->
+            <Grid x:Name="SuccessOverlay" Grid.RowSpan="2" BackgroundColor="#80000000" IsVisible="False">
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 24" StrokeThickness="0" Padding="32"
+                        HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="360">
+                    <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
+                        <Border BackgroundColor="#F0FDFA" StrokeShape="RoundRectangle 40" HeightRequest="80" WidthRequest="80" StrokeThickness="0" HorizontalOptions="Center">
+                            <Path Data="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" Fill="#0D9488" Aspect="Uniform" HeightRequest="40" WidthRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Payment Successful!" TextColor="#0F172A" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <Label x:Name="SuccessMessageLabel" Text="Your transaction has been recorded." TextColor="#64748B" FontSize="14" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                        <Button Text="Continue" BackgroundColor="#0D9488" TextColor="White" CornerRadius="10" HeightRequest="44" Margin="0,16,0,0" Clicked="OnCloseSuccessTapped" />
                     </VerticalStackLayout>
                 </Border>
             </Grid>

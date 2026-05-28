@@ -186,10 +186,10 @@ namespace CreatiSphere.Views.Admin
             var plan = btn?.CommandParameter?.ToString() ?? "Plan";
             _selectedPlan = plan;
 
-            if (plan == "Starter") _selectedPlanPrice = "$0.00";
-            else if (plan == "Standard") _selectedPlanPrice = "$49.00 / mo";
-            else if (plan == "Enterprise Plus") _selectedPlanPrice = "$199.00 / mo";
-            else _selectedPlanPrice = "$99.00 / mo";
+            if (plan == "Starter") _selectedPlanPrice = "₱0.00";
+            else if (plan == "Standard") _selectedPlanPrice = "₱2,499.00 / mo";
+            else if (plan == "Enterprise Plus") _selectedPlanPrice = "₱9,999.00 / mo";
+            else _selectedPlanPrice = "₱4,999.00 / mo";
 
             SummaryPlanNameLabel.Text = _selectedPlan;
             SummaryPlanPriceLabel.Text = _selectedPlanPrice;
@@ -198,9 +198,14 @@ namespace CreatiSphere.Views.Admin
             SubscriptionPaymentModal.IsVisible = true;
         }
 
-        private void OnClosePaymentModalTapped(object? sender, TappedEventArgs e)
+        private void OnClosePaymentModalTapped(object? sender, EventArgs e)
         {
-            SubscriptionPaymentModal.IsVisible = false;
+            if (SubscriptionPaymentModal != null) SubscriptionPaymentModal.IsVisible = false;
+        }
+
+        private void OnCloseSuccessTapped(object? sender, EventArgs e)
+        {
+            if (SuccessOverlay != null) SuccessOverlay.IsVisible = false;
         }
 
         private void OnCreditCardTabTapped(object? sender, TappedEventArgs e)
@@ -304,7 +309,12 @@ namespace CreatiSphere.Views.Admin
                     // Sync session ONLY on success
                     Services.UserSession.Tier = _selectedPlan;
                     
-                    await DisplayAlertAsync("Payment Successful", $"You have successfully subscribed to the {_selectedPlan} tier!", "OK");
+                    // Persist tier to local storage so it survives logout/login
+                    Preferences.Set($"Tier_{Services.UserSession.AccountID}", _selectedPlan);
+                    if (SubscriptionPaymentModal != null) SubscriptionPaymentModal.IsVisible = false;
+
+                    if (SuccessMessageLabel != null) SuccessMessageLabel.Text = $"You have successfully subscribed to the {_selectedPlan} tier!";
+                    if (SuccessOverlay != null) SuccessOverlay.IsVisible = true;
                     
                     // Refresh all dashboard data to reflect potential capacity changes
                     await LoadDashboardData();

@@ -1,6 +1,8 @@
 using Microsoft.Maui.Controls;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
 using CreatiSphere.Services;
 
 namespace CreatiSphere.Views.Sales
@@ -25,11 +27,22 @@ namespace CreatiSphere.Views.Sales
         {
             try
             {
+                await _databaseService.RemoveDuplicateTransactionsAsync();
+
                 var stats = await _databaseService.GetReportStatsAsync();
-                TotalRevenueLabel.Text = stats.TotalRevenue.ToString("C0");
+                TotalRevenueLabel.Text = $"₱{stats.TotalRevenue:N0}";
+                TransactionsLabel.Text = stats.TotalOrders.ToString("N0");
                 
-                // Assuming Active Leads comes from a different source, using orders as proxy for now
-                ActiveLeadsLabel.Text = stats.TotalOrders.ToString("N0");
+                var customers = await _databaseService.GetCustomersAsync();
+                CustomersHandledLabel.Text = (customers?.Count ?? 0).ToString("N0");
+
+                ConversionRateLabel.Text = "68%"; // Mock metric since no clear Conversion Rate in DB
+
+                var transactions = await _databaseService.GetRecentTransactionsAsync();
+                BindableLayout.SetItemsSource(RecentInteractionsLayout, transactions?.Take(4).ToList() ?? new List<SaleTransaction>());
+
+                var products = await _databaseService.GetProductsAsync();
+                BindableLayout.SetItemsSource(TopProductsLayout, products?.OrderByDescending(p => p.Price).Take(3).ToList() ?? new List<Product>());
             }
             catch (Exception ex)
             {

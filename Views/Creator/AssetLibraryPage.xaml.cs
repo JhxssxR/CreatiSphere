@@ -349,5 +349,39 @@ namespace CreatiSphere.Views.Creator
         {
             await DisplayAlert("Load More", "Fetching more assets from the library...", "OK");
         }
+        private void OnNotificationsTapped(object? sender, EventArgs e)
+        {
+            NotificationsOverlay.IsVisible = true;
+        }
+
+        private void OnCloseNotificationsTapped(object? sender, EventArgs e)
+        {
+            NotificationsOverlay.IsVisible = false;
+        }
+
+        private void OnMarkAsReadTapped(object? sender, EventArgs e)
+        {
+            if (sender is Border border && border.Parent is HorizontalStackLayout hsl && hsl.Parent is Grid grid)
+            {
+                if (grid.Children[0] is Border dot)
+                {
+                    dot.IsVisible = false;
+                }
+            }
+        }
+
+        private void OnDeleteNotificationTapped(object? sender, EventArgs e)
+        {
+            if (sender is Border border && border.Parent is HorizontalStackLayout hsl && hsl.Parent is Grid grid)
+            {
+                NotificationsContainer.Children.Remove(grid);
+            }
+        }
+
+        private void OnClearAllNotificationsClicked(object? sender, EventArgs e)
+        {
+            NotificationsContainer.Children.Clear();
+            NotificationsOverlay.IsVisible = false;
+        }
     }
 }

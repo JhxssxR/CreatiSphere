@@ -5,6 +5,31 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F8FAFC">
 
+    <ContentPage.Resources>
+        <Style x:Key="HoverCardStyle" TargetType="Border">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Stroke" Value="#E2E8F0" />
+                                <Setter Property="BackgroundColor" Value="White" />
+                                <Setter Property="TranslationY" Value="0" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Stroke" Value="#0D9488" />
+                                <Setter Property="BackgroundColor" Value="#F8FAFC" />
+                                <Setter Property="TranslationY" Value="-4" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
     <Grid ColumnDefinitions="260, *">
 
         <!-- ===== SALES SIDEBAR ===== -->
@@ -130,39 +155,30 @@
                 </VerticalStackLayout>
 
                 <!-- Stats Cards -->
-                <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="20">
-                    <Border Grid.Column="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
+                <Grid ColumnDefinitions="*, *, *" ColumnSpacing="20">
+                    <Border Grid.Column="0" Style="{StaticResource HoverCardStyle}" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
                         <VerticalStackLayout Spacing="8">
                             <Label Text="TOTAL CUSTOMERS" TextColor="#64748B" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
                             <HorizontalStackLayout Spacing="10">
-                                <Label Text="1,284" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" />
+                                <Label Text="{Binding TotalCustomers}" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" />
                                 <Label Text="+12%" TextColor="#0D9488" FontSize="13" VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Border>
-                    <Border Grid.Column="1" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#0D9488" BackgroundColor="White" Padding="24">
+                    <Border Grid.Column="1" Style="{StaticResource HoverCardStyle}" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#0D9488" BackgroundColor="White" Padding="24">
                         <VerticalStackLayout Spacing="8">
                             <Label Text="ACTIVE CONTRACTS" TextColor="#64748B" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
                             <HorizontalStackLayout Spacing="10">
-                                <Label Text="842" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" />
+                                <Label Text="{Binding ActiveContracts}" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" />
                                 <Label Text="+5%" TextColor="#0D9488" FontSize="13" VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Border>
-                    <Border Grid.Column="2" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
-                        <VerticalStackLayout Spacing="8">
-                            <Label Text="QUALIFIED LEADS" TextColor="#64748B" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Text="312" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" />
-                                <Label Text="-2%" TextColor="#EF4444" FontSize="13" VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
-                    </Border>
-                    <Border Grid.Column="3" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
+                    <Border Grid.Column="2" Style="{StaticResource HoverCardStyle}" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
                         <VerticalStackLayout Spacing="8">
                             <Label Text="AT RISK" TextColor="#64748B" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
                             <HorizontalStackLayout Spacing="10">
-                                <Label Text="18" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" />
+                                <Label Text="{Binding AtRisk}" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" />
                                 <Label Text="Critical" TextColor="#EF4444" FontSize="13" VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
@@ -246,7 +262,7 @@
                         </CollectionView>
 
                         <Grid ColumnDefinitions="*, Auto" Padding="24,20" BackgroundColor="#F8FAFC">
-                            <Label Text="Showing 1 to 4 of 1,284 customers" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
+                            <Label Text="{Binding TotalCustomers, StringFormat='Showing 1 to 4 of {0} customers'}" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
                             <HorizontalStackLayout Grid.Column="1" Spacing="8">
                                 <Border BackgroundColor="White" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#E2E8F0" HeightRequest="36" WidthRequest="36">
                                     <Label Text="&lt;" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#64748B" />

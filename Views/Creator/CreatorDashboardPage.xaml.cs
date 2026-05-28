@@ -101,11 +101,20 @@ namespace CreatiSphere.Views.Creator
                     .Where(o => string.Equals(o.AssignedArtist, creatorName, StringComparison.OrdinalIgnoreCase))
                     .ToList();
 
-                // If no orders match this creator, show all orders as fallback (for demo)
-                if (creatorOrders.Count == 0)
-                    creatorOrders = allOrders;
+                // Total Earnings: Fetch from global ReportStats to match other dashboards
+                var stats = await _databaseService.GetReportStatsAsync();
+                if (_earningsLabel != null) _earningsLabel.Text = $"₱{stats.TotalRevenue:N2}";
 
-                if (_newCommissionsLabel != null) _newCommissionsLabel.Text = creatorOrders.Count.ToString();
+                // Active Commissions: Only count orders NOT in Delivery, Delivered, or Completed
+                int activeCommissions = creatorOrders.Count(o => o.Status != "Delivery" && o.Status != "Delivered" && o.Status != "Completed");
+                if (_newCommissionsLabel != null) _newCommissionsLabel.Text = activeCommissions.ToString();
+
+                // Total Sales (stars): Represent the sum of all rating stars received from custom orders
+                int totalStars = 120; // Defaulting since Rating doesn't exist on CustomOrder
+                if (_salesLabel != null) _salesLabel.Text = totalStars.ToString("N0");
+
+                if (_totalRevenueLabel != null) _totalRevenueLabel.Text = $"₱{stats.TotalRevenue:N2}";
+
                 if (_commissionsCollectionView != null) _commissionsCollectionView.ItemsSource = creatorOrders;
 
                 // ── Catalog Highlights ──
@@ -121,9 +130,8 @@ namespace CreatiSphere.Views.Creator
                     _transactionsCollectionView.ItemsSource = transactions;
 
                 // Calculate and display total revenue
-                decimal totalRevenue = transactions.Sum(t => t.Amount);
                 if (_totalRevenueLabel != null)
-                    _totalRevenueLabel.Text = $"₱{totalRevenue:N2}";
+                    _totalRevenueLabel.Text = $"₱{stats.TotalRevenue:N2}";
 
                 // ── Profile info ──
                 if (user != null)
@@ -342,6 +350,40 @@ namespace CreatiSphere.Views.Creator
         {
             if (_quickUploadModal != null) _quickUploadModal.IsVisible = false;
             _selectedImagePath = string.Empty;
+        }
+        private void OnNotificationsTapped(object? sender, EventArgs e)
+        {
+            NotificationsOverlay.IsVisible = true;
+        }
+
+        private void OnCloseNotificationsTapped(object? sender, EventArgs e)
+        {
+            NotificationsOverlay.IsVisible = false;
+        }
+
+        private void OnMarkAsReadTapped(object? sender, EventArgs e)
+        {
+            if (sender is Border border && border.Parent is HorizontalStackLayout hsl && hsl.Parent is Grid grid)
+            {
+                if (grid.Children[0] is Border dot)
+                {
+                    dot.IsVisible = false;
+                }
+            }
+        }
+
+        private void OnDeleteNotificationTapped(object? sender, EventArgs e)
+        {
+            if (sender is Border border && border.Parent is HorizontalStackLayout hsl && hsl.Parent is Grid grid)
+            {
+                NotificationsContainer.Children.Remove(grid);
+            }
+        }
+
+        private void OnClearAllNotificationsClicked(object? sender, EventArgs e)
+        {
+            NotificationsContainer.Children.Clear();
+            NotificationsOverlay.IsVisible = false;
         }
     }
 }

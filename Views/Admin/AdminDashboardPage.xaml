@@ -288,7 +288,7 @@
                                 <VerticalStackLayout Grid.Column="1" Spacing="20">
                                     <VerticalStackLayout x:Name="StarterDetails" Spacing="16" IsVisible="True">
                                         <VerticalStackLayout Spacing="6">
-                                            <Label Text="$49 / month" TextColor="{StaticResource DashboardTeal}" FontSize="24" FontAttributes="Bold" />
+                                            <Label Text="₱2,499 / month" TextColor="{StaticResource DashboardTeal}" FontSize="24" FontAttributes="Bold" />
                                             <Border x:Name="StarterCurrentBadge" BackgroundColor="#134E4A" Padding="8,4" StrokeShape="RoundRectangle 4" StrokeThickness="0" HorizontalOptions="Start">
                                                 <Label Text="✓  CURRENT PLAN" TextColor="{StaticResource DashboardTeal}" FontSize="10" FontAttributes="Bold" />
                                             </Border>
@@ -312,7 +312,7 @@
 
                                     <VerticalStackLayout x:Name="StandardDetails" Spacing="16" IsVisible="False">
                                         <VerticalStackLayout Spacing="6">
-                                            <Label Text="$199 / month" TextColor="#3B82F6" FontSize="24" FontAttributes="Bold" />
+                                            <Label Text="₱9,999 / month" TextColor="#3B82F6" FontSize="24" FontAttributes="Bold" />
                                             <Border x:Name="StandardCurrentBadge" IsVisible="False" BackgroundColor="#1E3A5F" Padding="8,4" StrokeShape="RoundRectangle 4" StrokeThickness="0" HorizontalOptions="Start">
                                                 <Label Text="✓  CURRENT PLAN" TextColor="#60A5FA" FontSize="10" FontAttributes="Bold" />
                                             </Border>
@@ -339,7 +339,7 @@
 
                                     <VerticalStackLayout x:Name="EnterprisePlusDetails" Spacing="16" IsVisible="False">
                                         <VerticalStackLayout Spacing="6">
-                                            <Label Text="$599 / month" TextColor="#A855F7" FontSize="24" FontAttributes="Bold" />
+                                            <Label Text="₱29,999 / month" TextColor="#A855F7" FontSize="24" FontAttributes="Bold" />
                                             <Border x:Name="EnterpriseCurrentBadge" IsVisible="False" BackgroundColor="#2E1A47" Padding="8,4" StrokeShape="RoundRectangle 4" StrokeThickness="0" HorizontalOptions="Start">
                                                 <Label Text="✓  CURRENT PLAN" TextColor="#C084FC" FontSize="10" FontAttributes="Bold" />
                                             </Border>
@@ -665,6 +665,21 @@
                 </Grid>
             </Border>
         </ContentView>
+        <!-- SUCCESS OVERLAY -->
+        <Grid x:Name="SuccessOverlay" Grid.ColumnSpan="2" BackgroundColor="#80000000" IsVisible="False">
+            <Border BackgroundColor="White" StrokeShape="RoundRectangle 24" StrokeThickness="0" Padding="32"
+                    HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="360">
+                <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
+                    <Border BackgroundColor="#F0FDFA" StrokeShape="RoundRectangle 40" HeightRequest="80" WidthRequest="80" StrokeThickness="0" HorizontalOptions="Center">
+                        <Path Data="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" Fill="#0D9488" Aspect="Uniform" HeightRequest="40" WidthRequest="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <Label Text="Payment Successful!" TextColor="#0F172A" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label x:Name="SuccessMessageLabel" Text="Your payment has been successfully processed." TextColor="#64748B" FontSize="14" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                    <Button Text="Continue" BackgroundColor="#0D9488" TextColor="White" CornerRadius="10" HeightRequest="44" Margin="0,16,0,0" Clicked="OnCloseSuccessTapped" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+        
     </Grid>
 
 </ContentPage>

@@ -3,7 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CreatiSphere.Views.Finance.BusinessReportsPage"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="#F8FAFC">
+             BackgroundColor="{StaticResource Slate50}">
+
+    <ContentPage.Resources>
+        <Style x:Key="HoverCardStyle" TargetType="Border">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Stroke" Value="{StaticResource Slate200}" />
+                                <Setter Property="BackgroundColor" Value="White" />
+                                <Setter Property="TranslationY" Value="0" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Stroke" Value="{StaticResource DashboardTeal}" />
+                                <Setter Property="BackgroundColor" Value="#F8FAFC" />
+                                <Setter Property="TranslationY" Value="-4" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
 
     <Grid ColumnDefinitions="260, *">
 
@@ -76,218 +101,244 @@
         <ScrollView Grid.Column="1" VerticalScrollBarVisibility="Never">
             <VerticalStackLayout Padding="40" Spacing="32">
                 
-                <!-- Top Bar -->
+                <!-- Top Nav Bar -->
                 <Grid ColumnDefinitions="*, Auto">
-                    <VerticalStackLayout Spacing="4">
-                        <Label Text="Business Reports" TextColor="#0F172A" FontSize="28" FontAttributes="Bold" />
-                        <Label Text="Generate comprehensive financial breakdowns and manage your creative business insights." TextColor="#64748B" FontSize="14" />
-                    </VerticalStackLayout>
-                    
-                    <HorizontalStackLayout Grid.Column="1" Spacing="16">
-                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#E2E8F0" Padding="12,0" HeightRequest="40" WidthRequest="350">
-                            <Grid ColumnDefinitions="20, *">
-                                <Path Data="M15.5,14h-0.79l-0.28-0.27C15.41,12.59,16,11.11,16,9.5C16,5.91,13.09,3,9.5,3S3,5.91,3,9.5S5.91,16,9.5,16 c1.61,0,3.09-0.59,4.23-1.57l0.27,0.28v0.79l5,4.99L20.49,19L15.5,14z M9.5,14C7.01,14,5,11.99,5,9.5S7.01,5,9.5,5S14,7.01,14,9.5 S11.99,14,9.5,14z" Fill="#64748B" Aspect="Uniform" VerticalOptions="Center" />
-                                <Entry Grid.Column="1" Placeholder="Search reports or transactions..." PlaceholderColor="#64748B" TextColor="#0F172A" FontSize="13" Margin="8,0,0,0" VerticalOptions="Center" />
+                    <Label Text="Business Analytics Dashboard" TextColor="{StaticResource Slate900}" FontSize="12" VerticalOptions="Center" />
+
+                    <!-- User Actions -->
+                    <HorizontalStackLayout Grid.Column="1" Spacing="24" VerticalOptions="Center">
+                        <!-- Search Bar -->
+                        <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" WidthRequest="320" Padding="12, 8">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal" />
+                                    <VisualState Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Property="Stroke" Value="{StaticResource DashboardTeal}" />
+                                            <Setter Property="BackgroundColor" Value="#F0FDFA" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Path Data="M15.5,14h-0.79l-0.28-0.27C15.41,12.59,16,11.11,16,9.5C16,5.91,13.09,3,9.5,3S3,5.91,3,9.5S5.91,16,9.5,16 c1.61,0,3.09-0.59,4.23-1.57l0.27,0.28v0.79l5,4.99L20.49,19L15.5,14z M9.5,14C7.01,14,5,11.99,5,9.5S7.01,5,9.5,5S14,7.01,14,9.5 S11.99,14,9.5,14z" 
+                                      Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                <Entry Grid.Column="1" Placeholder="Search reports, data points..." PlaceholderColor="{StaticResource Slate400}" TextColor="{StaticResource Slate900}" BackgroundColor="Transparent" Margin="8,0,0,0" FontSize="12" />
                             </Grid>
                         </Border>
-                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#E2E8F0" HeightRequest="40" WidthRequest="40">
-                            <Path Data="M12,22c1.1,0,2-0.9,2-2h-4C10,21.1,10.9,22,12,22z M18,16v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-0.83-0.67-1.5-1.5-1.5 s-1.5,0.67-1.5,1.5v0.68C7.64,5.36,6,7.92,6,11v5l-2,2v1h16v-1L18,16z" Fill="#64748B" Aspect="Uniform" HeightRequest="18" WidthRequest="18" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#E2E8F0" HeightRequest="40" WidthRequest="40">
-                            <Path Data="M20,2H4C2.9,2,2,2.9,2,4v16c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z M20,20H4V4h16V20z M18,12H6v-2h12V12z" Fill="#64748B" Aspect="Uniform" HeightRequest="18" WidthRequest="18" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <Border HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0">
-                            <Image Source="staff_avatar.png" Aspect="AspectFill" />
+
+                        <Path Data="M12,22c1.1,0,2-0.9,2-2h-4C10,21.1,10.9,22,12,22z M18,16v-5c0-3.1-1.6-5.6-4.5-6.3V4c0-0.8-0.7-1.5-1.5-1.5 S10.5,3.2,10.5,4v0.7C7.6,5.4,6,7.9,6,11v5l-2,2v1h16v-1L18,16z" 
+                              Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                        <Path Data="M19.1,12.9l2.1,1.6c0.2,0.1,0.2,0.4,0.1,0.6l-2,3.5c-0.1,0.2-0.4,0.3-0.6,0.2l-2.5-1c-0.5,0.4-1.1,0.7-1.7,1 l-0.4,2.6c0,0.2-0.2,0.4-0.5,0.4h-4c-0.3,0-0.5-0.2-0.5-0.4l-0.4-2.6c-0.6-0.3-1.2-0.6-1.7-1l-2.5,1c-0.2,0.1-0.5,0-0.6-0.2l-2-3.5 C1.9,14.9,2,14.6,2.2,14.5l2.1-1.6c-0.1-0.3-0.1-0.6-0.1-0.9s0-0.6,0.1-0.9L2.2,8.6c-0.2-0.1-0.2-0.4-0.1-0.6l2-3.5c0.1-0.2,0.4-0.3,0.6-0.2 l2.5,1c0.5-0.4,1.1-0.7,1.7-1L9.4,1.7c0-0.2,0.2-0.4,0.5-0.4h4c0.3,0,0.5,0.2,0.5,0.4l0.4,2.6c0.6,0.3,1.2,0.6,1.7,1l2.5-1 c0.2-0.1,0.5,0,0.6,0.2l2,3.5c0.1,0.2,0,0.5-0.2,0.6l-2.1,1.6c0.1,0.3,0.1,0.6,0.1,0.9S19.2,12.6,19.1,12.9z M12,15c1.7,0,3-1.3,3-3 s-1.3-3-3-3s-3,1.3-3,3S10.3,15,12,15z" 
+                              Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                        
+                        <Border BackgroundColor="#E2E8F0" HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0">
+                            <Label x:Name="HeaderProfileInitials" Text="A" TextColor="{StaticResource Slate600}" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
                         </Border>
                     </HorizontalStackLayout>
                 </Grid>
 
-                <Grid ColumnDefinitions="*, 350" ColumnSpacing="24">
-                    <!-- Left Section: Main Cards and Table -->
-                    <VerticalStackLayout Grid.Column="0" Spacing="32">
+                <!-- Page Header -->
+                <Grid ColumnDefinitions="*, Auto">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Business Reports" TextColor="{StaticResource Slate900}" FontSize="32" FontAttributes="Bold" />
+                        <Label Text="Real-time analytical overview of revenue performance and creator engagement." TextColor="{StaticResource Slate600}" FontSize="14" />
+                    </VerticalStackLayout>
+                    
+                    <HorizontalStackLayout Grid.Column="1" Spacing="12" VerticalOptions="Center">
+                        <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" Padding="12, 8">
+                            <HorizontalStackLayout Spacing="8">
+                                <Path Data="M19,3h-1V1h-2v2H8V1H6v2H5C3.89,3,3,3.9,3,5v14c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V8h14V19z" 
+                                      Fill="{StaticResource Slate600}" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
+                                <Label Text="Last 30 Days" TextColor="{StaticResource Slate700}" FontSize="13" VerticalOptions="Center" />
+                                <Path Data="M7,10l5,5l5-5H7z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="12" WidthRequest="12" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
                         
-                        <!-- Primary Report Card -->
-                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="32">
-                            <VerticalStackLayout Spacing="24">
-                                <HorizontalStackLayout Spacing="20">
-                                    <Border BackgroundColor="#0D9488" HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 12">
-                                        <Path Data="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z M9,17H7v-7h2V17z M13,17h-2V7h2V17z M17,17h-2v-4h2V17z" Fill="White" Aspect="Uniform" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
-                                    </Border>
-                                    <VerticalStackLayout VerticalOptions="Center">
-                                        <Label Text="Monthly Revenue Performance" TextColor="#0F172A" FontSize="20" FontAttributes="Bold" />
-                                        <Label Text="Detailed analysis of sales, licensing fees, and custom commissions." TextColor="#64748B" FontSize="13" />
-                                    </VerticalStackLayout>
-                                </HorizontalStackLayout>
-
-                                <Grid ColumnDefinitions="*, *, *" ColumnSpacing="16">
-                                    <Border Grid.Column="0" BackgroundColor="#F8FAFC" StrokeShape="RoundRectangle 12" Padding="20">
-                                        <VerticalStackLayout Spacing="4">
-                                            <Label Text="GROWTH" TextColor="#64748B" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
-                                            <Label Text="+12.4%" TextColor="#0D9488" FontSize="18" FontAttributes="Bold" />
-                                        </VerticalStackLayout>
-                                    </Border>
-                                    <Border Grid.Column="1" BackgroundColor="#F8FAFC" StrokeShape="RoundRectangle 12" Padding="20">
-                                        <VerticalStackLayout Spacing="4">
-                                            <Label Text="AVG SALE" TextColor="#64748B" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
-                                            <Label Text="$142.50" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" />
-                                        </VerticalStackLayout>
-                                    </Border>
-                                    <Border Grid.Column="2" BackgroundColor="#F8FAFC" StrokeShape="RoundRectangle 12" Padding="20">
-                                        <VerticalStackLayout Spacing="4">
-                                            <Label Text="TOP REGION" TextColor="#64748B" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
-                                            <Label Text="EU West" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" />
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </Grid>
-
-                                <HorizontalStackLayout Spacing="16">
-                                    <Button Text="Generate Full Report" BackgroundColor="#0D9488" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="44" Padding="24,0">
-                                        <Button.ImageSource>
-                                            <FontImageSource Glyph="✨" Size="14" Color="White" />
-                                        </Button.ImageSource>
-                                    </Button>
-                                    <Button Text="Preview Data" BackgroundColor="White" TextColor="#0F172A" BorderColor="#E2E8F0" BorderWidth="1" FontAttributes="Bold" CornerRadius="8" HeightRequest="44" Padding="24,0" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </Border>
-
-                        <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
-                            <!-- Payout Summaries -->
-                            <Border Grid.Column="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
-                                <Grid ColumnDefinitions="Auto, *, Auto">
-                                    <Border Grid.Column="0" BackgroundColor="#DBEAFE" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8">
-                                        <Path Data="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z" Fill="#3B82F6" Aspect="Uniform" HeightRequest="18" WidthRequest="18" HorizontalOptions="Center" VerticalOptions="Center" />
-                                    </Border>
-                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="16,0">
-                                        <Label Text="Payout Summaries" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
-                                        <Label Text="History of all transfers to your bank." TextColor="#64748B" FontSize="11" />
-                                    </VerticalStackLayout>
-                                    <Path Grid.Column="2" Data="M19,9h-4V3H9v6H5l7,7L19,9z M5,18v2h14v-2H5z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
-                                </Grid>
-                            </Border>
-                            <!-- Tax Reports -->
-                            <Border Grid.Column="1" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
-                                <Grid ColumnDefinitions="Auto, *, Auto">
-                                    <Border Grid.Column="0" BackgroundColor="#F1F5F9" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8">
-                                        <Path Data="M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z M13,9V3.5L18.5,9H13z" Fill="#64748B" Aspect="Uniform" HeightRequest="18" WidthRequest="18" HorizontalOptions="Center" VerticalOptions="Center" />
-                                    </Border>
-                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="16,0">
-                                        <Label Text="Tax Reports" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
-                                        <Label Text="1099-K forms and annual summaries." TextColor="#64748B" FontSize="11" />
-                                    </VerticalStackLayout>
-                                    <Path Grid.Column="2" Data="M19,12h-2v3h-3v2h5V12z M7,17h5v-2H9v-3H7V17z M20,2H4C2.9,2,2,2.9,2,4v16c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z M20,20H4V4h16V20z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="18" WidthRequest="18" VerticalOptions="Center" />
-                                </Grid>
-                            </Border>
-                        </Grid>
-
-                        <!-- Recently Generated Table -->
-                        <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="0">
-                            <VerticalStackLayout>
-                                <Grid ColumnDefinitions="*, Auto" Padding="24,16">
-                                    <Label Text="Recently Generated" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
-                                    <Label Grid.Column="1" Text="View Archive" TextColor="#0D9488" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                                </Grid>
-                                <BoxView HeightRequest="1" Color="#F1F5F9" />
-
-                                <!-- Table Header -->
-                                <Grid ColumnDefinitions="2*, *, *, Auto" Padding="24,12" BackgroundColor="#F8FAFC">
-                                    <Label Text="REPORT NAME" TextColor="#64748B" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
-                                    <Label Grid.Column="1" Text="GENERATED ON" TextColor="#64748B" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
-                                    <Label Grid.Column="2" Text="FORMAT" TextColor="#64748B" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" />
-                                    <Label Grid.Column="3" Text="ACTIONS" TextColor="#64748B" FontSize="10" FontAttributes="Bold" CharacterSpacing="1" WidthRequest="60" HorizontalOptions="Center" />
-                                </Grid>
-
-                                <!-- Row 1 -->
-                                <Grid ColumnDefinitions="2*, *, *, Auto" Padding="24,16">
-                                    <HorizontalStackLayout Spacing="12">
-                                        <Path Data="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z M9,17H7v-7h2V17z M13,17h-2V7h2V17z M17,17h-2v-4h2V17z" Fill="#64748B" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
-                                        <Label Text="Q3_2026_Licensing_Summary" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                                    </HorizontalStackLayout>
-                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                        <Label Text="Oct 12, 2026" TextColor="#0F172A" FontSize="13" />
-                                    </VerticalStackLayout>
-                                    <Border Grid.Column="2" BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 4" Padding="6,2" HorizontalOptions="Start">
-                                        <Label Text="PDF" TextColor="#64748B" FontSize="9" FontAttributes="Bold" />
-                                    </Border>
-                                    <Label Grid.Column="3" Text="•••" TextColor="#94A3B8" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Grid>
-                                <BoxView HeightRequest="1" Color="#F1F5F9" Margin="24,0" />
-
-                                <!-- Row 2 -->
-                                <Grid ColumnDefinitions="2*, *, *, Auto" Padding="24,16">
-                                    <HorizontalStackLayout Spacing="12">
-                                        <Path Data="M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z M13,9V3.5L18.5,9H13z" Fill="#64748B" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
-                                        <Label Text="September_Payout_Log" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                                    </HorizontalStackLayout>
-                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                        <Label Text="Oct 01, 2026" TextColor="#0F172A" FontSize="13" />
-                                    </VerticalStackLayout>
-                                    <Border Grid.Column="2" BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 4" Padding="6,2" HorizontalOptions="Start">
-                                        <Label Text="CSV" TextColor="#64748B" FontSize="9" FontAttributes="Bold" />
-                                    </Border>
-                                    <Label Grid.Column="3" Text="•••" TextColor="#94A3B8" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Grid>
-                                <BoxView HeightRequest="1" Color="#F1F5F9" Margin="24,0" />
-
-                                <!-- Row 3 -->
-                                <Grid ColumnDefinitions="2*, *, *, Auto" Padding="24,16">
-                                    <HorizontalStackLayout Spacing="12">
-                                        <Path Data="M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z M13,9V3.5L18.5,9H13z" Fill="#64748B" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
-                                        <Label Text="Custom_Commissions_August" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                                    </HorizontalStackLayout>
-                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                        <Label Text="Sep 15, 2026" TextColor="#0F172A" FontSize="13" />
-                                    </VerticalStackLayout>
-                                    <Border Grid.Column="2" BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 4" Padding="6,2" HorizontalOptions="Start">
-                                        <Label Text="PDF" TextColor="#64748B" FontSize="9" FontAttributes="Bold" />
-                                    </Border>
-                                    <Label Grid.Column="3" Text="•••" TextColor="#94A3B8" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Grid>
-                            </VerticalStackLayout>
-                        </Border>
-                    </VerticalStackLayout>
-
-                    <!-- Right Sidebar Section -->
-                    <VerticalStackLayout Grid.Column="1" Spacing="24">
-                        <!-- Automated Schedule Card -->
-                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#064E3B" Padding="24">
-                            <Grid RowDefinitions="Auto, *, Auto">
-                                <Label Text="Automated Schedule" TextColor="White" FontSize="16" FontAttributes="Bold" />
-                                <Label Grid.Row="1" Text="Receive monthly summaries directly to your email on the 1st of every month." 
-                                       TextColor="#D1FAE5" FontSize="13" Margin="0,12,0,24" LineBreakMode="WordWrap" />
-                                <Button Grid.Row="2" Text="Configure Automation" BackgroundColor="#0D9488" TextColor="White" 
-                                        FontAttributes="Bold" CornerRadius="8" HeightRequest="40" Padding="16,0" />
-                                
-                                <!-- Background Icon Overlay (Large Clock) -->
-                                <Path Grid.RowSpan="3" Data="M11.99,2C6.47,2,2,6.48,2,12s4.47,10,9.99,10C17.52,22,22,17.52,22,12S17.52,2,11.99,2z M12,20c-4.42,0-8-3.58-8-8 s3.58-8,8-8s8,3.58,8,8S16.42,20,12,20z M12.5,7H11v6l5.25,3.15l0.75-1.23L12.5,12.5V7z" 
-                                      Fill="White" Opacity="0.1" Aspect="Uniform" HeightRequest="140" WidthRequest="140" 
-                                      HorizontalOptions="End" VerticalOptions="End" Margin="0,0,-40,-40" />
-                            </Grid>
-                        </Border>
-
-                        <!-- Report Builder Tips -->
-                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="#F1F5F9" Padding="24">
-                            <VerticalStackLayout Spacing="16">
-                                <Label Text="Report Builder Tips" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
-                                
-                                <Grid ColumnDefinitions="20, *">
-                                    <Label Text="💡" FontSize="14" VerticalOptions="Start" />
-                                    <Label Grid.Column="1" Text="Use CSV format if you plan to import data into Excel or Google Sheets." 
-                                           TextColor="#475569" FontSize="12" LineBreakMode="WordWrap" />
-                                </Grid>
-
-                                <Grid ColumnDefinitions="20, *">
-                                    <Label Text="🛡️" FontSize="14" VerticalOptions="Start" />
-                                    <Label Grid.Column="1" Text="Reports containing sensitive tax ID info are automatically password-protected." 
-                                           TextColor="#475569" FontSize="12" LineBreakMode="WordWrap" />
-                                </Grid>
-                            </VerticalStackLayout>
-                        </Border>
-                    </VerticalStackLayout>
+                        <Button Text="Export" 
+                                Clicked="OnExportClicked"
+                                TextColor="{StaticResource Slate700}" 
+                                BackgroundColor="White"
+                                BorderColor="{StaticResource Slate200}"
+                                BorderWidth="1"
+                                CornerRadius="8"
+                                Padding="16, 8"
+                                FontSize="14" />
+                        
+                        <Button Text="Refresh Data" 
+                                Clicked="OnRefreshDataClicked"
+                                TextColor="White" 
+                                BackgroundColor="{StaticResource DashboardTeal}"
+                                CornerRadius="8"
+                                Padding="16, 8"
+                                FontSize="14" />
+                    </HorizontalStackLayout>
                 </Grid>
 
+                <!-- Analytics Summary Cards -->
+                <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="20">
+                    <!-- Total Revenue -->
+                    <Border Grid.Column="0" Style="{StaticResource HoverCardStyle}" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="16">
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Border BackgroundColor="{StaticResource DashboardTealLight}" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                                    <Path Data="M21,19V5c0-1.1-0.9-2-2-2H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14C20.1,21,21,20.1,21,19z M8.5,13.5l2.5,3.01L14.5,12l4.5,6H5 L8.5,13.5z" 
+                                          Fill="{StaticResource DashboardTeal}" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                                    <HorizontalStackLayout Spacing="4">
+                                        <Path Data="M7,14l5-5l5,5" Fill="{StaticResource SuccessGreen}" Aspect="Uniform" HeightRequest="10" WidthRequest="10" VerticalOptions="Center" />
+                                        <Label Text="12.4%" TextColor="{StaticResource SuccessGreen}" FontSize="11" FontAttributes="Bold" />
+                                    </HorizontalStackLayout>
+                                    <Label Text="VS PREV. MONTH" TextColor="{StaticResource Slate400}" FontSize="9" FontAttributes="Bold" HorizontalOptions="End" />
+                                </VerticalStackLayout>
+                            </Grid>
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Total Revenue" TextColor="{StaticResource Slate500}" FontSize="12" />
+                                <Label x:Name="TotalRevenueLabel" Text="₱0.00" TextColor="{StaticResource Slate900}" FontSize="28" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- New Creators -->
+                    <Border Grid.Column="1" Style="{StaticResource HoverCardStyle}" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="16">
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Border BackgroundColor="#EFF6FF" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                                    <Path Data="M12,12c2.21,0,4-1.79,4-4s-1.79-4-4-4-4,1.79-4,4,1.79,4,4,4zm0,2c-2.67,0-8,1.34-8,4v2h16v-2c0-2.66-5.33-4-8-4z" 
+                                          Fill="#3B82F6" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                                    <HorizontalStackLayout Spacing="4">
+                                        <Path Data="M7,14l5-5l5,5" Fill="{StaticResource SuccessGreen}" Aspect="Uniform" HeightRequest="10" WidthRequest="10" VerticalOptions="Center" />
+                                        <Label Text="8.2%" TextColor="{StaticResource SuccessGreen}" FontSize="11" FontAttributes="Bold" />
+                                    </HorizontalStackLayout>
+                                    <Label Text="VS PREV. MONTH" TextColor="{StaticResource Slate400}" FontSize="9" FontAttributes="Bold" HorizontalOptions="End" />
+                                </VerticalStackLayout>
+                            </Grid>
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="New Creators" TextColor="{StaticResource Slate500}" FontSize="12" />
+                                <Label x:Name="NewCreatorsLabel" Text="0" TextColor="{StaticResource Slate900}" FontSize="28" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Total Orders -->
+                    <Border Grid.Column="2" Style="{StaticResource HoverCardStyle}" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="16">
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Border BackgroundColor="#F5F3FF" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                                    <Path Data="M7,18c-1.1,0-1.99.9-1.99,2S5.9,22,7,22s2-.9,2-2-.9-2-2-2zM1,2v2h2l3.6,7.59-1.35,2.45c-.16.28-.25.61-.25.96,0,1.1.9,2,2,2h12v-2H7.42c-.14,0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75,0,1.41-.41,1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48,0-.55-.45-1-1-1H5.21l-.94-2H1zm16,16c-1.1,0-1.99.9-1.99,2s.89,2,1.99,2,2-.9,2-2-.9-2-2-2z" 
+                                          Fill="#8B5CF6" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                                    <HorizontalStackLayout Spacing="4">
+                                        <Path Data="M7,10l5,5l5-5H7z" Fill="#EF4444" Aspect="Uniform" HeightRequest="10" WidthRequest="10" VerticalOptions="Center" />
+                                        <Label Text="2.1%" TextColor="#EF4444" FontSize="11" FontAttributes="Bold" />
+                                    </HorizontalStackLayout>
+                                    <Label Text="VS PREV. MONTH" TextColor="{StaticResource Slate400}" FontSize="9" FontAttributes="Bold" HorizontalOptions="End" />
+                                </VerticalStackLayout>
+                            </Grid>
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Total Orders" TextColor="{StaticResource Slate500}" FontSize="12" />
+                                <Label x:Name="TotalOrdersLabel" Text="0" TextColor="{StaticResource Slate900}" FontSize="28" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Conversion Rate -->
+                    <Border Grid.Column="3" Padding="24" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="16">
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Border BackgroundColor="#FDF2F8" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                                    <Path Data="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M9,17H7v-7h2V17z M13,17h-2V7h2V17z M17,17h-2v-4h2V17z" 
+                                          Fill="#EC4899" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                                    <HorizontalStackLayout Spacing="4">
+                                        <Path Data="M7,14l5-5l5,5" Fill="{StaticResource SuccessGreen}" Aspect="Uniform" HeightRequest="10" WidthRequest="10" VerticalOptions="Center" />
+                                        <Label Text="4.5%" TextColor="{StaticResource SuccessGreen}" FontSize="11" FontAttributes="Bold" />
+                                    </HorizontalStackLayout>
+                                    <Label Text="VS PREV. MONTH" TextColor="{StaticResource Slate400}" FontSize="9" FontAttributes="Bold" HorizontalOptions="End" />
+                                </VerticalStackLayout>
+                            </Grid>
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Conversion Rate" TextColor="{StaticResource Slate500}" FontSize="12" />
+                                <Label x:Name="ConversionRateLabel" Text="0.00%" TextColor="{StaticResource Slate900}" FontSize="28" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Chart Section -->
+                <Border Padding="32" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="32">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Weekly Revenue Growth" TextColor="{StaticResource Slate900}" FontSize="20" FontAttributes="Bold" />
+                                <Label Text="Performance analysis for the current quarter across all sales channels." TextColor="{StaticResource Slate600}" FontSize="14" />
+                            </VerticalStackLayout>
+                            
+                            <HorizontalStackLayout Grid.Column="1" Spacing="24" VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Ellipse WidthRequest="10" HeightRequest="10" Fill="{StaticResource DashboardTeal}" />
+                                    <Label Text="This Week" TextColor="{StaticResource Slate700}" FontSize="13" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="8">
+                                    <Ellipse WidthRequest="10" HeightRequest="10" Fill="{StaticResource Slate300}" />
+                                    <Label Text="Last Week" TextColor="{StaticResource Slate700}" FontSize="13" />
+                                </HorizontalStackLayout>
+                                
+                                <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{StaticResource Slate200}" BackgroundColor="White" Padding="12, 6">
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Label Text="All Channels" TextColor="{StaticResource Slate700}" FontSize="13" />
+                                        <Path Data="M7,10l5,5l5-5H7z" Fill="{StaticResource Slate400}" Aspect="Uniform" HeightRequest="12" WidthRequest="12" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </HorizontalStackLayout>
+                        </Grid>
+                        
+                        <Grid RowDefinitions="*, Auto" HeightRequest="400">
+                            <!-- Y Axis lines -->
+                            <VerticalStackLayout Spacing="75" VerticalOptions="Fill">
+                                <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
+                                <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
+                                <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
+                                <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
+                                <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
+                                <BoxView HeightRequest="1" Color="{StaticResource Slate100}" />
+                            </VerticalStackLayout>
+                            
+                            <!-- Bars and Labels -->
+                            <FlexLayout x:Name="ChartFlexLayout" Grid.Row="0" Grid.RowSpan="2" Margin="40, 20, 40, 0" JustifyContent="SpaceBetween" AlignItems="End">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <VerticalStackLayout Spacing="8" VerticalOptions="End">
+                                            <Label Text="{Binding ThisWeekRevenueFormatted}" TextColor="{StaticResource DashboardTeal}" FontSize="10" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,4" />
+                                            <HorizontalStackLayout Spacing="8" HorizontalOptions="Center" VerticalOptions="End">
+                                                <Border HeightRequest="{Binding LastWeekHeight}" WidthRequest="24" BackgroundColor="{StaticResource Slate200}" StrokeThickness="0" StrokeShape="RoundRectangle 6,6,0,0" VerticalOptions="End">
+                                                    <ToolTipProperties.Text>
+                                                        <Binding Path="LastWeekRevenueFormatted" />
+                                                    </ToolTipProperties.Text>
+                                                </Border>
+                                                <Border HeightRequest="{Binding ThisWeekHeight}" WidthRequest="24" BackgroundColor="{StaticResource DashboardTeal}" StrokeThickness="0" StrokeShape="RoundRectangle 6,6,0,0" VerticalOptions="End">
+                                                    <Border.Shadow><Shadow Brush="{StaticResource DashboardTeal}" Opacity="0.3" Offset="0,4" Radius="8"/></Border.Shadow>
+                                                    <ToolTipProperties.Text>
+                                                        <Binding Path="ThisWeekRevenueFormatted" />
+                                                    </ToolTipProperties.Text>
+                                                </Border>
+                                            </HorizontalStackLayout>
+                                            <Label Text="{Binding Day}" TextColor="{StaticResource Slate500}" FontSize="12" HorizontalOptions="Center" />
+                                        </VerticalStackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
+                        </Grid>
+                        
+                    </VerticalStackLayout>
+                </Border>
             </VerticalStackLayout>
         </ScrollView>
-
     </Grid>
+
 </ContentPage>

@@ -4,12 +4,40 @@ using System.Threading.Tasks;
 
 namespace CreatiSphere.Views.Customer
 {
+    [QueryProperty(nameof(FilterParam), "filter")]
     public partial class TrackOrdersPage : ContentPage
     {
         private readonly DatabaseService _databaseService;
         private const int CurrentUserId = 1002;
         private List<CustomOrder> _allCommissions = new();
         private string _currentFilter = "Active";
+
+        public string FilterParam
+        {
+            set
+            {
+                if (value != null)
+                {
+                    _currentFilter = Uri.UnescapeDataString(value);
+                    
+                    ResetTab(TabActive, LblActive);
+                    ResetTab(TabWaitingForPayment, LblWaitingForPayment);
+                    ResetTab(TabCompleted, LblCompleted);
+                    ResetTab(TabDrafts, LblDrafts);
+
+                    var activeTab = _currentFilter switch
+                    {
+                        "Waiting for Payment" => (TabWaitingForPayment, LblWaitingForPayment),
+                        "Completed" => (TabCompleted, LblCompleted),
+                        "Drafts" => (TabDrafts, LblDrafts),
+                        _ => (TabActive, LblActive)
+                    };
+                    
+                    SetActiveTab(activeTab.Item1, activeTab.Item2);
+                    FilterCommissions();
+                }
+            }
+        }
 
         public TrackOrdersPage()
         {
@@ -22,6 +50,18 @@ namespace CreatiSphere.Views.Customer
             base.OnAppearing();
             await LoadUserInfo();
             await LoadCommissions();
+            await LoadNotificationsAsync();
+        }
+
+        private async Task LoadNotificationsAsync()
+        {
+            try
+            {
+                var db = new DatabaseService();
+                var notifications = await db.GetUserNotificationsAsync(1002);
+                BindableLayout.SetItemsSource(NotificationsContainer, notifications);
+            }
+            catch {}
         }
 
         private async Task LoadUserInfo()
@@ -196,6 +236,78 @@ namespace CreatiSphere.Views.Customer
                     }
                 }
             }
+        }
+        private void OnNotificationsTapped(object? sender, EventArgs e)
+        {
+            NotificationsOverlay.IsVisible = true;
+        }
+
+        private void OnCloseNotificationsTapped(object? sender, EventArgs e)
+        {
+            NotificationsOverlay.IsVisible = false;
+        }
+
+        private void OnMarkAsReadTapped(object? sender, EventArgs e)
+        {
+            if (sender is Border border && border.Parent is HorizontalStackLayout hsl && hsl.Parent is Grid grid)
+            {
+                if (grid.Children[0] is Border dot)
+                {
+                    dot.IsVisible = false;
+                }
+            }
+        }
+
+        private void OnDeleteNotificationTapped(object? sender, EventArgs e)
+        {
+            if (sender is Border border && border.Parent is HorizontalStackLayout hsl && hsl.Parent is Grid grid)
+            {
+                NotificationsContainer.Children.Remove(grid);
+            }
+        }
+
+        private void OnClearAllNotificationsClicked(object? sender, EventArgs e)
+        {
+            NotificationsContainer.Children.Clear();
+            NotificationsOverlay.IsVisible = false;
+        }
+
+        private void OnClosePaymentTapped(object? sender, EventArgs e)
+        {
+            PaymentOverlay.IsVisible = false;
+        }
+
+        private void OnPaymentCardTapped(object? sender, EventArgs e)
+        {
+            // Payment card logic
+        }
+
+        private void OnPaymentWalletTapped(object? sender, EventArgs e)
+        {
+            // Wallet selection logic
+        }
+
+        private void OnGCashWalletOptionTapped(object? sender, EventArgs e)
+        {
+            // GCash logic
+        }
+
+        private void OnMayaWalletOptionTapped(object? sender, EventArgs e)
+        {
+            // Maya logic
+        }
+
+        private async void OnConfirmPaymentClicked(object? sender, EventArgs e)
+        {
+            PaymentOverlay.IsVisible = false;
+            
+            if (SuccessMessageLabel != null) SuccessMessageLabel.Text = "Your payment has been successfully processed.";
+            if (SuccessOverlay != null) SuccessOverlay.IsVisible = true;
+        }
+
+        private void OnCloseSuccessTapped(object? sender, EventArgs e)
+        {
+            if (SuccessOverlay != null) SuccessOverlay.IsVisible = false;
         }
     }
 }

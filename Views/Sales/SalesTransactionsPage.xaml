@@ -172,7 +172,7 @@
                 </Grid>
 
                 <!-- Top Stats Row -->
-                <Grid ColumnDefinitions="*, *, *" ColumnSpacing="20">
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
                     <Border Grid.Column="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24" Style="{StaticResource HoverCardStyle}">
                         <VerticalStackLayout Spacing="16">
                             <Grid ColumnDefinitions="Auto, *">
@@ -184,7 +184,7 @@
                             <VerticalStackLayout Spacing="4">
                                 <Label Text="Pending Approval" TextColor="#64748B" FontSize="13" />
                                 <HorizontalStackLayout Spacing="8">
-                                    <Label Text="24" TextColor="#0F172A" FontSize="32" FontAttributes="Bold" />
+                                    <Label Text="{Binding PendingApprovalCount}" TextColor="#0F172A" FontSize="32" FontAttributes="Bold" />
                                     <Label Text="orders" TextColor="#64748B" FontSize="14" VerticalOptions="End" Margin="0,0,0,6" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
@@ -202,29 +202,11 @@
                             <VerticalStackLayout Spacing="4">
                                 <Label Text="Processing" TextColor="#64748B" FontSize="13" />
                                 <HorizontalStackLayout Spacing="8">
-                                    <Label Text="156" TextColor="#0F172A" FontSize="32" FontAttributes="Bold" />
+                                    <Label Text="{Binding ActiveNowCount}" TextColor="#0F172A" FontSize="32" FontAttributes="Bold" />
                                     <Label Text="orders" TextColor="#64748B" FontSize="14" VerticalOptions="End" Margin="0,0,0,6" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                             <Label Text="84% within delivery window" TextColor="#94A3B8" FontSize="12" />
-                        </VerticalStackLayout>
-                    </Border>
-                    <Border Grid.Column="2" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#EF4444" BackgroundColor="White" Padding="24" Style="{StaticResource HoverCardStyle}">
-                        <VerticalStackLayout Spacing="16">
-                            <Grid ColumnDefinitions="Auto, *">
-                                <Border BackgroundColor="#FEE2E2" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8">
-                                    <Path Data="{StaticResource IconUndo}" Fill="#EF4444" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Border>
-                                <Label Grid.Column="1" Text="Requires attention" TextColor="#EF4444" FontSize="11" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Start" />
-                            </Grid>
-                            <VerticalStackLayout Spacing="4">
-                                <Label Text="Refund Requests" TextColor="#64748B" FontSize="13" />
-                                <HorizontalStackLayout Spacing="8">
-                                    <Label Text="08" TextColor="#0F172A" FontSize="32" FontAttributes="Bold" />
-                                    <Label Text="claims" TextColor="#64748B" FontSize="14" VerticalOptions="End" Margin="0,0,0,6" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                            <Label Text="3 flagged as high priority" TextColor="#94A3B8" FontSize="12" />
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
@@ -261,7 +243,7 @@
                                                 <Label Text="{Binding CustomerEmail}" TextColor="#94A3B8" FontSize="11" />
                                             </VerticalStackLayout>
                                         </HorizontalStackLayout>
-                                        <Label Grid.Column="2" Text="{Binding Amount, StringFormat='${0:N2}'}" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" />
+                                        <Label Grid.Column="2" Text="{Binding Amount, StringFormat='₱{0:N2}'}" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" />
                                         <Label Grid.Column="3" Text="{Binding Date}" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
                                         
                                         <Border Grid.Column="4" Padding="12,4" StrokeShape="RoundRectangle 12" HorizontalOptions="Start" VerticalOptions="Center">

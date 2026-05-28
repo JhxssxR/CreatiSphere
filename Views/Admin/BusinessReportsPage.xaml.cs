@@ -26,7 +26,7 @@ namespace CreatiSphere.Views.Admin
             {
                 if (UserSession.AccountID > 5)
                 {
-                    TotalRevenueLabel.Text = "$0.00";
+                    TotalRevenueLabel.Text = "₱0.00";
                     NewCreatorsLabel.Text = "0";
                     TotalOrdersLabel.Text = "0";
                     ConversionRateLabel.Text = "0.0%";
@@ -34,7 +34,7 @@ namespace CreatiSphere.Views.Admin
                 }
 
                 var stats = await _dbService.GetReportStatsAsync();
-                TotalRevenueLabel.Text = stats.TotalRevenue.ToString("C");
+                TotalRevenueLabel.Text = stats.TotalRevenue.ToString("C2", new System.Globalization.CultureInfo("en-PH"));
                 NewCreatorsLabel.Text = stats.NewCreators.ToString("N0");
                 TotalOrdersLabel.Text = stats.TotalOrders.ToString("N0");
                 ConversionRateLabel.Text = stats.ConversionRate.ToString("F2") + "%";

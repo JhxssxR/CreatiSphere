@@ -25,5 +25,10 @@ namespace CreatiSphere.Services
 
         public static bool CanCreateSuperAdmin => Tier == "Enterprise Plus";
         public static bool CanBulkExport => Tier != "Starter";
+
+        // Feedback navigation context
+        public static string FeedbackOrderTitle { get; set; } = "";
+        public static string FeedbackOrderId { get; set; } = "";
+        public static string FeedbackOrderArtist { get; set; } = "";
     }
 }

@@ -26,30 +26,14 @@ namespace CreatiSphere.Views.Admin
             {
                 if (UserSession.AccountID > 5)
                 {
-                    BindableLayout.SetItemsSource(NewOrdersList, new List<CustomOrder>());
-                    BindableLayout.SetItemsSource(InProgressOrdersList, new List<CustomOrder>());
-                    BindableLayout.SetItemsSource(ReviewOrdersList, new List<CustomOrder>());
-                    
-                    NewRequestsCountLabel.Text = "0";
-                    InProgressCountLabel.Text = "0";
-                    ReviewCountLabel.Text = "0";
+                    BindableLayout.SetItemsSource(AllOrdersList, new List<CustomOrder>());
+                    TotalVolumeLabel.Text = "$0";
                     TotalVolumeLabel.Text = "$0";
                     return;
                 }
 
                 var orders = await _dbService.GetCustomOrdersAsync();
-                
-                var newOrders = orders.Where(o => o.Status == "New Request" || string.IsNullOrEmpty(o.Status)).ToList();
-                var inProgressOrders = orders.Where(o => o.Status == "Sketching" || o.Status == "In Progress").ToList();
-                var reviewOrders = orders.Where(o => o.Status == "Review").ToList();
-
-                BindableLayout.SetItemsSource(NewOrdersList, newOrders);
-                BindableLayout.SetItemsSource(InProgressOrdersList, inProgressOrders);
-                BindableLayout.SetItemsSource(ReviewOrdersList, reviewOrders);
-
-                NewRequestsCountLabel.Text = newOrders.Count.ToString();
-                InProgressCountLabel.Text = inProgressOrders.Count.ToString();
-                ReviewCountLabel.Text = reviewOrders.Count.ToString();
+                BindableLayout.SetItemsSource(AllOrdersList, orders);
 
                 // Fetch real stats
                 var stats = await _dbService.GetReportStatsAsync();
@@ -69,14 +53,10 @@ namespace CreatiSphere.Views.Admin
             {
                 _selectedOrder = order;
                 DetailTitleLabel.Text = order.Title;
-                DetailIdLabel.Text = $"#CO-{order.OrderID}";
-                DetailPriorityLabel.Text = $"Priority: {order.Priority}";
                 DetailCategoryLabel.Text = order.Category;
                 DetailBriefLabel.Text = order.Description;
                 DetailResolutionLabel.Text = order.Resolution;
-                DetailColorProfileLabel.Text = order.ColorProfile;
                 DetailDeliverablesLabel.Text = order.Deliverables;
-                DetailArtistNameLabel.Text = !string.IsNullOrEmpty(order.AssignedArtist) ? order.AssignedArtist : "Unassigned";
             }
         }
 

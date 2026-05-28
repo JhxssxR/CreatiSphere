@@ -166,76 +166,124 @@
             </Grid>
         </Border>
 
-        <!-- ===== RIGHT COLUMN: CHAT AREA / EMPTY STATE ===== -->
-        <Grid Grid.Column="2" RowDefinitions="*, Auto" BackgroundColor="#F8FAFC">
-            
-            <!-- Chat UI -->
-            <Grid Grid.Row="0" RowDefinitions="Auto, *, Auto">
-                <!-- Chat Header -->
-                <Border Grid.Row="0" StrokeThickness="0,0,0,1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24,16">
-                    <HorizontalStackLayout Spacing="16">
-                        <Border HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 24" BackgroundColor="#0D9488">
-                            <Label Text="AH" TextColor="White" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </Border>
-                        <VerticalStackLayout VerticalOptions="Center">
-                            <Label Text="Alex Henderson" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
-                            <Label Text="Active now" TextColor="#10B981" FontSize="12" />
-                        </VerticalStackLayout>
-                    </HorizontalStackLayout>
-                </Border>
+        <!-- ===== RIGHT COLUMN: CHAT AREA ===== -->
+        <Grid Grid.Column="2" RowDefinitions="Auto, *, Auto" BackgroundColor="#F8FAFC" VerticalOptions="Fill">
+            <!-- Chat Header -->
+            <Border Grid.Row="0" StrokeThickness="0" BackgroundColor="White" Padding="24,16" ZIndex="10">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.05" Offset="0,2" Radius="4"/>
+                </Border.Shadow>
+                <HorizontalStackLayout Spacing="16">
+                    <Border HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 24" BackgroundColor="#0D9488">
+                        <Label Text="AH" TextColor="White" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <Label Text="Alex Henderson" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
+                        <Label Text="Active now" TextColor="#10B981" FontSize="12" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Border>
 
-                <!-- Chat History -->
-                <CollectionView Grid.Row="1" x:Name="ChatCollectionView" Margin="0,16" ItemsUpdatingScrollMode="KeepLastItemInView">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="24,8">
-                                <Border HorizontalOptions="{Binding Alignment}" 
-                                        BackgroundColor="{Binding BackgroundColor}" 
-                                        StrokeThickness="0" 
-                                        StrokeShape="RoundRectangle 16" 
+            <!-- Chat History -->
+            <CollectionView Grid.Row="1" x:Name="ChatCollectionView" Margin="0,16" ItemsUpdatingScrollMode="KeepLastItemInView" VerticalOptions="Fill">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="24,8">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding SenderName}" TextColor="#94A3B8" FontSize="11" Margin="0,0,0,4" HorizontalOptions="{Binding CreatorAlignment}" />
+                                <Border HorizontalOptions="{Binding CreatorAlignment}" 
+                                        BackgroundColor="{Binding CreatorBackgroundColor}" 
+                                        StrokeThickness="0.5" 
+                                        Stroke="#E2E8F0"
+                                        StrokeShape="RoundRectangle 18" 
                                         Padding="16,12" 
                                         MaximumWidthRequest="500">
+                                    <Border.Shadow>
+                                        <Shadow Brush="Black" Opacity="0.04" Offset="0,2" Radius="4"/>
+                                    </Border.Shadow>
                                     <VerticalStackLayout>
-                                        <Label Text="{Binding Text}" TextColor="{Binding TextColor}" FontSize="15" />
+                                        <Label Text="{Binding Text}" TextColor="{Binding CreatorTextColor}" FontSize="15" />
                                         <Label Text="{Binding Timestamp, StringFormat='{0:t}'}" 
-                                               TextColor="{Binding TextColor}" 
+                                               TextColor="{Binding CreatorTextColor}" 
                                                Opacity="0.7" 
                                                FontSize="11" 
                                                HorizontalOptions="End" 
                                                Margin="0,4,0,0"/>
                                     </VerticalStackLayout>
                                 </Border>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-                <!-- Message Input -->
-                <Border Grid.Row="2" BackgroundColor="White" StrokeThickness="1,0,0,0" Stroke="#E2E8F0" Padding="24,16,24,24">
-                    <Grid ColumnDefinitions="*, Auto">
-                        <Border BackgroundColor="#F1F5F9" StrokeThickness="0" StrokeShape="RoundRectangle 24" Padding="16,4">
-                            <Entry x:Name="MessageEntry" Placeholder="Type a message..." BackgroundColor="Transparent" TextColor="#0F172A" Completed="OnSendMessageTapped" />
-                        </Border>
-                        <Border Grid.Column="1" BackgroundColor="#0D9488" HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 24" StrokeThickness="0" Margin="16,0,0,0">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnSendMessageTapped" />
-                            </Border.GestureRecognizers>
-                            <Path Data="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" Fill="White" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                    </Grid>
-                </Border>
-            </Grid>
-
-            <!-- Bottom Page Footer -->
-            <Border Grid.Row="1" StrokeThickness="0,1,0,0" Stroke="#E2E8F0" BackgroundColor="White" Padding="24,16">
+            <!-- Message Input -->
+            <Border Grid.Row="2" BackgroundColor="Transparent" StrokeThickness="0" Padding="24,16,24,24">
                 <Grid ColumnDefinitions="*, Auto">
-                    <Label Text="© 2024 CreatiSphere. All rights reserved." TextColor="#64748B" FontSize="12" VerticalOptions="Center" />
-                    <HorizontalStackLayout Grid.Column="1" Spacing="24" VerticalOptions="Center">
-                        <Label Text="Terms" TextColor="#64748B" FontSize="12" />
-                        <Label Text="Privacy" TextColor="#64748B" FontSize="12" />
-                        <Label Text="Support" TextColor="#64748B" FontSize="12" />
-                    </HorizontalStackLayout>
+                    <Border BackgroundColor="White" StrokeThickness="1" Stroke="#E2E8F0" StrokeShape="RoundRectangle 24" Padding="16,4">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Opacity="0.05" Offset="0,2" Radius="8"/>
+                        </Border.Shadow>
+                        <Entry x:Name="MessageEntry" Placeholder="Type a message..." BackgroundColor="Transparent" TextColor="#0F172A" Completed="OnSendMessageTapped" />
+                    </Border>
+                    <Border Grid.Column="1" BackgroundColor="#0D9488" HeightRequest="48" WidthRequest="48" StrokeShape="RoundRectangle 24" StrokeThickness="0" Margin="12,0,0,0">
+                        <Border.Shadow>
+                            <Shadow Brush="#0D9488" Opacity="0.4" Offset="0,4" Radius="8"/>
+                        </Border.Shadow>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSendMessageTapped" />
+                        </Border.GestureRecognizers>
+                        <Path Data="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" Fill="White" Aspect="Uniform" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
                 </Grid>
+            </Border>
+        </Grid>
+        <!-- Notifications Modal -->
+        <Grid x:Name="NotificationsOverlay" Grid.ColumnSpan="2" BackgroundColor="#20000000" IsVisible="False">
+            <BoxView BackgroundColor="Transparent">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCloseNotificationsTapped" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+            <Border BackgroundColor="White" StrokeShape="RoundRectangle 16" StrokeThickness="1" Stroke="#E2E8F0"
+                    HorizontalOptions="End" VerticalOptions="Start" WidthRequest="380" Margin="0,70,30,0" Padding="0">
+                <VerticalStackLayout>
+                    <Grid Padding="20,16" BackgroundColor="#F8FAFC">
+                        <Label Text="Notifications" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Label Text="✕" TextColor="#64748B" FontSize="16" HorizontalOptions="End" VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCloseNotificationsTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="#E2E8F0" />
+                    <ScrollView MaximumHeightRequest="320">
+                        <VerticalStackLayout x:Name="NotificationsContainer" Spacing="0">
+                            <!-- Sample Notification Item -->
+                            <Grid Padding="20,16" ColumnDefinitions="Auto, *, Auto">
+                                <Border HeightRequest="8" WidthRequest="8" StrokeShape="RoundRectangle 4" BackgroundColor="#3B82F6" VerticalOptions="Start" Margin="0,6,12,0" StrokeThickness="0" />
+                                <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                    <Label Text="New Commission Request" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                    <Label Text="Alex Morgan requested a custom asset." TextColor="#475569" FontSize="13" />
+                                    <Label Text="2 mins ago" TextColor="#94A3B8" FontSize="11" />
+                                </VerticalStackLayout>
+                                <HorizontalStackLayout Grid.Column="2" Spacing="8" VerticalOptions="Start">
+                                    <Border BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="8,4">
+                                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnMarkAsReadTapped" /></Border.GestureRecognizers>
+                                        <Label Text="Read" TextColor="#64748B" FontSize="11" FontAttributes="Bold" />
+                                    </Border>
+                                    <Border BackgroundColor="#FEE2E2" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="8,4">
+                                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnDeleteNotificationTapped" /></Border.GestureRecognizers>
+                                        <Label Text="Del" TextColor="#EF4444" FontSize="11" FontAttributes="Bold" />
+                                    </Border>
+                                </HorizontalStackLayout>
+                            </Grid>
+                            <BoxView HeightRequest="1" Color="#F1F5F9" />
+                        </VerticalStackLayout>
+                    </ScrollView>
+                    <BoxView HeightRequest="1" Color="#E2E8F0" />
+                    <Button Text="Clear All" BackgroundColor="Transparent" TextColor="#EF4444" FontSize="13" FontAttributes="Bold" HeightRequest="44" CornerRadius="0" Clicked="OnClearAllNotificationsClicked" />
+                </VerticalStackLayout>
             </Border>
         </Grid>
     </Grid>

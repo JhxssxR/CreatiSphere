@@ -151,7 +151,7 @@
                     </VerticalStackLayout>
 
                     <!-- Catalog Stats -->
-                    <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="20">
+                    <Grid ColumnDefinitions="*, *, *" ColumnSpacing="20">
                         <Border x:Name="TotalProductsCard" Grid.Column="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -227,32 +227,6 @@
                                 <HorizontalStackLayout Spacing="6">
                                     <Path Data="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M13,17h-2v-2h2V17z M13,13h-2V7h2V13z" Fill="#EF4444" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
                                     <Label Text="Needs attention" TextColor="#EF4444" FontSize="12" FontAttributes="Bold" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border x:Name="AvgPriceCard" Grid.Column="3" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Property="Scale" Value="1" />
-                                            <Setter Property="BackgroundColor" Value="White" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Property="Scale" Value="1.02" />
-                                            <Setter Property="BackgroundColor" Value="#F8FAFC" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <VerticalStackLayout Spacing="8">
-                                <Label Text="AVG. PRICE" TextColor="#64748B" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
-                                <Label x:Name="AvgPriceLabel" Text="₱85" TextColor="#0F172A" FontSize="32" FontAttributes="Bold" />
-                                <HorizontalStackLayout Spacing="6">
-                                    <Path Data="M9,16.17L4.83,12l-1.42,1.41L9,19 21,7l-1.41-1.41L9,16.17z" Fill="#0D9488" Aspect="Uniform" HeightRequest="14" WidthRequest="14" VerticalOptions="Center" />
-                                    <Label Text="Market competitive" TextColor="#64748B" FontSize="12" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Border>

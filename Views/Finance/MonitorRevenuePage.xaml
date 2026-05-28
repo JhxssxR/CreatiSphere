@@ -5,6 +5,31 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F8FAFC">
 
+    <ContentPage.Resources>
+        <Style x:Key="HoverCardStyle" TargetType="Border">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Stroke" Value="#E2E8F0" />
+                                <Setter Property="BackgroundColor" Value="White" />
+                                <Setter Property="TranslationY" Value="0" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Stroke" Value="#0D9488" />
+                                <Setter Property="BackgroundColor" Value="#F8FAFC" />
+                                <Setter Property="TranslationY" Value="-4" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
     <Grid ColumnDefinitions="260, *">
 
         <!-- ===== FINANCE SIDEBAR ===== -->
@@ -116,53 +141,39 @@
                         </HorizontalStackLayout>
                     </Border>
                     
-                    <Button Grid.Column="3" Text="Export CSV" BackgroundColor="#0D9488" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="40" Padding="20,0">
-                        <Button.ImageSource>
-                            <FontImageSource Glyph="📥" Size="14" Color="White" />
-                        </Button.ImageSource>
-                    </Button>
+                    <Button Grid.Column="3" Text="Export CSV" Clicked="OnExportCsvClicked" BackgroundColor="#0D9488" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="40" Padding="20,0" />
                 </Grid>
 
                 <!-- Stats Cards Row -->
-                <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="20">
+                <Grid ColumnDefinitions="*, *, *" ColumnSpacing="20">
                     <!-- Total Revenue -->
-                    <Border Grid.Column="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20">
+                    <Border Grid.Column="0" Style="{StaticResource HoverCardStyle}" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20">
                         <VerticalStackLayout Spacing="8">
                             <Label Text="TOTAL REVENUE" TextColor="#64748B" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
                             <HorizontalStackLayout Spacing="8">
-                                <Label Text="$128,450.00" TextColor="#0D9488" FontSize="24" FontAttributes="Bold" />
+                                <Label Text="{Binding TotalRevenue}" TextColor="#0D9488" FontSize="24" FontAttributes="Bold" />
                                 <Label Text="↗ 12%" TextColor="#0D9488" FontSize="11" VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Border>
-                    <!-- Asset Sales -->
-                    <Border Grid.Column="1" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20">
-                        <VerticalStackLayout Spacing="8">
-                            <Label Text="ASSET SALES" TextColor="#64748B" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
-                            <HorizontalStackLayout Spacing="8">
-                                <Label Text="$84,200.00" TextColor="#0F172A" FontSize="24" FontAttributes="Bold" />
-                                <Label Text="↗ 8.5%" TextColor="#0D9488" FontSize="11" VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
-                    </Border>
                     <!-- Commissions -->
-                    <Border Grid.Column="2" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20">
+                    <Border Grid.Column="1" Style="{StaticResource HoverCardStyle}" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="20">
                         <VerticalStackLayout Spacing="8">
                             <Label Text="COMMISSIONS" TextColor="#64748B" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
                             <HorizontalStackLayout Spacing="8">
-                                <Label Text="$31,150.00" TextColor="#0F172A" FontSize="24" FontAttributes="Bold" />
+                                <Label Text="{Binding Commissions}" TextColor="#0F172A" FontSize="24" FontAttributes="Bold" />
                                 <Label Text="↘ 0.2%" TextColor="#EF4444" FontSize="11" VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Border>
                     <!-- Pending Payouts -->
-                    <Border Grid.Column="3" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="0">
+                    <Border Grid.Column="2" Style="{StaticResource HoverCardStyle}" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="0">
                         <Grid ColumnDefinitions="4, *">
                             <BoxView Grid.Column="0" BackgroundColor="#0D9488" WidthRequest="4" VerticalOptions="Fill" />
                             <VerticalStackLayout Grid.Column="1" Spacing="8" Padding="20">
                                 <Label Text="PENDING PAYOUTS" TextColor="#64748B" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
                                 <HorizontalStackLayout Spacing="8">
-                                    <Label Text="$13,100.00" TextColor="#0F172A" FontSize="24" FontAttributes="Bold" />
+                                    <Label Text="{Binding PendingPayouts}" TextColor="#0F172A" FontSize="24" FontAttributes="Bold" />
                                     <Path Data="M11.99,2C6.47,2,2,6.48,2,12s4.47,10,9.99,10C17.52,22,22,17.52,22,12S17.52,2,11.99,2z M12,20c-4.42,0-8-3.58-8-8 s3.58-8,8-8s8,3.58,8,8S16.42,20,12,20z M12.5,7H11v6l5.25,3.15l0.75-1.23L12.5,12.5V7z" Fill="#94A3B8" Aspect="Uniform" HeightRequest="16" WidthRequest="16" VerticalOptions="Center" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
@@ -170,94 +181,55 @@
                     </Border>
                 </Grid>
 
-                <Grid ColumnDefinitions="2*, *" ColumnSpacing="24">
-                    <!-- Revenue Trends Chart -->
-                    <Border Grid.Column="0" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
-                        <VerticalStackLayout Spacing="24">
-                            <Grid ColumnDefinitions="*, Auto">
-                                <Label Text="Revenue Trends" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
-                                <HorizontalStackLayout Grid.Column="1" BackgroundColor="#F1F5F9" Padding="4" Spacing="4">
-                                    <Label Text="DAILY" TextColor="#0D9488" FontSize="10" FontAttributes="Bold" Padding="8,4" BackgroundColor="White" />
-                                    <Label Text="WEEKLY" TextColor="#64748B" FontSize="10" FontAttributes="Bold" Padding="8,4" />
-                                    <Label Text="MONTHLY" TextColor="#64748B" FontSize="10" FontAttributes="Bold" Padding="8,4" />
-                                </HorizontalStackLayout>
-                            </Grid>
+                <!-- Revenue Trends Chart -->
+                <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
+                    <VerticalStackLayout Spacing="24">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Text="Revenue Trends" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
+                            <HorizontalStackLayout Grid.Column="1" BackgroundColor="#F1F5F9" Padding="4" Spacing="4">
+                                <Border x:Name="DailyTabBorder" BackgroundColor="White" StrokeShape="RoundRectangle 4" StrokeThickness="0" Padding="8,4">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnDailyTabTapped" />
+                                    </Border.GestureRecognizers>
+                                    <Label x:Name="DailyTabLabel" Text="DAILY" TextColor="#0D9488" FontSize="10" FontAttributes="Bold" />
+                                </Border>
+                                <Border x:Name="WeeklyTabBorder" BackgroundColor="Transparent" StrokeShape="RoundRectangle 4" StrokeThickness="0" Padding="8,4">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnWeeklyTabTapped" />
+                                    </Border.GestureRecognizers>
+                                    <Label x:Name="WeeklyTabLabel" Text="WEEKLY" TextColor="#64748B" FontSize="10" FontAttributes="Bold" />
+                                </Border>
+                                <Border x:Name="MonthlyTabBorder" BackgroundColor="Transparent" StrokeShape="RoundRectangle 4" StrokeThickness="0" Padding="8,4">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnMonthlyTabTapped" />
+                                    </Border.GestureRecognizers>
+                                    <Label x:Name="MonthlyTabLabel" Text="MONTHLY" TextColor="#64748B" FontSize="10" FontAttributes="Bold" />
+                                </Border>
+                            </HorizontalStackLayout>
+                        </Grid>
 
-                            <!-- Custom Bar Chart Visualization -->
-                            <Grid HeightRequest="200" ColumnDefinitions="*, *, *, *, *, *, *" ColumnSpacing="12" VerticalOptions="End">
-                                <BoxView Grid.Column="0" HeightRequest="80" CornerRadius="4" BackgroundColor="#CCFBF1" VerticalOptions="End" />
-                                <BoxView Grid.Column="1" HeightRequest="120" CornerRadius="4" BackgroundColor="#99F6E4" VerticalOptions="End" />
-                                <BoxView Grid.Column="2" HeightRequest="160" CornerRadius="4" BackgroundColor="#0D9488" VerticalOptions="End" />
-                                <BoxView Grid.Column="3" HeightRequest="100" CornerRadius="4" BackgroundColor="#5EEAD4" VerticalOptions="End" />
-                                <BoxView Grid.Column="4" HeightRequest="180" CornerRadius="4" BackgroundColor="#99F6E4" VerticalOptions="End" />
-                                <BoxView Grid.Column="5" HeightRequest="200" CornerRadius="4" BackgroundColor="#0D9488" VerticalOptions="End" />
-                                <BoxView Grid.Column="6" HeightRequest="90" CornerRadius="4" BackgroundColor="#CCFBF1" VerticalOptions="End" />
-                            </Grid>
+                        <!-- Custom Bar Chart Visualization -->
+                        <Grid HeightRequest="200" ColumnDefinitions="*, *, *, *, *, *, *" ColumnSpacing="12" VerticalOptions="End">
+                            <BoxView Grid.Column="0" HeightRequest="{Binding BarHeight0}" CornerRadius="4" BackgroundColor="#CCFBF1" VerticalOptions="End" />
+                            <BoxView Grid.Column="1" HeightRequest="{Binding BarHeight1}" CornerRadius="4" BackgroundColor="#99F6E4" VerticalOptions="End" />
+                            <BoxView Grid.Column="2" HeightRequest="{Binding BarHeight2}" CornerRadius="4" BackgroundColor="#0D9488" VerticalOptions="End" />
+                            <BoxView Grid.Column="3" HeightRequest="{Binding BarHeight3}" CornerRadius="4" BackgroundColor="#5EEAD4" VerticalOptions="End" />
+                            <BoxView Grid.Column="4" HeightRequest="{Binding BarHeight4}" CornerRadius="4" BackgroundColor="#99F6E4" VerticalOptions="End" />
+                            <BoxView Grid.Column="5" HeightRequest="{Binding BarHeight5}" CornerRadius="4" BackgroundColor="#0D9488" VerticalOptions="End" />
+                            <BoxView Grid.Column="6" HeightRequest="{Binding BarHeight6}" CornerRadius="4" BackgroundColor="#CCFBF1" VerticalOptions="End" />
+                        </Grid>
 
-                            <Grid ColumnDefinitions="*, *, *, *, *, *, *">
-                                <Label Text="MON" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
-                                <Label Grid.Column="1" Text="TUE" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
-                                <Label Grid.Column="2" Text="WED" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
-                                <Label Grid.Column="3" Text="THU" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
-                                <Label Grid.Column="4" Text="FRI" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
-                                <Label Grid.Column="5" Text="SAT" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
-                                <Label Grid.Column="6" Text="SUN" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
-                            </Grid>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <!-- Stream Breakdown -->
-                    <Border Grid.Column="1" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="24">
-                        <VerticalStackLayout Spacing="20">
-                            <Label Text="Stream Breakdown" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
-                            
-                            <!-- Breakdown Item 1 -->
-                            <VerticalStackLayout Spacing="6">
-                                <Grid ColumnDefinitions="*, Auto">
-                                    <Label Text="Premium 3D Assets" TextColor="#475569" FontSize="13" />
-                                    <Label Grid.Column="1" Text="45%" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" />
-                                </Grid>
-                                <ProgressBar Progress="0.45" ProgressColor="#0D9488" />
-                            </VerticalStackLayout>
-
-                            <!-- Breakdown Item 2 -->
-                            <VerticalStackLayout Spacing="6">
-                                <Grid ColumnDefinitions="*, Auto">
-                                    <Label Text="Custom Illustrations" TextColor="#475569" FontSize="13" />
-                                    <Label Grid.Column="1" Text="30%" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" />
-                                </Grid>
-                                <ProgressBar Progress="0.30" ProgressColor="#2DD4BF" />
-                            </VerticalStackLayout>
-
-                            <!-- Breakdown Item 3 -->
-                            <VerticalStackLayout Spacing="6">
-                                <Grid ColumnDefinitions="*, Auto">
-                                    <Label Text="Motion Graphics" TextColor="#475569" FontSize="13" />
-                                    <Label Grid.Column="1" Text="18%" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" />
-                                </Grid>
-                                <ProgressBar Progress="0.18" ProgressColor="#99F6E4" />
-                            </VerticalStackLayout>
-
-                            <!-- Breakdown Item 4 -->
-                            <VerticalStackLayout Spacing="6">
-                                <Grid ColumnDefinitions="*, Auto">
-                                    <Label Text="Admin Fees" TextColor="#475569" FontSize="13" />
-                                    <Label Grid.Column="1" Text="7%" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" />
-                                </Grid>
-                                <ProgressBar Progress="0.07" ProgressColor="#CCFBF1" />
-                            </VerticalStackLayout>
-
-                            <!-- Insight Box -->
-                            <Border BackgroundColor="#F0FDFA" StrokeShape="RoundRectangle 8" StrokeThickness="0" Padding="16" Margin="0,8,0,0">
-                                <HorizontalStackLayout Spacing="12">
-                                    <Label Text="💡" FontSize="18" VerticalOptions="Start" />
-                                    <Label Text="3D Assets increased by 15% this period. Consider highlighting new releases." 
-                                           TextColor="#0D9488" FontSize="11" MaxLines="2" LineBreakMode="WordWrap" />
-                                </HorizontalStackLayout>
-                            </Border>
-                        </VerticalStackLayout>
-                    </Border>
-                </Grid>
+                        <Grid ColumnDefinitions="*, *, *, *, *, *, *">
+                            <Label Text="{Binding LabelText0}" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
+                            <Label Grid.Column="1" Text="{Binding LabelText1}" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
+                            <Label Grid.Column="2" Text="{Binding LabelText2}" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
+                            <Label Grid.Column="3" Text="{Binding LabelText3}" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
+                            <Label Grid.Column="4" Text="{Binding LabelText4}" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
+                            <Label Grid.Column="5" Text="{Binding LabelText5}" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
+                            <Label Grid.Column="6" Text="{Binding LabelText6}" HorizontalOptions="Center" TextColor="#94A3B8" FontSize="10" FontAttributes="Bold" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
 
                 <!-- Recent Transactions -->
                 <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White" Padding="0">
@@ -277,69 +249,52 @@
                             <Label Grid.Column="4" Text="STATUS" TextColor="#64748B" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
                         </Grid>
 
-                        <!-- Row 1 -->
-                        <Grid ColumnDefinitions="*, 2.5*, 1.5*, 1.2*, 1.2*, Auto" Padding="24,16">
-                            <Label Text="Oct 24, 2026" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
-                            <HorizontalStackLayout Grid.Column="1" Spacing="12">
-                                <Border BackgroundColor="#F1F5F9" HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 4">
-                                    <Path Data="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20c-4.42,0-8-3.58-8-8s3.58-8,8-8s8,3.58,8,8 S16.42,20,12,20z" Fill="#64748B" Aspect="Uniform" HeightRequest="14" WidthRequest="14" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Border>
-                                <VerticalStackLayout VerticalOptions="Center">
-                                    <Label Text="Abstract Geometry Set" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" />
-                                    <Label Text="ID: #CS-8921" TextColor="#94A3B8" FontSize="11" />
-                                </VerticalStackLayout>
-                            </HorizontalStackLayout>
-                            <Label Grid.Column="2" Text="Marketplace" TextColor="#475569" FontSize="13" VerticalOptions="Center" />
-                            <Label Grid.Column="3" Text="$1,200.00" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                            <Border Grid.Column="4" BackgroundColor="#F0FDFA" StrokeShape="RoundRectangle 12" Padding="10,4" HorizontalOptions="Start">
-                                <Label Text="DELIVERED" TextColor="#0D9488" FontSize="10" FontAttributes="Bold" />
-                            </Border>
-                            <Label Grid.Column="5" Text="⋮" TextColor="#94A3B8" FontSize="20" VerticalOptions="Center" />
-                        </Grid>
-
-                        <BoxView HeightRequest="1" Color="#F1F5F9" Margin="24,0" />
-
-                        <!-- Row 2 -->
-                        <Grid ColumnDefinitions="*, 2.5*, 1.5*, 1.2*, 1.2*, Auto" Padding="24,16">
-                            <Label Text="Oct 24, 2026" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
-                            <HorizontalStackLayout Grid.Column="1" Spacing="12">
-                                <Border BackgroundColor="#F1F5F9" HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 4">
-                                    <Path Data="M3,17.25V21h3.75L17.81,9.94l-3.75-3.75L3,17.25z M20.71,7.04c0.39-0.39,0.39-1.02,0-1.41l-2.34-2.34 c-0.39-0.39-1.02-0.39-1.41,0l-1.83,1.83l3.75,3.75L20.71,7.04z" Fill="#64748B" Aspect="Uniform" HeightRequest="14" WidthRequest="14" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Border>
-                                <VerticalStackLayout VerticalOptions="Center">
-                                    <Label Text="Custom Brand Mascot" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" />
-                                    <Label Text="ID: #CS-8922" TextColor="#94A3B8" FontSize="11" />
-                                </VerticalStackLayout>
-                            </HorizontalStackLayout>
-                            <Label Grid.Column="2" Text="Direct Order" TextColor="#475569" FontSize="13" VerticalOptions="Center" />
-                            <Label Grid.Column="3" Text="$2,450.00" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                            <Border Grid.Column="4" BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 12" Padding="10,4" HorizontalOptions="Start">
-                                <Label Text="PROCESSING" TextColor="#64748B" FontSize="10" FontAttributes="Bold" />
-                            </Border>
-                            <Label Grid.Column="5" Text="⋮" TextColor="#94A3B8" FontSize="20" VerticalOptions="Center" />
-                        </Grid>
-
-                        <BoxView HeightRequest="1" Color="#F1F5F9" Margin="24,0" />
-
-                        <!-- Row 3 -->
-                        <Grid ColumnDefinitions="*, 2.5*, 1.5*, 1.2*, 1.2*, Auto" Padding="24,16">
-                            <Label Text="Oct 23, 2026" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
-                            <HorizontalStackLayout Grid.Column="1" Spacing="12">
-                                <Border BackgroundColor="#F1F5F9" HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 4">
-                                    <Path Data="M17,10.5V7c0-0.55-0.45-1-1-1H4C3.45,6,3,6.45,3,7v10c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1v-3.5l4,4v-11L17,10.5z" Fill="#64748B" Aspect="Uniform" HeightRequest="14" WidthRequest="14" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Border>
-                                <VerticalStackLayout VerticalOptions="Center">
-                                    <Label Text="Motion Intro Package" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" />
-                                    <Label Text="ID: #CS-8919" TextColor="#94A3B8" FontSize="11" />
-                                </VerticalStackLayout>
-                            </HorizontalStackLayout>
-                            <Label Grid.Column="2" Text="Marketplace" TextColor="#475569" FontSize="13" VerticalOptions="Center" />
-                            <Label Grid.Column="3" Text="$590.00" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                            <Border Grid.Column="4" BackgroundColor="#F0FDFA" StrokeShape="RoundRectangle 12" Padding="10,4" HorizontalOptions="Start">
-                                <Label Text="DELIVERED" TextColor="#0D9488" FontSize="10" FontAttributes="Bold" />
-                            </Border>
-                            <Label Grid.Column="5" Text="⋮" TextColor="#94A3B8" FontSize="20" VerticalOptions="Center" />
-                        </Grid>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Transactions}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout>
+                                        <Grid ColumnDefinitions="*, 2.5*, 1.5*, 1.2*, 1.2*, Auto" Padding="24,16">
+                                            <Label Text="{Binding Date}" TextColor="#64748B" FontSize="13" VerticalOptions="Center" />
+                                            <HorizontalStackLayout Grid.Column="1" Spacing="12">
+                                                <Border BackgroundColor="#F1F5F9" HeightRequest="32" WidthRequest="32" StrokeShape="RoundRectangle 4">
+                                                    <Label Text="{Binding Initials}" TextColor="#475569" FontSize="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                </Border>
+                                                <VerticalStackLayout VerticalOptions="Center">
+                                                    <Label Text="{Binding CustomerName}" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" />
+                                                    <Label Text="{Binding TransactionID}" TextColor="#94A3B8" FontSize="11" />
+                                                </VerticalStackLayout>
+                                            </HorizontalStackLayout>
+                                            <Label Grid.Column="2" Text="{Binding PaymentMethod}" TextColor="#475569" FontSize="13" VerticalOptions="Center" />
+                                            <Label Grid.Column="3" Text="{Binding AmountFormatted}" TextColor="#0F172A" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                                            
+                                            <!-- Status Badge -->
+                                            <Border Grid.Column="4" StrokeShape="RoundRectangle 12" Padding="10,4" HorizontalOptions="Start">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Completed">
+                                                        <Setter Property="BackgroundColor" Value="#F0FDFA" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Processing">
+                                                        <Setter Property="BackgroundColor" Value="#F1F5F9" />
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Label Text="{Binding Status}" FontSize="10" FontAttributes="Bold">
+                                                    <Label.Triggers>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Completed">
+                                                            <Setter Property="TextColor" Value="#0D9488" />
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Processing">
+                                                            <Setter Property="TextColor" Value="#64748B" />
+                                                        </DataTrigger>
+                                                    </Label.Triggers>
+                                                </Label>
+                                            </Border>
+                                            <Label Grid.Column="5" Text="⋮" TextColor="#94A3B8" FontSize="20" VerticalOptions="Center" />
+                                        </Grid>
+                                        <BoxView HeightRequest="1" Color="#F1F5F9" Margin="24,0" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
 

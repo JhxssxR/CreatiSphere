@@ -60,6 +60,12 @@ namespace CreatiSphere.Views.Customer
             catch { }
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            Shell.Current.GoToAsync("//CustomerDashboard");
+            return true;
+        }
+
         private async void OnDashboardTapped(object? sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//CustomerDashboard");
@@ -114,7 +120,7 @@ namespace CreatiSphere.Views.Customer
             await SecureStorage.Default.SetAsync(CartKey, string.Join(CartDelimiter, items));
 
             await RefreshCartAsync();
-            UpdateCartBadge(items.Count);
+            UpdateCartBadge(_cartItems.Count);
         }
 
         private async void OnCartTapped(object? sender, EventArgs e)
@@ -126,6 +132,20 @@ namespace CreatiSphere.Views.Customer
         private void OnCloseCartTapped(object? sender, EventArgs e)
         {
             CartOverlay.IsVisible = false;
+        }
+
+        private async void OnRemoveFromCartTapped(object? sender, TappedEventArgs e)
+        {
+            var productId = e.Parameter as string;
+            if (string.IsNullOrWhiteSpace(productId)) return;
+
+            var items = await GetCartItemIdsAsync();
+            if (items.Remove(productId))
+            {
+                await SecureStorage.Default.SetAsync(CartKey, string.Join(CartDelimiter, items));
+                await RefreshCartAsync();
+                UpdateCartBadge(_cartItems.Count);
+            }
         }
 
         private async void OnCheckoutClicked(object? sender, EventArgs e)
@@ -166,32 +186,66 @@ namespace CreatiSphere.Views.Customer
             SetPaymentMethod(PaymentMethod.Wallet);
         }
 
+        private bool _isProcessingPayment = false;
+        
         private async void OnConfirmPaymentClicked(object? sender, EventArgs e)
         {
-            if (_cartItems.Count == 0)
-            {
-                await DisplayAlert("Checkout", "Your cart is empty.", "OK");
-                return;
-            }
+            if (_isProcessingPayment) return;
+            _isProcessingPayment = true;
 
-            var transactionId = await _databaseService.RecordSaleTransactionAsync(GetCurrentUserId(), _cartItems, _selectedPaymentMethod.ToString());
-            if (string.IsNullOrWhiteSpace(transactionId))
+            try
             {
-                await DisplayAlert("Checkout", "Payment failed. Please try again.", "OK");
-                return;
-            }
+                if (_cartItems.Count == 0)
+                {
+                    await DisplayAlert("Checkout", "Your cart is empty.", "OK");
+                    return;
+                }
 
-            await SecureStorage.Default.SetAsync(CartKey, string.Empty);
-            _cartItems.Clear();
-            UpdateCartBadge(0);
-            UpdateCartDrawer(_cartItems);
-            if (_paymentOverlay != null)
+                var transactionId = await _databaseService.RecordSaleTransactionAsync(GetCurrentUserId(), _cartItems, _selectedPaymentMethod.ToString());
+                
+                if (transactionId != null && transactionId.StartsWith("ERROR:"))
+                {
+                    await DisplayAlert("Database Error", transactionId.Substring(6), "OK");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(transactionId))
+                {
+                    await DisplayAlert("Checkout", "Payment failed. Please try again.", "OK");
+                    return;
+                }
+
+                await SecureStorage.Default.SetAsync(CartKey, string.Empty);
+                _cartItems = new List<Services.CartItem>();
+                UpdateCartBadge(0);
+                UpdateCartDrawer(_cartItems);
+                
+                var successLabel = this.FindByName<Label>("SuccessMessageLabel") ?? SuccessMessageLabel;
+                if (successLabel != null) successLabel.Text = $"Checkout complete. Transaction {transactionId} recorded.";
+                
+                var successOverlay = this.FindByName<Grid>("SuccessOverlay") ?? SuccessOverlay;
+                if (successOverlay != null) successOverlay.IsVisible = true;
+
+                if (_paymentOverlay != null)
+                {
+                    _paymentOverlay.IsVisible = false;
+                }
+                CartOverlay.IsVisible = false;
+            }
+            catch (Exception ex)
             {
-                _paymentOverlay.IsVisible = false;
+                Console.WriteLine($"Error during checkout: {ex}");
             }
-            CartOverlay.IsVisible = false;
+            finally
+            {
+                _isProcessingPayment = false;
+            }
+        }
 
-            await DisplayAlert("Payment Successful", $"Checkout complete. Transaction {transactionId} recorded.", "OK");
+        private void OnCloseSuccessTapped(object? sender, EventArgs e)
+        {
+            var successOverlay = this.FindByName<Grid>("SuccessOverlay") ?? SuccessOverlay;
+            if (successOverlay != null) successOverlay.IsVisible = false;
         }
 
         private static async Task<List<string>> GetCartItemIdsAsync()
@@ -223,7 +277,7 @@ namespace CreatiSphere.Views.Customer
             EmptyCartLabel.IsVisible = items.Count == 0;
             if (_cartTotalLabel != null)
             {
-                _cartTotalLabel.Text = items.Sum(item => item.Price).ToString("C2");
+                _cartTotalLabel.Text = $"₱{items.Sum(item => item.Price):N2}";
             }
         }
 
@@ -323,6 +377,18 @@ namespace CreatiSphere.Views.Customer
             _paymentWalletPanel = this.FindByName<VerticalStackLayout>("PaymentWalletPanel");
             _paymentCardTab = this.FindByName<Border>("PaymentCardTab");
             _paymentWalletTab = this.FindByName<Border>("PaymentWalletTab");
+            
+            // Explicitly map Success overlays if MAUI generation missed them
+            if (SuccessOverlay == null)
+            {
+                var successOverlay = this.FindByName<Grid>("SuccessOverlay");
+                if (successOverlay != null) SuccessOverlay = successOverlay;
+            }
+            if (SuccessMessageLabel == null)
+            {
+                var label = this.FindByName<Label>("SuccessMessageLabel");
+                if (label != null) SuccessMessageLabel = label;
+            }
         }
     }
 

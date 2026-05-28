@@ -1,7 +1,17 @@
 using Microsoft.Maui.Controls;
 using CreatiSphere.Services;
+using System.Linq;
+using System.Collections.Generic;
 namespace CreatiSphere.Views.Admin
 {
+    public class CrmLead
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
+        public decimal Value { get; set; }
+    }
+
     public partial class CrmManagementPage : ContentPage
     {
         private readonly Services.DatabaseService _dbService;
@@ -23,18 +33,43 @@ namespace CreatiSphere.Views.Admin
         {
             try
             {
-                if (UserSession.AccountID > 5)
+                var msmes = await _dbService.GetMsmesAsync();
+                var leads = msmes.Select(m => new CrmLead
                 {
-                    TotalCustomersLabel.Text = "0";
-                    ActiveLeadsLabel.Text = "0";
-                    TotalPortfolioSpendLabel.Text = "$0.0M";
-                    return;
-                }
+                    Name = m.BusinessName ?? "Unknown",
+                    Email = m.OwnerName ?? "No Owner",
+                    Status = m.Status ?? "ACTIVE",
+                    Value = m.ErpTier == "Enterprise Plus" ? 9999m : (m.ErpTier == "Standard" ? 2499m : 0m)
+                }).ToList();
 
-                var stats = await _dbService.GetReportStatsAsync();
-                TotalCustomersLabel.Text = stats.TotalCustomers.ToString("N0");
-                ActiveLeadsLabel.Text = stats.ActiveLeads.ToString("N0");
-                TotalPortfolioSpendLabel.Text = (stats.TotalPortfolioSpend / 1000000m).ToString("C1") + "M";
+                BindableLayout.SetItemsSource(LeadsList, leads);
+                string customerWord = leads.Count == 1 ? "customer" : "customers";
+                PaginationLabel.Text = $"Showing {leads.Count} of {leads.Count} {customerWord}";
+
+                // Update stat cards from real MSME data
+                int total = leads.Count;
+                int active = leads.Count(l => l.Status?.ToUpper() == "ACTIVE");
+                decimal totalSpend = leads.Sum(l => l.Value);
+
+                TotalCustomersLabel.Text = total.ToString("N0");
+                ActiveLeadsLabel.Text = active.ToString("N0");
+                TotalPortfolioSpendLabel.Text = totalSpend >= 1000000
+                    ? "₱" + (totalSpend / 1000000m).ToString("F1") + "M"
+                    : "₱" + (totalSpend / 1000m).ToString("F1") + "K";
+
+                // Update right profile panel with first MSME
+                if (msmes.Count > 0)
+                {
+                    var first = msmes[0];
+                    string bname = first.BusinessName ?? "MSME";
+                    ProfileInitialsLabel.Text = bname.Length >= 2
+                        ? bname.Substring(0, 2).ToUpper()
+                        : bname.Substring(0, 1).ToUpper();
+                    ProfileNameLabel.Text = bname;
+                    ProfileLocationLabel.Text = first.Niche ?? "Creative Business";
+                    ProfileContactLabel.Text = first.OwnerName ?? "Owner";
+                    ProfileRoleLabel.Text = (first.ErpTier ?? "Starter") + " Plan";
+                }
             }
             catch (Exception ex)
             {

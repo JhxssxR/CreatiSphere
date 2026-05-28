@@ -247,16 +247,19 @@
                                         <Grid ColumnDefinitions="*,*" ColumnSpacing="32">
                                             <VerticalStackLayout Spacing="12">
                                                 <Label Text="Dimensions" TextColor="#475569" FontSize="14" FontAttributes="Bold" />
-                                                <HorizontalStackLayout Spacing="12">
-                                                    <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" HeightRequest="52" WidthRequest="80">
-                                                        <Entry x:Name="BriefWidthEntry" Placeholder="W" HorizontalTextAlignment="Center" FontSize="15" />
-                                                    </Border>
-                                                    <Label Text="×" TextColor="#64748B" FontSize="18" VerticalOptions="Center" />
-                                                    <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" HeightRequest="52" WidthRequest="80">
-                                                        <Entry x:Name="BriefHeightEntry" Placeholder="H" HorizontalTextAlignment="Center" FontSize="15" />
-                                                    </Border>
-                                                    <Label Text="cm" TextColor="#64748B" FontSize="14" VerticalOptions="Center" />
-                                                </HorizontalStackLayout>
+                                                <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" Padding="12,0" HeightRequest="52">
+                                                    <Picker x:Name="DimensionsPicker" TextColor="#0F172A" FontSize="15" VerticalOptions="Center" HorizontalOptions="Fill">
+                                                        <Picker.ItemsSource>
+                                                            <x:Array Type="{x:Type x:String}">
+                                                                <x:String>Small (30x30 cm)</x:String>
+                                                                <x:String>Medium (60x60 cm)</x:String>
+                                                                <x:String>Large (100x100 cm)</x:String>
+                                                                <x:String>Custom Size</x:String>
+                                                            </x:Array>
+                                                        </Picker.ItemsSource>
+                                                        <Picker.SelectedIndex>1</Picker.SelectedIndex>
+                                                    </Picker>
+                                                </Border>
                                             </VerticalStackLayout>
 
                                             <VerticalStackLayout Grid.Column="1" Spacing="12">
@@ -264,14 +267,14 @@
                                                 <Grid ColumnDefinitions="*, Auto, *" ColumnSpacing="12">
                                                     <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" Padding="16,0" HeightRequest="52">
                                                         <HorizontalStackLayout Spacing="4">
-                                                            <Label Text="$" TextColor="#64748B" VerticalOptions="Center" FontSize="15" />
+                                                            <Label Text="₱" TextColor="#64748B" VerticalOptions="Center" FontSize="15" />
                                                             <Entry x:Name="BudgetMinEntry" Placeholder="Min" Keyboard="Numeric" TextColor="#0F172A" FontSize="15" VerticalOptions="Center" />
                                                         </HorizontalStackLayout>
                                                     </Border>
                                                     <Label Grid.Column="1" Text="to" TextColor="#64748B" VerticalOptions="Center" FontSize="14" />
                                                     <Border Grid.Column="2" StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="#CBD5E1" Padding="16,0" HeightRequest="52">
                                                         <HorizontalStackLayout Spacing="4">
-                                                            <Label Text="$" TextColor="#64748B" VerticalOptions="Center" FontSize="15" />
+                                                            <Label Text="₱" TextColor="#64748B" VerticalOptions="Center" FontSize="15" />
                                                             <Entry x:Name="BudgetMaxEntry" Placeholder="Max" Keyboard="Numeric" TextColor="#0F172A" FontSize="15" VerticalOptions="Center" />
                                                         </HorizontalStackLayout>
                                                     </Border>
@@ -794,8 +797,8 @@
                                             <Label Text="MAXIMUM BUDGET" TextColor="#94A3B8" FontSize="11" FontAttributes="Bold" CharacterSpacing="1" />
                                             <Border BackgroundColor="#F1F5F9" StrokeShape="RoundRectangle 8" Padding="16,12" HorizontalOptions="Start">
                                                 <HorizontalStackLayout Spacing="8">
-                                                    <Label x:Name="ReviewBriefBudget" Text="$2,500.00" TextColor="#0D9488" FontSize="18" FontAttributes="Bold" />
-                                                    <Label Text="USD" TextColor="#94A3B8" FontSize="12" VerticalOptions="Center" />
+                                                    <Label x:Name="ReviewBriefBudget" Text="₱2,500.00" TextColor="#0D9488" FontSize="18" FontAttributes="Bold" />
+                                                    <Label Text="PHP" TextColor="#94A3B8" FontSize="12" VerticalOptions="Center" />
                                                 </HorizontalStackLayout>
                                             </Border>
                                         </VerticalStackLayout>
@@ -1161,19 +1164,19 @@
                                         <VerticalStackLayout Spacing="12">
                                             <Grid ColumnDefinitions="*, Auto">
                                                 <Label Text="Commission Fee" TextColor="#475569" FontSize="14" />
-                                                <Label x:Name="SummaryCommissionFeeLabel" Grid.Column="1" Text="$2,250.00" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                                <Label x:Name="SummaryCommissionFeeLabel" Grid.Column="1" Text="₱2,250.00" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
                                             </Grid>
                                             <Grid ColumnDefinitions="*, Auto">
                                                 <Label Text="Platform Service Fee" TextColor="#475569" FontSize="14" />
-                                                <Label x:Name="SummaryServiceFeeLabel" Grid.Column="1" Text="$125.00" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                                <Label x:Name="SummaryServiceFeeLabel" Grid.Column="1" Text="₱125.00" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
                                             </Grid>
                                             <Grid ColumnDefinitions="*, Auto">
                                                 <Label Text="Escrow Hold Fee" TextColor="#475569" FontSize="14" />
-                                                <Label x:Name="SummaryEscrowFeeLabel" Grid.Column="1" Text="$25.00" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
+                                                <Label x:Name="SummaryEscrowFeeLabel" Grid.Column="1" Text="₱25.00" TextColor="#0F172A" FontSize="14" FontAttributes="Bold" />
                                             </Grid>
                                             <Grid ColumnDefinitions="*, Auto">
                                                 <Label Text="Taxes (Estimated)" TextColor="#475569" FontSize="14" />
-                                                <Label Grid.Column="1" Text="$0.00" TextColor="#94A3B8" FontSize="14" />
+                                                <Label Grid.Column="1" Text="₱0.00" TextColor="#94A3B8" FontSize="14" />
                                             </Grid>
                                         </VerticalStackLayout>
 
@@ -1182,16 +1185,16 @@
                                         <VerticalStackLayout Spacing="16">
                                             <Grid ColumnDefinitions="*, Auto">
                                                 <Label Text="Total Amount" TextColor="#0F172A" FontSize="16" FontAttributes="Bold" />
-                                                <Label x:Name="SummaryTotalAmountLabel" Grid.Column="1" Text="$2,500.00" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" />
+                                                <Label x:Name="SummaryTotalAmountLabel" Grid.Column="1" Text="₱2,500.00" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" />
                                             </Grid>
 
                                             <Border BackgroundColor="#F0FDFA" Stroke="#0D9488" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="16">
                                                 <VerticalStackLayout Spacing="8">
                                                     <Grid ColumnDefinitions="*, Auto">
                                                         <Label Text="Amount Due Now (50%)" TextColor="#0D9488" FontSize="14" FontAttributes="Bold" />
-                                                        <Label x:Name="SummaryDueNowLabel" Grid.Column="1" Text="$1,250.00" TextColor="#0D9488" FontSize="16" FontAttributes="Bold" />
+                                                        <Label x:Name="SummaryDueNowLabel" Grid.Column="1" Text="₱1,250.00" TextColor="#0D9488" FontSize="16" FontAttributes="Bold" />
                                                     </Grid>
-                                                    <Label x:Name="SummaryRemainingBalanceLabel" Text="Remaining Balance: $1,250.00" TextColor="#64748B" FontSize="12" />
+                                                    <Label x:Name="SummaryRemainingBalanceLabel" Text="Remaining Balance: ₱1,250.00" TextColor="#64748B" FontSize="12" />
                                                     <Label Text="(Due upon project completion)" TextColor="#64748B" FontSize="11" FontAttributes="Italic" />
                                                 </VerticalStackLayout>
                                             </Border>

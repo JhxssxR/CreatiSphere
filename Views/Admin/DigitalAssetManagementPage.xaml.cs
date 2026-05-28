@@ -111,12 +111,72 @@ namespace CreatiSphere.Views.Admin
 
                 if (result != null && result.Any())
                 {
-                    await DisplayAlertAsync("Upload Success", $"{result.Count()} files selected for upload.", "OK");
+                    // Create an Assets folder inside app data
+                    string currentFolder = CurrentFolderLabel?.Text ?? "All Files";
+                    string targetDir = System.IO.Path.Combine(FileSystem.AppDataDirectory, "Assets", currentFolder);
+                    System.IO.Directory.CreateDirectory(targetDir);
+
+                    int savedCount = 0;
+                    var newAssets = new List<Services.DigitalAsset>();
+
+                    foreach (var file in result)
+                    {
+                        try
+                        {
+                            string destPath = System.IO.Path.Combine(targetDir, file.FileName);
+
+                            // Copy the file to the app's assets folder
+                            using var sourceStream = await file.OpenReadAsync();
+                            using var destStream = System.IO.File.Create(destPath);
+                            await sourceStream.CopyToAsync(destStream);
+
+                            // Get file size
+                            var fileInfo = new System.IO.FileInfo(destPath);
+                            string sizeText = fileInfo.Length >= 1_048_576
+                                ? $"{fileInfo.Length / 1_048_576.0:F1} MB"
+                                : $"{fileInfo.Length / 1024.0:F0} KB";
+
+                            string ext = System.IO.Path.GetExtension(file.FileName).TrimStart('.').ToUpper();
+
+                            newAssets.Add(new Services.DigitalAsset
+                            {
+                                Name = file.FileName,
+                                Size = sizeText,
+                                Format = ext,
+                                Date = "Just now"
+                            });
+
+                            savedCount++;
+                        }
+                        catch (Exception fileEx)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Failed to copy {file.FileName}: {fileEx.Message}");
+                        }
+                    }
+
+                    if (savedCount > 0)
+                    {
+                        // Refresh the list to show the new assets
+                        var existingAssets = new List<Services.DigitalAsset>();
+                        // Get current items
+                        if (AssetsList != null)
+                        {
+                            var currentSource = BindableLayout.GetItemsSource(AssetsList);
+                            if (currentSource is IEnumerable<Services.DigitalAsset> existing)
+                                existingAssets.AddRange(existing);
+                        }
+                        // Add new assets at the top
+                        newAssets.AddRange(existingAssets);
+                        BindableLayout.SetItemsSource(AssetsList, newAssets);
+
+                        await DisplayAlertAsync("Upload Complete",
+                            $"{savedCount} file(s) saved to:\n{targetDir}", "OK");
+                    }
                 }
             }
             catch (Exception ex)
             {
-                await DisplayAlertAsync("Error", "File selection failed: " + ex.Message, "OK");
+                await DisplayAlertAsync("Error", "File upload failed: " + ex.Message, "OK");
             }
         }
 

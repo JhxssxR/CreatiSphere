@@ -36,7 +36,6 @@ namespace CreatiSphere.Views.Creator
                 TotalProductsLabel.Text = stats.Total.ToString("D2");
                 ActiveListingsLabel.Text = stats.Active.ToString("D2");
                 LowStockLabel.Text = stats.LowStock.ToString("D2");
-                AvgPriceLabel.Text = "₱" + stats.AvgPrice.ToString("N0");
 
                 // Load Products
                 var (items, totalCount) = await _dbService.GetProductsAsync(_currentPage, _pageSize, _currentCategory);

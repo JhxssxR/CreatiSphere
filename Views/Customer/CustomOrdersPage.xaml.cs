@@ -178,9 +178,8 @@ namespace CreatiSphere.Views.Customer
                 ? "No specific intent provided."
                 : BriefIntentEditor.Text;
 
-            string width = string.IsNullOrWhiteSpace(BriefWidthEntry.Text) ? "0" : BriefWidthEntry.Text;
-            string height = string.IsNullOrWhiteSpace(BriefHeightEntry.Text) ? "0" : BriefHeightEntry.Text;
-            ReviewBriefDimensions.Text = $"{width}cm x {height}cm";
+            string dimensions = DimensionsPicker.SelectedItem?.ToString() ?? "Unknown";
+            ReviewBriefDimensions.Text = dimensions;
             
             // -- Budget Range --
             string min = string.IsNullOrWhiteSpace(BudgetMinEntry.Text) ? "0" : BudgetMinEntry.Text;
@@ -189,9 +188,9 @@ namespace CreatiSphere.Views.Customer
             if (min == "0" && max == "0")
                 ReviewBriefBudget.Text = "Not Specified";
             else if (max == "0")
-                ReviewBriefBudget.Text = $"${min}+";
+                ReviewBriefBudget.Text = $"₱{min}+";
             else
-                ReviewBriefBudget.Text = $"${min} - ${max}";
+                ReviewBriefBudget.Text = $"₱{min} - ₱{max}";
         }
 
         private void PopulateReviewAesthetics()
@@ -299,12 +298,12 @@ namespace CreatiSphere.Views.Customer
             _totalPrice = commissionFee + serviceFee + escrowFee;
             decimal dueNow = _totalPrice * 0.5m;
 
-            SummaryCommissionFeeLabel.Text = $"${commissionFee:N2}";
-            SummaryServiceFeeLabel.Text = $"${serviceFee:N2}";
-            SummaryEscrowFeeLabel.Text = $"${escrowFee:N2}";
-            SummaryTotalAmountLabel.Text = $"${_totalPrice:N2}";
-            SummaryDueNowLabel.Text = $"${dueNow:N2}";
-            SummaryRemainingBalanceLabel.Text = $"Remaining Balance: ${_totalPrice - dueNow:N2}";
+            SummaryCommissionFeeLabel.Text = $"₱{commissionFee:N2}";
+            SummaryServiceFeeLabel.Text = $"₱{serviceFee:N2}";
+            SummaryEscrowFeeLabel.Text = $"₱{escrowFee:N2}";
+            SummaryTotalAmountLabel.Text = $"₱{_totalPrice:N2}";
+            SummaryDueNowLabel.Text = $"₱{dueNow:N2}";
+            SummaryRemainingBalanceLabel.Text = $"Remaining Balance: ₱{_totalPrice - dueNow:N2}";
         }
 
         // ── Payment Tab Switching ─────────────────────────────────────────
@@ -367,9 +366,9 @@ namespace CreatiSphere.Views.Customer
             decimal dueNow = _totalPrice * 0.5m;
             bool confirmed = await this.DisplayAlertAsync(
                 "Confirm Downpayment",
-                $"You are about to pay ${dueNow:N2} USD (50% Downpayment) for your commission.\n\n" +
+                $"You are about to pay ₱{dueNow:N2} PHP (50% Downpayment) for your commission.\n\n" +
                 "Proceed with secure payment?",
-                $"Yes, Pay ${dueNow:N2}",
+                $"Yes, Pay ₱{dueNow:N2}",
                 "Cancel");
 
             if (!confirmed) return;
